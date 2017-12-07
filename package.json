@@ -1,29 +1,38 @@
 {
-  "name": "ts-types",
-  "version": "0.0.0",
-  "description": "yet another Typescript type library for advanced types",
-  "main": "src/index.ts",
-  "scripts": {
-    "test": "ava-ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andnp/ts-types.git"
-  },
-  "keywords": [
-    "typescript",
-    "types"
-  ],
-  "author": "Andy Patterson",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/andnp/ts-types/issues"
-  },
-  "homepage": "https://github.com/andnp/ts-types#readme",
-  "devDependencies": {
-    "ava": "^0.24.0",
-    "ava-ts": "^0.23.0",
-    "ts-node": "^3.3.0",
-    "typescript": "^2.6.2"
-  }
+    "name": "ts-types",
+    "version": "0.0.0",
+    "description": "yet another Typescript type library for advanced types",
+    "main": "src/index.ts",
+    "typings": "src/index",
+    "types": "src/index",
+    "scripts": {
+        "bumpVersion": "ts-node scripts/versionBump.ts",
+        "test": "ava-ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/andnp/ts-types.git"
+    },
+    "keywords": [
+        "typescript",
+        "types"
+    ],
+    "author": "Andy Patterson",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/andnp/ts-types/issues"
+    },
+    "homepage": "https://github.com/andnp/ts-types#readme",
+    "devDependencies": {
+        "@types/node": "^8.0.57",
+        "ava": "^0.24.0",
+        "ava-ts": "^0.23.0",
+        "pre-push": "^0.1.1",
+        "ts-node": "^3.3.0",
+        "typescript": "^2.6.2"
+    },
+    "pre-push": [
+        "bumpVersion",
+        "test"
+    ]
 }
