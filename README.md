@@ -1,4 +1,4 @@
-# ts-types
+# SimplyTyped
 
 Yet another typing library.
 This differs by aiming to be less experimental than others, driven by industry use cases.
