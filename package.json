@@ -1,6 +1,6 @@
 {
     "name": "ts-types",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "yet another Typescript type library for advanced types",
     "main": "src/index.ts",
     "scripts": {
