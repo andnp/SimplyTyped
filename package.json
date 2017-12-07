@@ -1,5 +1,5 @@
 {
-    "name": "ts-types",
+    "name": "simplytyped",
     "version": "0.0.3",
     "description": "yet another Typescript type library for advanced types",
     "main": "src/index.ts",
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/andnp/ts-types.git"
+        "url": "git+https://github.com/andnp/SimplyTyped.git"
     },
     "keywords": [
         "typescript",
@@ -18,9 +18,9 @@
     "author": "Andy Patterson",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/andnp/ts-types/issues"
+        "url": "https://github.com/andnp/SimplyTyped/issues"
     },
-    "homepage": "https://github.com/andnp/ts-types#readme",
+    "homepage": "https://github.com/andnp/SimplyTyped#readme",
     "devDependencies": {
         "@types/node": "^8.0.57",
         "ava": "^0.24.0",
