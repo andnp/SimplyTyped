@@ -4,6 +4,7 @@
   "description": "yet another Typescript type library for advanced types",
   "main": "src/index.ts",
   "scripts": {
+    "bumpVersion": "ts-node scripts/versionBump.ts",
     "test": "ava-ts"
   },
   "repository": {
@@ -29,6 +30,7 @@
     "typescript": "^2.6.2"
   },
   "pre-push": [
+    "bumpVersion",
     "test"
   ]
 }
