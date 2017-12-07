@@ -15,7 +15,7 @@
     "types"
   ],
   "author": "Andy Patterson",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/andnp/ts-types/issues"
   },
