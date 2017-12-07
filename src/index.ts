@@ -42,5 +42,5 @@ export type SharedKeys<T extends object, U extends object> = Keys<T> & Keys<U>;
 export type AllKeys<T extends object, U extends object> = Keys<T> | Keys<U>;
 export type DiffKeys<T extends object, U extends object> = Diff<Keys<T>, Keys<U>>;
 
-export type Merge<T extends object, U extends object> = Omit<T, SharedKeys<T, U>> & U;
+export type Merge<T extends object, U extends object> = CombineObjects<Omit<T, SharedKeys<T, U>>, U>;
 
