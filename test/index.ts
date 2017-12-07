@@ -1,7 +1,7 @@
 import test from 'ava';
 import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, Keys, Merge, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeObject, UnionizeTuple } from '../src/index';
 
-function is<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass() }
 
 // Conditionals
 
@@ -10,8 +10,8 @@ test('Can assign type conditionally', t => {
     type gotF = conditional<False>;
     type gotT = conditional<True>;
 
-    is<gotF, string>(t);
-    is<gotT, number>(t);
+    assert<gotF, string>(t);
+    assert<gotT, number>(t);
 });
 
 test('Conditions can be based on AND', t => {
@@ -21,10 +21,10 @@ test('Conditions can be based on AND', t => {
     type gotTF = conditional<True, False>;
     type gotTT = conditional<True, True>;
 
-    is<gotFF, string>(t);
-    is<gotFT, string>(t);
-    is<gotTF, string>(t);
-    is<gotTT, number>(t);
+    assert<gotFF, string>(t);
+    assert<gotFT, string>(t);
+    assert<gotTF, string>(t);
+    assert<gotTT, number>(t);
 });
 
 test('Conditions can be based on OR', t => {
@@ -34,10 +34,10 @@ test('Conditions can be based on OR', t => {
     type gotTF = conditional<True, False>;
     type gotTT = conditional<True, True>;
 
-    is<gotFF, string>(t);
-    is<gotFT, number>(t);
-    is<gotTF, number>(t);
-    is<gotTT, number>(t);
+    assert<gotFF, string>(t);
+    assert<gotFT, number>(t);
+    assert<gotTF, number>(t);
+    assert<gotTT, number>(t);
 });
 
 test('Conditional logic can be inversed with NOT', t => {
@@ -45,8 +45,8 @@ test('Conditional logic can be inversed with NOT', t => {
     type gotF = conditional<False>;
     type gotT = conditional<True>;
 
-    is<gotF, number>(t);
-    is<gotT, string>(t);
+    assert<gotF, number>(t);
+    assert<gotT, string>(t);
 });
 
 // Objects
@@ -56,7 +56,7 @@ test('Can get keys from object', t => {
     type expected = 'x' | 'y' | 'z';
     type got = Keys<obj>;
 
-    is<expected, got>(t);
+    assert<expected, got>(t);
 });
 
 test('Can turn an object into another object', t => {
@@ -64,7 +64,7 @@ test('Can turn an object into another object', t => {
     type expected = obj;
     type got = ObjectType<obj>;
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can combine two objects (without pesky & in vscode)', t => {
@@ -78,7 +78,7 @@ test('Can combine two objects (without pesky & in vscode)', t => {
         z: number
     };
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can get keys that are same between objects', t => {
@@ -88,7 +88,7 @@ test('Can get keys that are same between objects', t => {
     type got = SharedKeys<a, b>;
     type expected = 'x' | 'y';
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can get a union of all values in an object', t => {
@@ -97,7 +97,7 @@ test('Can get a union of all values in an object', t => {
     type got = UnionizeObject<a>;
     type expected = 'hi' | 'there' | 'friend';
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can get all keys that are different between objects', t => {
@@ -107,8 +107,8 @@ test('Can get all keys that are different between objects', t => {
     type gotA = DiffKeys<a, b>;
     type gotB = DiffKeys<b, a>;
 
-    is<gotA, 'x'>(t);
-    is<gotB, 'z'>(t);
+    assert<gotA, 'x'>(t);
+    assert<gotB, 'z'>(t);
 });
 
 test('Can get all keys between objects', t => {
@@ -118,7 +118,7 @@ test('Can get all keys between objects', t => {
     type got = AllKeys<a, b>;
     type expected = 'w' | 'x' | 'z';
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can omit keys from an object', t => {
@@ -127,7 +127,7 @@ test('Can omit keys from an object', t => {
     type got = Omit<a, 'x' | 'y'>;
     type expected = { z: boolean };
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can merge two objects, resolving matching keys by rightmost object', t => {
@@ -137,7 +137,7 @@ test('Can merge two objects, resolving matching keys by rightmost object', t => 
     type got = Merge<a, b>;
     type expected = { x: number, y: number, z: string };
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 test('Can get a deep partial object', t => {
@@ -156,7 +156,7 @@ test('Can get a deep partial object', t => {
         d?: string
     };
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 // Tuples
@@ -167,7 +167,7 @@ test('Can get a union of all values in tuple', t => {
     type got = UnionizeTuple<t>;
     type expected = 'hi' | 'there' | 'friend';
 
-    is<got, expected>(t);
+    assert<got, expected>(t);
 });
 
 // Strings
@@ -179,6 +179,6 @@ test('Can get difference between unions of strings', t => {
     type gotA = Diff<a, b>;
     type gotB = Diff<b, a>;
 
-    is<gotA, 'there'>(t);
-    is<gotB, 'my' | 'friend'>(t);
+    assert<gotA, 'there'>(t);
+    assert<gotB, 'my' | 'friend'>(t);
 });
