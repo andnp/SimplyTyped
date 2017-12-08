@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, Keys, Merge, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeObject, UnionizeTuple } from '../src/index';
+import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, Keys, Merge, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeProperties, UnionizeTuple } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass() }
 
@@ -94,7 +94,7 @@ test('Can get keys that are same between objects', t => {
 test('Can get a union of all values in an object', t => {
     type a = { x: 'hi', y: 'there', z: 'friend' };
 
-    type got = UnionizeObject<a>;
+    type got = UnionizeProperties<a>;
     type expected = 'hi' | 'there' | 'friend';
 
     assert<got, expected>(t);

@@ -24,8 +24,7 @@ export type UnionizeTuple<T extends Vector<any>> = T[number];
 
 // Objects
 
-export type UnionizeObject<T extends object> = T[Keys<T>];
-export type Omit<T extends object, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
+export type UnionizeProperties<T extends object> = T[Keys<T>];
 
 export type DeepPartial<T extends object> = Partial<{
     [k in keyof T]: DeepPartial<T[k]>
