@@ -36,6 +36,19 @@ type x = Not<True> // => False
 type y = Not<False> // => True
 ```
 
+### Xor
+```ts
+type x = Xor<True, False> // => True
+type y = Xor<True, True> // => False
+...
+```
+
+### Nand
+```ts
+type x = Nand<True, True> // => False
+type y = Nand<False, True> // => True
+```
+
 ## Objects
 
 ```ts

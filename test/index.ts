@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, Keys, Merge, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeProperties, UnionizeTuple } from '../src/index';
+import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, Keys, Merge, Nand, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeProperties, UnionizeTuple, Xor } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass() }
 
@@ -38,6 +38,20 @@ test('Conditions can be based on OR', t => {
     assert<gotFT, number>(t);
     assert<gotTF, number>(t);
     assert<gotTT, number>(t);
+});
+
+test('Conditions can be based on XOR', t => {
+    assert<Xor<True, True>,   False>(t);
+    assert<Xor<False, True>,  True>(t);
+    assert<Xor<True, False>,  True>(t);
+    assert<Xor<False, False>, False>(t);
+});
+
+test('Conditions can be based on NAND', t => {
+    assert<Nand<True, True>,   False>(t);
+    assert<Nand<False, True>,  True>(t);
+    assert<Nand<True, False>,  True>(t);
+    assert<Nand<False, False>, True>(t);
 });
 
 test('Conditional logic can be inversed with NOT', t => {
