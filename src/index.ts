@@ -18,22 +18,22 @@ export type Diff<T extends string, U extends string> = ({[K in T]: K} & {[K in U
 
 // Tuples
 
-export interface Vector<T> { readonly [x: number]: T; readonly length: number; }
-export type Length<T extends Vector<any>> = T['length'];
+export interface Vector<T> { readonly [x: number]: T; }
 
 export type UnionizeTuple<T extends Vector<any>> = T[number];
 
 // Objects
 
 export type UnionizeProperties<T extends object> = T[Keys<T>];
+export type Omit<T extends object, K extends Keys<T>> = Pick<T, Diff<Keys<T>, K>>;
 
 export type DeepPartial<T extends object> = Partial<{
-    [k in keyof T]: DeepPartial<T[k]>
+    [k in Keys<T>]: DeepPartial<T[k]>
 }>;
 
 export type ObjectType<T extends object> = {
     [k in Keys<T>]: T[k];
-}
+};
 
 export type CombineObjects<T extends object, U extends object> = ObjectType<T & U>;
 
@@ -42,5 +42,7 @@ export type SharedKeys<T extends object, U extends object> = Keys<T> & Keys<U>;
 export type AllKeys<T extends object, U extends object> = Keys<T> | Keys<U>;
 export type DiffKeys<T extends object, U extends object> = Diff<Keys<T>, Keys<U>>;
 
-export type Merge<T extends object, U extends object> = CombineObjects<Omit<T, SharedKeys<T, U>>, U>;
+export type Intersect<T extends object, U extends Partial<T>> = Omit<U, DiffKeys<U, T>>;
 
+export type Merge<T extends object, U extends object> = CombineObjects<Omit<T, SharedKeys<T, U>>, U>;
+export type Overwrite<T extends object, U extends object> = Merge<T, Intersect<T, U>>;
