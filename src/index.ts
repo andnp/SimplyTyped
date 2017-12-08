@@ -6,6 +6,8 @@ export type If<Cond extends Bool, Then, Else> = [Else, Then][Cond];
 export type Not<A extends Bool> = If<A, False, True>;
 export type And<A extends Bool, B extends Bool> = If<A, If<B, True, False>, False>;
 export type Or<A extends Bool, B extends Bool> = If<A, If<B, True, True>, If<B, True, False>>;
+export type Xor<A extends Bool, B extends Bool> = Or<And<A, Not<B>>, And<Not<A>, B>>;
+export type Nand<A extends Bool, B extends Bool> = Not<And<A, B>>;
 
 // Strings
 
