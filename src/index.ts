@@ -11,7 +11,7 @@ export type Nand<A extends Bool, B extends Bool> = Not<And<A, B>>;
 
 // Unions
 
-export type UnionHasString<T extends string, U extends string> = (Record<T, True> & Record<string, False>)[U];
+export type UnionContains<T extends string, U extends string> = (Record<T, True> & Record<string, False>)[U];
 
 // Numbers
 
@@ -31,7 +31,13 @@ export type Sub<A extends number, B extends number> = { 1: A, 0: Sub<Prev<A>, Pr
  */
 export type Diff<T extends string, U extends string> = ({[K in T]: K} & Record<U, never> & Record<string, never>)[T];
 export type DropString<T extends string, U extends T> = Diff<T, U>;
-export type StringEqual<T extends string, U extends string> = UnionHasString<T, U>;
+export type IsNever<S extends string> = Not<UnionContains<(Record<S, False> & Record<string, True>)[S], False>>;
+export type StringEqual<T extends string, U extends string> =
+    And<
+        And<
+            UnionContains<T, U>,
+            IsNever<Diff<T, U>>>,
+        IsNever<Diff<U, T>>>;
 
 // Tuples
 
