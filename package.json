@@ -31,7 +31,6 @@
         "typescript": "next"
     },
     "pre-push": [
-        "bumpVersion",
         "test"
     ]
 }
