@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, Keys, Merge, Nand, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeProperties, UnionizeTuple, Xor } from '../src/index';
+import { AllKeys, And, Bool, CombineObjects, DeepPartial, Diff, DiffKeys, False, If, IsNever, Keys, Merge, Nand, Not, ObjectType, Omit, Or, SharedKeys, True, UnionizeProperties, UnionizeTuple, Xor } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass() }
 
@@ -195,4 +195,9 @@ test('Can get difference between unions of strings', t => {
 
     assert<gotA, 'there'>(t);
     assert<gotB, 'my' | 'friend'>(t);
+});
+
+test('Can ask if a string is of type "never"', t => {
+    assert<IsNever<'hi'>, False>(t);
+    assert<IsNever<never>, True>(t);
 });

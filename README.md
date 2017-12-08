@@ -117,7 +117,7 @@ type x = DeepPartial<obj1> // => { w?: string, x?: string, y?: number }
 ```
 
 ## Tuples
-A tuple can be defined in two ways: `[number, string]` which as of Typescript 2.7 has an enforced length type parameter: `[number, string]['length'] === 2` or using this libraries `Tuple<any>` which can be extended with any length of tuple: `function doStuff<T extends Tuple<any>>(x: T) {}`.
+A tuple can be defined in two ways: `[number, string]` which as of Typescript 2.7 has an enforced length type parameter: `[number, string]['length'] === 2` or using this library's `Tuple<any>` which can be extended with any length of tuple: `function doStuff<T extends Tuple<any>>(x: T) {}`.
 
 ### Tuple
 ```ts
@@ -137,4 +137,18 @@ type x = UnionizeTuple<[number, string]> // => number | string
 Get the differences between two unions of strings.
 ```ts
 type x = Diff<'hi' | 'there', 'hi' | 'friend'> // => 'there'
+```
+
+### IsNever
+Returns true if type is `never`, otherwise returns false.
+```ts
+type x = IsNever<'hi'> // => True
+type y = IsNever<never> // => False
+```
+
+### StringEqual
+Returns true if all elements in two unions of strings are equal.
+```ts
+type x = StringEqual<'hi' | 'there', 'hi'> // => False
+type y = StringEqual<'hi' | 'there', 'there' | 'hi'> // => True
 ```
