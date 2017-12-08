@@ -3,6 +3,7 @@
     "version": "0.0.4",
     "description": "yet another Typescript type library for advanced types",
     "main": "src/index.ts",
+    "types": "src/index.ts",
     "scripts": {
         "bumpVersion": "ts-node scripts/versionBump.ts",
         "test": "ava-ts"

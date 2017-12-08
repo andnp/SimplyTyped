@@ -4,7 +4,6 @@
         "target": "es6",
         "strict": true,
         "sourceMap": false,
-        "allowJs": true,
         "outDir": "dist",
         "baseUrl": "src/",
         "noEmitOnError": true,
