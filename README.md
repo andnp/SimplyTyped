@@ -79,6 +79,13 @@ type x = obj1 & obj2 // => { w: string, x: string, y: number } & { y: string, z:
 type y = CombineObjects<obj1, obj2> // => { w: string, x: string, y: string & number, z: number }
 ```
 
+### Intersect
+Returns only the shared properties between two objects.
+All shared properties must be the same type.
+```ts
+type x = Intersect<obj1, { x: string }> // => { x: string }
+```
+
 ### SharedKeys
 Gets all of the keys that are shared between two objects (as in keys in common).
 ```ts
@@ -110,6 +117,14 @@ Much like `_.merge` in javascript, this returns an object with all keys present 
 type x = Merge<obj1, obj2> // => { w: string, x: string, y: string, z: number }
 ```
 
+### Overwrite
+Can change the types of properties on an object.
+This is similar to `Merge`, except that it will not add previously non-existent properties to the object.
+```ts
+type a = Overwrite<obj1, obj2> // => { w: string, x: string, y: string }
+type b = Overwrite<obj2, obj1> // => { y: number, z: number }
+```
+
 ### DeepPartial
 Uses `Partial` to make every parameter of an object optional (`| undefined`).
 ```ts
@@ -127,8 +142,16 @@ doStuff(['hi', 'there']); // => doStuff(x: ['hi', 'there']): void
 ```
 
 ### UnionizeTuple
+Returns elements within a tuple as a union.
 ```ts
 type x = UnionizeTuple<[number, string]> // => number | string
+```
+
+### Length
+Gets the length of either a built-in tuple, or a Vector.
+This will only work after Typescript 2.7 is released.
+```ts
+type x = Length<['hey', 'there']> // => 2
 ```
 
 ## Strings
@@ -151,4 +174,10 @@ Returns true if all elements in two unions of strings are equal.
 ```ts
 type x = StringEqual<'hi' | 'there', 'hi'> // => False
 type y = StringEqual<'hi' | 'there', 'there' | 'hi'> // => True
+```
+
+### DropString
+Can remove a string from a union of strings
+```ts
+type x = DropString<'hi' | 'there', 'hi'> // => 'there'
 ```
