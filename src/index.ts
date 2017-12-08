@@ -13,13 +13,13 @@ export type Or<A extends Bool, B extends Bool> = If<A, If<B, True, True>, If<B, 
  * From https://github.com/Microsoft/TypeScript/issues/12215#issuecomment-311923766
  * Omits keys in K from object type T
  */
-export type Diff<T extends string, U extends string> = ({[K in T]: K} & Record<U, never> & Record<string, never>)[T];
-export type DropString<T extends string, U extends T> = Diff<T, U>;
-export type StringEqual<T extends string, U extends string> = UnionHasString<T, U>;
+export type Diff<T extends string, U extends string> = ({[K in T]: K} & {[K in U]: never} & {[K: string]: never})[T];
+
 
 // Tuples
 
-export interface Vector<T> { readonly [x: number]: T; }
+export interface Vector<T> { readonly [x: number]: T; readonly length: number; }
+export type Length<T extends Vector<any>> = T['length'];
 
 export type UnionizeTuple<T extends Vector<any>> = T[number];
 
