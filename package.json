@@ -1,6 +1,6 @@
 {
     "name": "simplytyped",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "yet another Typescript type library for advanced types",
     "main": "src/index.ts",
     "types": "src/index.ts",
