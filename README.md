@@ -181,3 +181,61 @@ Can remove a string from a union of strings
 ```ts
 type x = DropString<'hi' | 'there', 'hi'> // => 'there'
 ```
+
+## Numbers
+
+Supports numbers from [0, 63]. More slows down the compiler to a crawl right now.
+
+### IsZero
+Returns true if the number is equal to zero.
+```ts
+type x = IsZero<1> // => False
+type y = IsZero<0> // => True
+```
+
+### IsOne
+Returns true if the number is equal to one.
+```ts
+type x = IsOne<0> // => False
+type y = IsOne<1> // => True
+```
+
+### NumberToString
+Returns the string type for a given number
+```ts
+type x = NumberToString<0> // => '0'
+type y = NumberToString<1> // => '1'
+```
+
+### Next
+Returns the number + 1.
+```ts
+type x = Next<0> // => 1
+type y = Next<22> // => 23
+```
+
+### Prev
+Returns the number - 1.
+```ts
+type x = Prev<0> // => -1
+type y = Prev<23> // => 22
+```
+
+### Add
+Adds two numbers together.
+```ts
+type x = Add<22, 8> // => 30
+```
+
+### Sub
+Subtracts the second from the first.
+```ts
+type x = Sub<22, 8> // => 14
+```
+
+### NumberEqual
+Returns `True` if the numbers are equivalent
+```ts
+type x = NumberEqual<0, 0> // => True
+type y = NumberEqual<22, 21> // => False
+```
