@@ -20,6 +20,7 @@ test('Can ask if a string is of type "never"', t => {
     type str = 'hi';
     assert<IsNever<str>, False>(t);
     assert<IsNever<never>, True>(t);
+    assert<IsNever<'hi' & 'hello'>, True>(t);
 });
 
 test('Can check that two unions of strings are equal', t => {
@@ -28,7 +29,7 @@ test('Can check that two unions of strings are equal', t => {
     type c = 'hi' | 'there' | 'friend';
 
     assert<StringEqual<a, b>, True>(t);
-    assert<StringEqual<a, b>, True>(t);
+    assert<StringEqual<b, a>, True>(t);
     assert<StringEqual<b, c>, False>(t);
 });
 
