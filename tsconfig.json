@@ -7,7 +7,6 @@
         "outDir": "dist",
         "baseUrl": "src/",
         "noEmitOnError": true,
-        "declaration": true,
         "lib": [
             "dom",
             "es2016"
