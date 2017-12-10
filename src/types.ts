@@ -9,9 +9,48 @@ export type Or<A extends Bool, B extends Bool> = If<A, True, If<B, True, False>>
 export type Xor<A extends Bool, B extends Bool> = Or<And<A, Not<B>>, And<Not<A>, B>>;
 export type Nand<A extends Bool, B extends Bool> = Not<And<A, B>>;
 
+export type ReallyTrue<A extends Bool> = StringEqual<A, True>;
+
 // Unions
 
 export type UnionContains<T extends string, U extends string> = (Record<T, True> & Record<string, False>)[U];
+
+// Prototypes
+
+export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
+export type ArrayPrototypeKeys = Keys<Array<any>>;
+export type NumberPrototypeKeys = Keys<number>;
+export type BooleanPrototypeKeys = Keys<false>;
+export type StringPrototypeKeys = Keys<string>;
+export type ObjectPrototypeKeys = Keys<Object>;
+export type FunctionPrototypeKeys = Keys<Function>;
+
+export type IsAny<T> = IsNever<HasKey<T, string>>;
+export type IsArray<T> = ReallyTrue<HasKey<T, ArrayPrototypeKeys>>;
+export type IsNumber<T> = ReallyTrue<HasKey<T, NumberPrototypeKeys>>;
+export type IsString<T> = ReallyTrue<HasKey<T, StringPrototypeKeys>>;
+export type IsFunction<T> =
+    Xor<
+        IsNever<Keys<T>>,
+        ReallyTrue<HasKey<T, FunctionPrototypeKeys>>>;
+
+// TODO: this doesn't quite cut it
+export type IsStringFunction<T extends string> = And<IsString<T>, IsNever<T>>;
+export type IsBoolean<T> =
+    And<And<And<
+        Not<IsStringFunction<Diff<Keys<T>, BooleanPrototypeKeys>>>, // filter out annoying prototype keys ie: 'toString' & () => boolean
+        Not<IsNever<Keys<T>>>>, // Make sure isn't a function because function types have no prototype keys, making first check fail
+        Not<HasKey<T, string>>>, // Make sure isn't any, by checking that all strings are in the prototype
+        IsNever<Diff<Keys<T>, BooleanPrototypeKeys>>>;
+
+export type IsObject<T> =
+    And<And<And<And<
+        Not<IsArray<T>>,
+        Not<IsNumber<T>>>,
+        Not<IsString<T>>>,
+        Not<IsBoolean<T>>>,
+        Not<IsFunction<T>>>;
+
 
 // Numbers
 
@@ -33,6 +72,7 @@ export type NumberEqual<A extends number, B extends number> = StringEqual<Number
 export type Diff<T extends string, U extends string> = ({[K in T]: K} & Record<U, never> & Record<string, never>)[T];
 export type DropString<T extends string, U extends T> = Diff<T, U>;
 export type IsNever<S extends string> = UnionContains<UnionContains<S, S>, False>;
+
 export type StringEqual<T extends string, U extends string> =
     And<
         IsNever<Diff<T, U>>,
@@ -61,11 +101,11 @@ export type ObjectType<T extends object> = {
 
 export type CombineObjects<T extends object, U extends object> = ObjectType<T & U>;
 
-export type Keys<T extends object> = keyof T;
-export type SharedKeys<T extends object, U extends object> = Keys<T> & Keys<U>;
-export type AllKeys<T extends object, U extends object> = Keys<T> | Keys<U>;
-export type DiffKeys<T extends object, U extends object> = Diff<Keys<T>, Keys<U>>;
-export type HasKey<T extends object, U extends string> = UnionContains<Keys<T>, U>;
+export type Keys<T> = keyof T;
+export type SharedKeys<T, U> = Keys<T> & Keys<U>;
+export type AllKeys<T, U> = Keys<T> | Keys<U>;
+export type DiffKeys<T, U> = Diff<Keys<T>, Keys<U>>;
+export type HasKey<T, U extends string> = UnionContains<Keys<T>, U>;
 
 export type Intersect<T extends object, U extends Partial<T>> = Omit<U, DiffKeys<U, T>>;
 
