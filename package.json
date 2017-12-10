@@ -6,7 +6,8 @@
     "types": "src/index.ts",
     "scripts": {
         "bumpVersion": "ts-node scripts/versionBump.ts",
-        "test": "ava-ts"
+        "test": "ava-ts",
+        "prepublish": "npm -s test"
     },
     "repository": {
         "type": "git",
