@@ -6,6 +6,10 @@ This differs by aiming to be less experimental than others, driven by industry u
 Many of the exposed types are a very thin layer above built in functionality.
 The goal is to provide all of the building blocks necessary to make concise, yet complex types.
 
+```
+npm install --save-dev simplytyped
+```
+
 ## Conditionals
 
 Some (somewhat common) implementations of conditional type logic
@@ -276,4 +280,19 @@ Returns `True` if the numbers are equivalent
 ```ts
 type x = NumberEqual<0, 0> // => True
 type y = NumberEqual<22, 21> // => False
+```
+
+## Schema Validation
+One of the easiest points of failure with the typescript type system is outside data.
+It is difficult to confirm that outside data matches the contract we have set within our typings.
+If we define our schemas as so:
+```ts
+const schema = {
+    hello: 'hi',
+    nestedThing: {
+        a: 2,
+        b: false
+        c: [ { d: 1 }, { d: 2 } ]
+    }
+}
 ```
