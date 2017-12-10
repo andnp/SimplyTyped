@@ -49,6 +49,44 @@ type x = Nand<True, True> // => False
 type y = Nand<False, True> // => True
 ```
 
+## Predicates
+
+### IsAny
+```ts
+type x = IsAny<any> // => True
+type y = IsAny<'hey'> // => False
+```
+
+### IsArray
+```ts
+type x = IsArray<any[]> // => True
+type y = IsArray<number> // => False
+```
+
+### IsBoolean
+```ts
+type x = IsBoolean<false> // => True
+type y = IsBoolean<3> // => False
+```
+
+### IsFunction
+```ts
+type x = IsFunction<(() => string)> // => True
+type y = IsFunction<'not a function'> // => False
+```
+
+### IsNumber
+```ts
+type x = IsNumber<3> // => True
+type y = IsNumber<false> // => False
+```
+
+### IsObject
+```ts
+type x = IsObject<{a: number, b: string}> // => True
+type y = IsObject<string> // => False
+```
+
 ## Objects
 
 ```ts
