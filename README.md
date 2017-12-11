@@ -1,5 +1,7 @@
 # SimplyTyped
 
+[![Build Status](https://travis-ci.org/andnp/SimplyTyped.svg?branch=NumberPerformance)](https://travis-ci.org/andnp/SimplyTyped)
+
 Yet another typing library.
 This differs by aiming to be less experimental than others, driven by industry use cases.
 
