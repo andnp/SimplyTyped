@@ -4,11 +4,11 @@ export function isObject(x: any): x is ObjectType<any> {
     return typeof x === 'object';
 }
 
-export function isArray(x: any): x is Array<any> {
+export function isArray(x: any): x is any[] {
     return Array.isArray(x);
 }
 
-function allTrue(x: Array<boolean>) {
+function allTrue(x: boolean[]) {
     let ret = true;
     x.forEach((y) => ret = ret && y);
     return ret;
@@ -42,16 +42,16 @@ export type SchemaTypeString<T extends string, S extends object> =
     If<StringEqual<T, 'object'>,  Schematize<S>,
     If<StringEqual<T, 'array'>,   Array<Schematize<GetKey<S, 'items'>>>,
     If<StringEqual<T, 'boolean'>, boolean,
-    any>>>>>
+    any>>>>>;
 
 export type GetSchemaProperties<T extends object> = {
     [K in Keys<T>]: SchemaTypeString<GetKey<T[K], 'type'>, T[K]>
-}
+};
 
 export type Schematize<T extends object> =
     If<UnionContains<Keys<T>, 'properties'>,
         GetSchemaProperties<GetKey<T, 'properties'>>,
-        any>
+        any>;
 
 export function schemaIsValid<T extends object>(data: any, schema: T): data is Schematize<T> {
     return checkSchema(data, schema);
