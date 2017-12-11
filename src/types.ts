@@ -111,4 +111,4 @@ export type Intersect<T extends object, U extends Partial<T>> = Omit<U, DiffKeys
 
 export type Merge<T extends object, U extends object> = CombineObjects<Omit<T, SharedKeys<T, U>>, U>;
 export type Overwrite<T extends object, U extends object> = Merge<T, Intersect<T, U>>;
-export type GetKey<T extends object, K extends string> = (Record<string, never> & T)[K];
+export type GetKey<T, K extends string> = (Record<string, never> & T)[K];
