@@ -173,6 +173,15 @@ Uses `Partial` to make every parameter of an object optional (`| undefined`).
 type x = DeepPartial<obj1> // => { w?: string, x?: string, y?: number }
 ```
 
+### GetKey
+Gets the value of specified property on any object without compile time error (`Property 'b' does not exist on type '{ a: string; }'.`) and the like.
+Returns `never` if the key is not on the object.
+I suggest using `If<HasKey...` first to handle validity of the object first.
+```ts
+type x = GetKey<{ a: string }, 'a'> // => string
+type y = GetKey<{ a: string }, 'b'> // => never
+```
+
 ## Tuples
 A tuple can be defined in two ways: `[number, string]` which as of Typescript 2.7 has an enforced length type parameter: `[number, string]['length'] === 2` or using this library's `Tuple<any>` which can be extended with any length of tuple: `function doStuff<T extends Tuple<any>>(x: T) {}`.
 
