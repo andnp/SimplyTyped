@@ -1,13 +1,14 @@
 {
     "name": "simplytyped",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "yet another Typescript type library for advanced types",
     "main": "src/index.ts",
     "types": "src/index.ts",
     "scripts": {
         "bumpVersion": "ts-node scripts/versionBump.ts",
+        "lint": "tslint --config tslint.json --project . --format stylish",
         "test": "ava-ts",
-        "prepublish": "npm -s test"
+        "prepublishOnly": "npm -s test"
     },
     "repository": {
         "type": "git",
@@ -29,9 +30,11 @@
         "ava-ts": "^0.23.0",
         "pre-push": "^0.1.1",
         "ts-node": "^3.3.0",
+        "tslint": "^5.8.0",
         "typescript": "next"
     },
     "pre-push": [
+        "lint",
         "test"
     ]
 }

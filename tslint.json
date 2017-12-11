@@ -1,0 +1,55 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "rules": {
+        "arrow-parens": false,
+        "curly": false,
+        "indent": [
+            true,
+            "spaces", 4
+        ],
+        "interface-name": false,
+        "max-classes-per-file": false,
+        "max-line-length": false,
+        "member-access": [
+            true,
+            "no-public"
+        ],
+        "member-ordering": false,
+        "no-consecutive-blank-lines": false,
+        "no-shadowed-variable": false,
+        "no-unused-variable": [
+            true,
+            {
+                "check-parameters": true
+            }
+        ],
+        "object-literal-sort-keys": false,
+        "only-arrow-functions": false,
+        "ordered-imports": false,
+        "prefer-object-spread": true,
+        "quotemark": false,
+        "radix": false,
+        "space-before-function-paren": false,
+        "trailing-comma": true,
+        "triple-equals": true,
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-pascal-case",
+            "allow-leading-underscore",
+            "allow-trailing-underscore"
+        ],
+        "whitespace": [
+            true,
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type",
+            "check-typecast"
+        ]
+    }
+}

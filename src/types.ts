@@ -18,12 +18,12 @@ export type UnionContains<T extends string, U extends string> = (Record<T, True>
 // Prototypes
 
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
-export type ArrayPrototypeKeys = Keys<Array<any>>;
+export type ArrayPrototypeKeys = Keys<any[]>;
 export type NumberPrototypeKeys = Keys<number>;
 export type BooleanPrototypeKeys = Keys<false>;
 export type StringPrototypeKeys = Keys<string>;
-export type ObjectPrototypeKeys = Keys<Object>;
-export type FunctionPrototypeKeys = Keys<Function>;
+export type ObjectPrototypeKeys = Keys<Object>; // tslint:disable-line
+export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
 
 export type IsAny<T> = IsNever<HasKey<T, string>>;
 export type IsArray<T> = ReallyTrue<HasKey<T, ArrayPrototypeKeys>>;
