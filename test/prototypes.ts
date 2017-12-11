@@ -1,9 +1,9 @@
 import test from 'ava';
-import { IsAny, IsArray, IsBoolean, IsFunction, IsNumber, IsObject, IsString, True, False } from '../src/index';
+import { IsAny, IsArray, IsBoolean, IsFunction, IsNumber, IsObject, IsString, IsType, True, False } from '../src/index';
 
-function assert<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
-class Class { public x = 'hey' };
+class Class { x = 'hey'; }
 const inst = new Class();
 
 type num = 0;
@@ -68,7 +68,7 @@ test('Can check if a type is a string', t => {
 
 test('Can check if a type is a function', t => {
     assert<IsFunction<func>, True>(t);
-    assert<IsFunction<Function>, True>(t);
+    assert<IsFunction<Function>, True>(t); // tslint:disable-line
 
     // TODO: this should probably be False
     assert<IsFunction<obj>, True>(t);
@@ -79,7 +79,7 @@ test('Can check if a type is a function', t => {
     assert<IsFunction<any>, False>(t);
     assert<IsFunction<any[]>, False>(t);
     assert<IsFunction<cls>, False>(t);
-})
+});
 
 test('Can check if a type is an object', t => {
     assert<IsObject<cls>, True>(t);
@@ -95,6 +95,13 @@ test('Can check if a type is an object', t => {
     assert<IsObject<func>, False>(t);
     assert<IsObject<any>, False>(t);
     assert<IsObject<any[]>, False>(t);
+});
+
+test('Can check if type is the same as another type', t => {
+    assert<IsType<Class, cls>, True>(t);
+    assert<IsType<string, str>, True>(t);
+
+    assert<IsType<Class, str>, False>(t);
 });
 
 test('Can check if a type is any', t => {

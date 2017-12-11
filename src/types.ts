@@ -25,6 +25,7 @@ export type StringPrototypeKeys = Keys<string>;
 export type ObjectPrototypeKeys = Keys<Object>; // tslint:disable-line
 export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
 
+export type IsType<T, X> = ReallyTrue<HasKey<T, Keys<X>>>;
 export type IsAny<T> = IsNever<HasKey<T, string>>;
 export type IsArray<T> = ReallyTrue<HasKey<T, ArrayPrototypeKeys>>;
 export type IsNumber<T> = ReallyTrue<HasKey<T, NumberPrototypeKeys>>;
