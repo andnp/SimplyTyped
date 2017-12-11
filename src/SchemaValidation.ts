@@ -56,33 +56,3 @@ export type Schematize<T extends object> =
 export function schemaIsValid<T extends object>(data: any, schema: T): data is Schematize<T> {
     return checkSchema(data, schema);
 }
-
-// const schema = {
-//     "title": "Component",
-//     "type": "object" as 'object',
-//     "properties": {
-//         "type": {
-//             "type": "string" as 'string',
-//             "minLength": 1
-//         },
-//         "data": {
-//             "type": "object" as 'object',
-//             "properties": {
-//                 "name": { type: "string" as 'string' }
-//             }
-//         },
-//         "arr": {
-//             "type": "array" as "array",
-//             "items": {
-//                 "type": "object" as "object",
-//                 "properties": { thing: { type: 'boolean' as 'boolean' } }
-//             }
-//         }
-//     },
-//     "required": ["type"]
-// }
-
-// const o = {};
-// if (schemaIsValid(o, schema)) {
-
-// }

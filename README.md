@@ -285,14 +285,30 @@ type y = NumberEqual<22, 21> // => False
 ## Schema Validation
 One of the easiest points of failure with the typescript type system is outside data.
 It is difficult to confirm that outside data matches the contract we have set within our typings.
+Using the common JSON-schema specification, we can check the validity of our runtime objects, while still having compile checking of logic validity.
 If we define our schemas as so:
 ```ts
 const schema = {
-    hello: 'hi',
-    nestedThing: {
-        a: 2,
-        b: false
-        c: [ { d: 1 }, { d: 2 } ]
+    type: 'object' as 'object',
+    properties: {
+        prop: {
+            type: 'string' as 'string'
+        }
     }
+}
+```
+then pass in data:
+```ts
+// use `any` to pretend we don't know the type here.
+const runtimeData: any = {
+    prop: 'hello world'
+};
+```
+then `schemaIsValid(data, schema)` will give both compile time and run time checking of types.
+```ts
+if (schemaIsValid(data, schema)) {
+    type x = typeof data; // => { prop: string }
+} else {
+    throw new Error('Uh-oh, you gave me ill-formatted data!!');
 }
 ```
