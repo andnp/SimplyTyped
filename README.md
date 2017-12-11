@@ -93,6 +93,15 @@ type x = IsObject<{a: number, b: string}> // => True
 type y = IsObject<string> // => False
 ```
 
+### IsType
+Given a base type and a value, check to see if value matches the base type.
+Useful for checking if something is an instance of a class.
+```ts
+class Thing { x: string };
+type x = IsType<Thing, { x: string }> // => True
+type y = IsType<Thing, { y: number }> // => False
+```
+
 ## Objects
 
 ```ts
