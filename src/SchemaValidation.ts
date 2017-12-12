@@ -1,4 +1,4 @@
-import { ObjectType, Keys, If, UnionContains, StringEqual, GetKey } from './types';
+import { ObjectType, Keys, If, StringEqual, GetKey, HasKey } from './types';
 
 export function isObject(x: any): x is ObjectType<any> {
     return typeof x === 'object';
@@ -36,22 +36,25 @@ function checkSchema(data: any, schema: any): boolean {
     return true;
 }
 
-export type SchemaTypeString<T extends string, S extends object> =
+export type SchemaSimpleTypes<T extends string> =
     If<StringEqual<T, 'string'>,  string,
     If<StringEqual<T, 'number'>,  number,
+    If<StringEqual<T, 'boolean'>, boolean,
+    any>>>;
+
+export type SchemaTypeString<T extends string, S extends object> =
     If<StringEqual<T, 'object'>,  Schematize<S>,
     If<StringEqual<T, 'array'>,   Array<Schematize<GetKey<S, 'items'>>>,
-    If<StringEqual<T, 'boolean'>, boolean,
-    any>>>>>;
+    SchemaSimpleTypes<T>>>;
 
 export type GetSchemaProperties<T extends object> = {
     [K in Keys<T>]: SchemaTypeString<GetKey<T[K], 'type'>, T[K]>
 };
 
 export type Schematize<T extends object> =
-    If<UnionContains<Keys<T>, 'properties'>,
+    If<HasKey<T, 'properties'>,
         GetSchemaProperties<GetKey<T, 'properties'>>,
-        any>;
+        SchemaSimpleTypes<GetKey<T, 'type'>>>;
 
 export function schemaIsValid<T extends object>(data: any, schema: T): data is Schematize<T> {
     return checkSchema(data, schema);
