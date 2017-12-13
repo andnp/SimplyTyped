@@ -8,9 +8,24 @@ This differs by aiming to be less experimental than others, driven by industry u
 Many of the exposed types are a very thin layer above built in functionality.
 The goal is to provide all of the building blocks necessary to make concise, yet complex types.
 
+Additionally packaged with this lib is a JSON-schema validator that will act as a type-guard for appropriately typed object.
+Using this will mean run-time checking of user/network/external data, with compile time checking of logic flow.
+The primary purpose of packaging the JSON-schema validator is as an example of complexity of types this library is able to specify.
+In particular, this shows the library's solution to the conditional mapped types problem without overloading the global namespace.
+
 ```
 npm install --save-dev simplytyped
 ```
+
+[Conditionals](#Conditionals)
+ - [If](#If)
+[Predicates](#Predicates)
+[Numbers](#Numbers)
+[Objects](#Objects)
+[Strings](#Strings)
+[Tuples](#Tuples)
+[Functions](#Functions)
+[Schema Validation](#Schema-Validation)
 
 ## Conditionals
 
@@ -79,6 +94,13 @@ type y = IsBoolean<3> // => False
 ```ts
 type x = IsFunction<(() => string)> // => True
 type y = IsFunction<'not a function'> // => False
+```
+
+### IsNever
+Returns true if type is `never`, otherwise returns false.
+```ts
+type x = IsNever<'hi'> // => False
+type y = IsNever<never> // => True
 ```
 
 ### IsNumber
@@ -222,13 +244,6 @@ type x = Length<['hey', 'there']> // => 2
 Get the differences between two unions of strings.
 ```ts
 type x = Diff<'hi' | 'there', 'hi' | 'friend'> // => 'there'
-```
-
-### IsNever
-Returns true if type is `never`, otherwise returns false.
-```ts
-type x = IsNever<'hi'> // => True
-type y = IsNever<never> // => False
 ```
 
 ### StringEqual

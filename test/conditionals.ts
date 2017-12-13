@@ -1,7 +1,7 @@
 import test from 'ava';
 import { And, Bool, False, If, Nand, Not, Or, True, Xor } from '../src/index';
 
-function assert<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
 // Conditionals
 
