@@ -2,13 +2,14 @@
     "name": "simplytyped",
     "version": "0.1.4",
     "description": "yet another Typescript type library for advanced types",
-    "main": "src/index.ts",
-    "types": "src/index.ts",
+    "main": "dist/index",
+    "types": "dist/index.d.ts",
     "scripts": {
         "bumpVersion": "ts-node scripts/versionBump.ts",
         "lint": "tslint --config tslint.json --project . --format stylish",
         "test": "ava-ts",
-        "prepublishOnly": "npm -s test"
+        "tsc": "tsc",
+        "prepublishOnly": "npm -s test && rm -rf dist && npm -s run tsc"
     },
     "repository": {
         "type": "git",
@@ -23,6 +24,9 @@
     "bugs": {
         "url": "https://github.com/andnp/SimplyTyped/issues"
     },
+    "files": [
+        "dist"
+    ],
     "homepage": "https://github.com/andnp/SimplyTyped#readme",
     "devDependencies": {
         "@types/node": "^8.0.57",
