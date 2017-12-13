@@ -17,15 +17,35 @@ In particular, this shows the library's solution to the conditional mapped types
 npm install --save-dev simplytyped
 ```
 
-[Conditionals](#Conditionals)
- - [If](#If)
-[Predicates](#Predicates)
-[Numbers](#Numbers)
-[Objects](#Objects)
-[Strings](#Strings)
-[Tuples](#Tuples)
-[Functions](#Functions)
-[Schema Validation](#Schema-Validation)
+**[Conditionals](#conditionals)**
+
+[If](#if) - [And](#and) - [Or](#or) - [Not](#not) - [Xor](#xor) - [Nand](#nand)
+
+**[Predicates](#predicates)**
+
+[IsAny](#isany) - [IsArray](#isarray) - [IsBoolean](#isboolean) - [IsFunction](#isfunction) - [IsNever](#isnever) - [IsNumber](#isnumber) - [IsObject](#isobject) - [IsType](#istype)
+
+**[Objects](#objects)**
+
+[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [GetKey](#getkey)
+
+**[Tuples](#tuples)**
+
+[Tuple](#tuple) - [UnionizeTuple](#unionizetuple) - [Length](#length)
+
+**[Strings](#strings)**
+
+[Diff](#diff) - [StringEqual](#stringequal) - [DropString](#dropstring)
+
+**[Numbers](#numbers)**
+
+[IsZero](#iszero) - [IsOne](#isone) - [NumberToString](#numbertostring) - [Next](#next) - [Prev](#prev) - [Add](#add) - [Sub](#sub) - [NumberEqual](#numberequal)
+
+**[Functions](#functions)**
+
+[Predicate](#predicate) - [ConstructorFunction](#constructorfunction)
+
+**[Schema Validation](#schema-validation)**
 
 ## Conditionals
 
@@ -315,6 +335,24 @@ Returns `True` if the numbers are equivalent
 ```ts
 type x = NumberEqual<0, 0> // => True
 type y = NumberEqual<22, 21> // => False
+```
+
+## Functions
+
+### Predicate
+This is a function that takes some args and returns a boolean
+```ts
+type x = Predicate // => (...args: any[]) => boolean
+const isThing: Predicate = (x: Thing) => x instanceof Thing;
+```
+
+### ConstructorFunction
+This represents the constructor for a particular object.
+```ts
+class Thing { constructor(public x: string) {}}
+type x = ConstructorFunction<Thing>
+declare const construct: x;
+const y = new construct(); // => y instanceof Thing
 ```
 
 ## Schema Validation
