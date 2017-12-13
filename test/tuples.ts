@@ -1,7 +1,7 @@
 import test from 'ava';
 import { Length, Vector, UnionizeTuple } from '../src/index';
 
-function assert<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
 // Tuples
 

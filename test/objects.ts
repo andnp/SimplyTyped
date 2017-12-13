@@ -1,7 +1,7 @@
 import test from 'ava';
 import { AllKeys, CombineObjects, DeepPartial, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Overwrite, SharedKeys, UnionizeProperties } from '../src/index';
 
-function assert<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
 // Objects
 

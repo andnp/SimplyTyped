@@ -1,7 +1,7 @@
 import test from 'ava';
 import { Diff, DropString, IsNever, StringEqual, True, False } from '../src/index';
 
-function assert<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
 // Strings
 

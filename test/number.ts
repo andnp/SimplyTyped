@@ -1,7 +1,7 @@
 import test from 'ava';
 import { Add, IsOne, IsZero, NumberToString, Sub, True, False, NumberEqual } from '../src/index';
 
-function assert<T, U extends T>(t: { pass: any }) { t.pass() }
+function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
 test('Can check if a number is zero', t => {
     type notZero = IsZero<1>;
