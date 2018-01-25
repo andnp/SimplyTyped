@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, CombineObjects, DeepPartial, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Overwrite, SharedKeys, UnionizeProperties } from '../src/index';
+import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -129,4 +129,21 @@ test('Can overwrite properties on an object', t => {
 
     assert<Overwrite<a, { z: 'hello' | 'there' }>, expected>(t);
     assert<Overwrite<a, { z: 'hello' | 'there', w: number }>, expected>(t);
+});
+
+test('Can make properties optional', t => {
+    type x = { x: number, y: string, z: 'hello there' };
+
+    type expected = { x?: number, y?: string, z: 'hello there' };
+
+    assert<Optional<x, 'x' | 'y'>, expected>(t);
+});
+
+test('Can make nested object readonly', t => {
+    type x = { x: { a: 1, b: 'hi' }, y: 'hey' };
+
+    type expected = { readonly x: Readonly<{ a: 1, b: 'hi' }>, readonly y: 'hey' };
+    type got = DeepReadonly<x>;
+
+    assert<got, expected>(t);
 });
