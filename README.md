@@ -27,7 +27,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [GetKey](#getkey)
+[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey)
 
 **[Tuples](#tuples)**
 
@@ -232,7 +232,7 @@ Uses `Readonly` to make every parameter of an object readonly
 type x = DeepReadonly<obj1> // => { w: readonly string, x: readonly string, y: readonly number }
 ```
 
-### Options
+### Optional
 Makes certain properties on an object optional.
 ```ts
 type x = Optional<obj1, 'w' | 'x'> // => { w?: string, x?: string, y: number }
