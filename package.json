@@ -34,7 +34,7 @@
         "pre-push": "^0.1.1",
         "ts-node": "^3.3.0",
         "tslint": "^5.8.0",
-        "typescript": "next"
+        "typescript": "2.7.0-rc"
     },
     "pre-push": [
         "lint",
