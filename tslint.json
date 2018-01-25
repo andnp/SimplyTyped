@@ -11,6 +11,7 @@
             "spaces", 4
         ],
         "interface-name": false,
+        "interface-over-type-literal": false,
         "max-classes-per-file": false,
         "max-line-length": false,
         "member-access": [
@@ -20,12 +21,6 @@
         "member-ordering": false,
         "no-consecutive-blank-lines": false,
         "no-shadowed-variable": false,
-        "no-unused-variable": [
-            true,
-            {
-                "check-parameters": true
-            }
-        ],
         "object-literal-sort-keys": false,
         "only-arrow-functions": false,
         "ordered-imports": false,
