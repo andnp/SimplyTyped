@@ -1,6 +1,6 @@
 {
     "name": "simplytyped",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "description": "yet another Typescript type library for advanced types",
     "main": "dist/src/index",
     "types": "dist/src/index.d.ts",
@@ -34,7 +34,7 @@
         "pre-push": "^0.1.1",
         "ts-node": "^3.3.0",
         "tslint": "^5.8.0",
-        "typescript": "2.7.0-rc"
+        "typescript": "^2.8.0-dev.20180126"
     },
     "pre-push": [
         "lint",

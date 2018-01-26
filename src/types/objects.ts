@@ -2,16 +2,18 @@ import { Diff, UnionContains } from './strings';
 import { IsObject } from './predicates';
 import { If } from './conditionals';
 
+export type PlainObject = Record<string, any>;
+
 export type UnionizeProperties<T extends object> = T[Keys<T>];
 export type Omit<T extends object, K extends Keys<T>> = Pick<T, Diff<Keys<T>, K>>;
 
-export type DeepPartial<T extends object> = Partial<{
+export type DeepPartial<T extends PlainObject> = Partial<{
     [k in Keys<T>]: DeepPartial<T[k]>
 }>;
 
 export type Optional<T extends object, K extends Keys<T>> = CombineObjects<Partial<Pick<T, K>>, Omit<T, K>>;
 
-export type DeepReadonly<T extends object> = Readonly<{
+export type DeepReadonly<T extends PlainObject> = Readonly<{
     [k in Keys<T>]:
         If<IsObject<T[k]>,
             DeepReadonly<T[k]>,
