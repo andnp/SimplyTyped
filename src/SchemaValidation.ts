@@ -1,4 +1,4 @@
-import { ObjectType, Keys, If, StringEqual, GetKey, HasKey } from './types';
+import { ObjectType, Keys, If, StringEqual, GetKey, HasKey, PlainObject } from './types';
 
 export function isObject(x: any): x is ObjectType<any> {
     return typeof x === 'object';
@@ -47,11 +47,11 @@ export type SchemaTypeString<T extends string, S extends object> =
     If<StringEqual<T, 'array'>,   Array<Schematize<GetKey<S, 'items'>>>,
     SchemaSimpleTypes<T>>>;
 
-export type GetSchemaProperties<T extends object> = {
+export type GetSchemaProperties<T extends PlainObject> = {
     [K in Keys<T>]: SchemaTypeString<GetKey<T[K], 'type'>, T[K]>
 };
 
-export type Schematize<T extends object> =
+export type Schematize<T extends PlainObject> =
     If<HasKey<T, 'properties'>,
         GetSchemaProperties<GetKey<T, 'properties'>>,
         SchemaSimpleTypes<GetKey<T, 'type'>>>;
