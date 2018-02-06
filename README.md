@@ -43,7 +43,7 @@ npm install --save-dev simplytyped
 
 **[Functions](#functions)**
 
-[Predicate](#predicate) - [ConstructorFunction](#constructorfunction)
+[Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
 
 **[Schema Validation](#schema-validation)**
 
@@ -365,6 +365,36 @@ class Thing { constructor(public x: string) {}}
 type x = ConstructorFunction<Thing>
 declare const construct: x;
 const y = new construct(); // => y instanceof Thing
+```
+
+### Readonly
+This takes a runtime object and makes its properties readonly.
+Useful for declare object literals, but using inferred types.
+```ts
+const config = Readonly({
+    url: 'https://example.com',
+    password: 'immasecurepassword',
+}); // => { url: readonly string, password: readonly string }
+```
+
+### isKeyOf
+Type guard returning true if `k` is a key in `obj`.
+```ts
+const obj = { a: '' };
+const k = 'a';
+if (isKeyOf(obj, k)) {
+    obj[k] = 'hi'; // typeof k === 'a'
+} else {
+    throw new Error('oops'); // typeof k === string
+}
+```
+
+### objectKeys
+Same as `Object.keys` except that the returned type is an array of keys of the object.
+Note that for the same reason that `Object.keys` does not do this natively, this method _is not safe_ for objects on the perimeter of your code (user input, read in files, network requests etc.).
+```ts
+const obj = { a: '', b: 22 };
+const keys = objectKeys(obj); // Array<'a' | 'b'>
 ```
 
 ## Schema Validation
