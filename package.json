@@ -8,6 +8,10 @@
         "bumpVersion": "ts-node scripts/versionBump.ts",
         "lint": "tslint --config tslint.json --project . --format stylish",
         "test": "npm run -s tsc && NODE_PATH=src/ ava",
+        "test:ts2.7.1": "npm install typescript@2.7.1 && npm test",
+        "test:ts2.7.2": "npm install typescript@2.7.2 && npm test",
+        "test:tsnext": "npm install typescript@next && npm test",
+        "test:all": "npm run test:ts2.7.1 && npm run test:ts2.7.2 && npm run test:tsnext",
         "tsc": "tsc",
         "prepublishOnly": "npm -s test && rm -rf dist && npm -s run tsc"
     },
@@ -34,7 +38,7 @@
         "pre-push": "^0.1.1",
         "ts-node": "^3.3.0",
         "tslint": "^5.8.0",
-        "typescript": "^2.8.0-dev.20180126"
+        "typescript": "^2.8.0-dev.20180301"
     },
     "pre-push": [
         "lint",
