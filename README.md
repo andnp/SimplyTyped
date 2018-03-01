@@ -247,6 +247,20 @@ type x = GetKey<{ a: string }, 'a'> // => string
 type y = GetKey<{ a: string }, 'b'> // => never
 ```
 
+### ConstructorFor
+Builds the type of a constructor function for a particular object.
+```ts
+type c = ConstructorFor<obj1> // => new (...args: any[]) => { w: string, x: string, z: number }
+```
+
+### InstanceOf
+Reverse of [ConstructorFor](#constructorfor).
+This takes a constructor function and gives back the instance of that object.
+```ts
+type c = ConstructorFor<obj1>
+type o = InstanceOf<c> // => { w: string, x: string, z: number }
+```
+
 ## Tuples
 A tuple can be defined in two ways: `[number, string]` which as of Typescript 2.7 has an enforced length type parameter: `[number, string]['length'] === 2` or using this library's `Tuple<any>` which can be extended with any length of tuple: `function doStuff<T extends Tuple<any>>(x: T) {}`.
 

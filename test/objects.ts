@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties } from '../src/index';
+import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, InstanceOf } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -146,4 +146,26 @@ test('Can make nested object readonly', t => {
     type got = DeepReadonly<x>;
 
     assert<got, expected>(t);
+});
+
+test('Can get a constructor type for any object', t => {
+    type x = { a: number, b: string, c: boolean };
+
+    class Expected {
+        a: number = null as any;
+        b: string = null as any;
+        c: boolean = null as any;
+    }
+
+    type got = ConstructorFor<x>;
+    assert<got, typeof Expected>(t);
+});
+
+test('Can get type of an instance of the object returned from a constructor', t => {
+    type x = { a: number, b: string, c: boolean };
+    type c = ConstructorFor<x>;
+
+    type got = InstanceOf<c>;
+
+    assert<got, x>(t);
 });
