@@ -27,7 +27,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey)
+[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey) - [AllRequired](#allrequired) - [Required](#required)
 
 **[Tuples](#tuples)**
 
@@ -44,6 +44,10 @@ npm install --save-dev simplytyped
 **[Functions](#functions)**
 
 [Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
+
+**[Utils](#utils)**
+
+[Nullable](#nullable) - [NotNullable](#notnullable) - [NoInfer](#noinfer)
 
 **[Schema Validation](#schema-validation)**
 
@@ -259,6 +263,47 @@ This takes a constructor function and gives back the instance of that object.
 ```ts
 type c = ConstructorFor<obj1>
 type o = InstanceOf<c> // => { w: string, x: string, z: number }
+```
+
+### AllRequired
+Makes all fields of an object "required".
+This means not Nullable and not optional.
+```ts
+type x = { a?: string, b: number | undefined };
+type o = AllRequired<x>; // => { a: string, b: number }
+```
+
+### Required
+Makes certain fields of an object "required"
+```ts
+type x = { a?: string, b: number | undefined };
+type o = Required<x, 'a'>; // => { a: string, b: number | undefined }
+```
+
+## Utils
+A few utility functions that generically work in any context, with any type.
+
+### Nullable
+Makes a type nullable (null | undefined).
+```ts
+type x = Nullable<string>; // => string | null | undefined
+```
+
+### NotNullable
+Takes a nullable type and removes the option for null | undefined;
+```ts
+type x = NotNullable<string | undefined>; // => string
+type y = NotNullable<Nullable<string>>; // => string
+```
+
+### NoInfer
+Prevents typescript from being able to infer a generic type.
+Useful when trying to get a function to infer based on one argument of a function, but not another.
+```ts
+function doStuff<T>(x: T, y: NoInfer<T>): T { return x; }
+function inferAll<T>(x: T, y: T): T { return x; }
+doStuff('hi', 'there') // => compile error
+inferAll('hi', 'there') // => typeof T === 'string'
 ```
 
 ## Tuples
