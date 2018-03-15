@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, InstanceOf } from '../src/index';
+import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, InstanceOf, Required, AllRequired } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -168,4 +168,27 @@ test('Can get type of an instance of the object returned from a constructor', t 
     type got = InstanceOf<c>;
 
     assert<got, x>(t);
+});
+
+test('Can make all fields of options object required (not optional and not nullable)', t => {
+    type x = { a?: string, b: number | undefined };
+    type got = AllRequired<x>;
+    type expected = { a: string, b: number };
+
+    assert<got, expected>(t);
+});
+
+test('Can make certain fields of options object required', t => {
+    type x = { a?: string, b: number | undefined };
+    type got1 = Required<x, 'a'>;
+    type got2 = Required<x, 'b'>;
+    type got3 = Required<x, 'a' | 'b'>;
+
+    type expected1 = { a: string, b: number | undefined };
+    type expected2 = { a?: string, b: number };
+    type expected3 = { a: string, b: number };
+
+    assert<got1, expected1>(t);
+    assert<got2, expected2>(t);
+    assert<got3, expected3>(t);
 });
