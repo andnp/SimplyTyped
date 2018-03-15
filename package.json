@@ -13,7 +13,7 @@
         "test:tsnext": "npm install typescript@next && npm test",
         "test:all": "npm run test:ts2.7.1 && npm run test:ts2.7.2 && npm run test:tsnext",
         "tsc": "tsc",
-        "prepublishOnly": "npm -s test && rm -rf dist && npm -s run tsc"
+        "prepublishOnly": "npm -s run test:all && rm -rf dist && npm -s run tsc"
     },
     "repository": {
         "type": "git",
