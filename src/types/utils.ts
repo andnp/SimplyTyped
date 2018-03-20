@@ -8,3 +8,4 @@ export type NoInfer<T> = T & ObjectType<T>;
 
 export type Nullable<T> = T | null | undefined;
 export type NotNullable<T> = T & {};
+export type Unknown = {} | null | undefined;
