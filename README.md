@@ -47,7 +47,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[Nullable](#nullable) - [NotNullable](#notnullable) - [NoInfer](#noinfer)
+[Nullable](#nullable) - [NotNullable](#notnullable) - [NoInfer](#noinfer) - [Unknown](#unknown)
 
 **[Schema Validation](#schema-validation)**
 
@@ -304,6 +304,19 @@ function doStuff<T>(x: T, y: NoInfer<T>): T { return x; }
 function inferAll<T>(x: T, y: T): T { return x; }
 doStuff('hi', 'there') // => compile error
 inferAll('hi', 'there') // => typeof T === 'string'
+```
+
+### Unknown
+A type that has no properties and cannot be passed into functions.
+This is particularly useful on the boundaries of an app where you may not know the type of a variable.
+For instance `JSON.parse` could return an `Unknown` and would require validation and / or a type assertion to make it a useful type.
+```ts
+declare let x: Unknown;
+x = 'hi'; // valid operation
+function doStuff(a: number) {}
+doStuff(x); // invalid operation
+x.thing // invalid operation
+x() // invalid operation
 ```
 
 ## Tuples
