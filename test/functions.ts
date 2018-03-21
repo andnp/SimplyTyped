@@ -1,5 +1,5 @@
 import test from 'ava';
-import { ConstructorFunction, Predicate, objectKeys, isKeyOf } from '../src/index';
+import { ConstructorFunction, Predicate, objectKeys, isKeyOf, AnyFunc } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -48,4 +48,15 @@ test('Can check if an object contains a key', t => {
         assert<typeof key1, string>(t);
         t.fail();
     }
+});
+
+test('Can define the type of a function that takes any arguments', t => {
+    type got = AnyFunc;
+    type got2 = AnyFunc<number>; // takes anything, returns a number
+
+    type expected = (...args: any[]) => any;
+    type expected2 = (...args: any[]) => number;
+
+    assert<got, expected>(t);
+    assert<got2, expected2>(t);
 });
