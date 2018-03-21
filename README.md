@@ -43,7 +43,7 @@ npm install --save-dev simplytyped
 
 **[Functions](#functions)**
 
-[Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
+[Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [AnyFunc](#anyfunc) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
 
 **[Utils](#utils)**
 
@@ -448,6 +448,14 @@ class Thing { constructor(public x: string) {}}
 type x = ConstructorFunction<Thing>
 declare const construct: x;
 const y = new construct(); // => y instanceof Thing
+```
+
+### AnyFunc
+Concisely and cleanly define an arbitrary function.
+Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
+```ts
+type got = AnyFunc; // => (...args: any[]) => any;
+type got2 = AnyFunc<number>; // => (...args: any[]) => number;
 ```
 
 ### Readonly
