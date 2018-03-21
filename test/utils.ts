@@ -1,5 +1,5 @@
 import test from 'ava';
-import { NoInfer, Nullable, NotNullable } from '../src/index';
+import { NoInfer, Nullable, NotNullable, Nominal } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -25,4 +25,11 @@ test('Will make a type not nullable', t => {
     type got = NotNullable<Nullable<string>>;
 
     assert<got, string>(t);
+});
+
+test('Can make a new nominal type', t => {
+    type Id = Nominal<string, 'id'>;
+
+    // TODO: improve once negative testing is in place
+    assert<Id, Nominal<string, 'id'>>(t);
 });

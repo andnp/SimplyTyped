@@ -9,3 +9,6 @@ export type NoInfer<T> = T & ObjectType<T>;
 export type Nullable<T> = T | null | undefined;
 export type NotNullable<T> = T & {};
 export type Unknown = {} | null | undefined;
+
+export declare class Tagged<N extends string> { private _nominal_: N; }
+export type Nominal<T, N extends string> = T & Tagged<N>;

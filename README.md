@@ -47,7 +47,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[Nullable](#nullable) - [NotNullable](#notnullable) - [NoInfer](#noinfer) - [Unknown](#unknown)
+[Nullable](#nullable) - [NotNullable](#notnullable) - [NoInfer](#noinfer) - [Unknown](#unknown) - [Nominal](#nominal)
 
 **[Schema Validation](#schema-validation)**
 
@@ -317,6 +317,17 @@ function doStuff(a: number) {}
 doStuff(x); // invalid operation
 x.thing // invalid operation
 x() // invalid operation
+```
+
+### Nominal
+This creates a type that, while it shares all of the properties with its parent type, cannot be set to another type without containing the same tag.
+This is useful in the case where you have a string that is an id, but you don't want to be able to set just any string to this id; only a string tagged as being an id.
+```ts
+type Id = Nominal<string, 'id'>; // => string
+declare let x: Id;
+x = 'hi'; // invalid operation;
+x = 'hi' as Nominal<string, 'id'>; // valid operation
+x = 'hi' as Id; // valid operation
 ```
 
 ## Tuples
