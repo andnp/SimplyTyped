@@ -27,7 +27,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey) - [AllRequired](#allrequired) - [Required](#required)
+[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey) - [AllRequired](#allrequired) - [Required](#required) - [TaggedObject](#taggedobject)
 
 **[Tuples](#tuples)**
 
@@ -278,6 +278,25 @@ Makes certain fields of an object "required"
 ```ts
 type x = { a?: string, b: number | undefined };
 type o = Required<x, 'a'>; // => { a: string, b: number | undefined }
+```
+
+### TaggedObject
+Creates an object with each entry being tagged by the key defining that entry.
+```ts
+const obj = {
+    a: { merp: 'hi' },
+    b: { merp: 'there' },
+    c: { merp: 'friend' },
+};
+
+const got = taggedObject(obj, 'name');
+/*
+got = {
+    a: { name: 'a', merp: 'hi' },
+    b: { name: 'b', merp: 'there' },
+    c: { name: 'c', merp: 'friend' },
+};
+*/
 ```
 
 ## Utils
