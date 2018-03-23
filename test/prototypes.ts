@@ -70,9 +70,7 @@ test('Can check if a type is a function', t => {
     assert<IsFunction<func>, True>(t);
     assert<IsFunction<Function>, True>(t); // tslint:disable-line
 
-    // TODO: this should probably be False
-    assert<IsFunction<obj>, True>(t);
-
+    assert<IsFunction<obj>, False>(t);
     assert<IsFunction<str>, False>(t);
     assert<IsFunction<boo>, False>(t);
     assert<IsFunction<num>, False>(t);
@@ -84,14 +82,12 @@ test('Can check if a type is a function', t => {
 test('Can check if a type is an object', t => {
     assert<IsObject<cls>, True>(t);
     assert<IsObject<{y: any}>, True>(t);
+    assert<IsObject<obj>, True>(t);
 
-    // TODO: this should probably be True
-    assert<IsObject<object>, False>(t);
-
+    assert<IsObject<object>, True>(t);
     assert<IsObject<str>, False>(t);
     assert<IsObject<boo>, False>(t);
     assert<IsObject<num>, False>(t);
-    assert<IsObject<obj>, False>(t);
     assert<IsObject<func>, False>(t);
     assert<IsObject<any>, False>(t);
     assert<IsObject<any[]>, False>(t);
