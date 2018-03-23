@@ -2,6 +2,7 @@ import { Diff, UnionContains } from './strings';
 import { IsObject } from './predicates';
 import { If } from './conditionals';
 import { NotNullable } from './utils';
+import { objectKeys } from './functions';
 
 export type PlainObject = Record<string, any>;
 
@@ -48,3 +49,19 @@ export interface ConstructorFor<T extends object> {
 }
 
 export type InstanceOf<T extends ConstructorFor<any>> = T['prototype'];
+
+export type TaggedObject<T extends Record<string, object>, Key extends string> = {
+    [K in keyof T]: CombineObjects<T[K], Record<Key, K>>;
+};
+
+export const taggedObject = <T extends Record<string, object>, K extends string>(obj: T, key: K): TaggedObject<T, K> => {
+    const keys = objectKeys(obj);
+    return keys.reduce((collection: any, k) => {
+        const inner: any = obj[k];
+        collection[k] = {
+            [key]: k,
+            ...inner,
+        };
+        return collection;
+    }, {} as TaggedObject<T, K>);
+};

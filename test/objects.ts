@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, InstanceOf, Required, AllRequired } from '../src/index';
+import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, InstanceOf, Required, AllRequired, taggedObject } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -191,4 +191,23 @@ test('Can make certain fields of options object required', t => {
     assert<got1, expected1>(t);
     assert<got2, expected2>(t);
     assert<got3, expected3>(t);
+});
+
+test('Can generate a tagged object', t => {
+    const obj = {
+        a: { merp: 'hi' },
+        b: { merp: 'there' },
+        c: { merp: 'friend' },
+    };
+
+    const expected = {
+        a: { name: 'a' as 'a', merp: 'hi' },
+        b: { name: 'b' as 'b', merp: 'there' },
+        c: { name: 'c' as 'c', merp: 'friend' },
+    };
+
+    const got = taggedObject(obj, 'name');
+
+    t.deepEqual(got, expected);
+    assert<typeof got, typeof expected>(t);
 });
