@@ -1,7 +1,7 @@
 import { Diff, UnionContains } from './strings';
 import { IsObject } from './predicates';
 import { If } from './conditionals';
-import { NotNullable } from './utils';
+import { NotNullable, Nullable } from './utils';
 
 // -------
 // Helpers
@@ -39,16 +39,22 @@ export type TaggedObject<T extends Record<string, object>, Key extends string> =
 // Accessors
 // ---------
 export type DeepPartial<T extends PlainObject> = Partial<{
-    [k in Keys<T>]: DeepPartial<T[k]>
+    [k in Keys<T>]: T[k] extends object ? DeepPartial<T[k]> : T[k];
 }>;
-export type AllRequired<T extends object> = { [K in PureKeys<T>]: NotNullable<T[K]> };
-export type Required<T extends object, K extends Keys<T>> = CombineObjects<AllRequired<Pick<T, K>>, Omit<T, K>>;
-export type Optional<T extends object, K extends Keys<T>> = CombineObjects<Partial<Pick<T, K>>, Omit<T, K>>;
+export type AllRequired<T extends object> = { [K in Keys<T>]-?: NotNullable<T[K]> };
+export type Required<T extends object, K extends Keys<T>> = CombineObjects<
+    {[k in K]-?: NotNullable<T[k]> },
+    Omit<T, K>
+>;
+export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
+    {[k in K]?: Nullable<T[k]> },
+    Omit<T, K>
+>;
 export type DeepReadonly<T extends PlainObject> = Readonly<{
     [k in Keys<T>]:
-        If<IsObject<T[k]>,
-            DeepReadonly<T[k]>,
-            T[k]>
+        T[k] extends object ?
+            DeepReadonly<T[k]> :
+            T[k]
 }>;
 
 // -------

@@ -8,7 +8,7 @@ export function objectKeys<T extends object>(obj: T) {
     return Object.keys(obj) as Array<Keys<T>>;
 }
 
-export function Readonly<T extends object>(obj: T): DeepReadonly<T> { return obj; }
+export function Readonly<T extends object>(obj: T): DeepReadonly<T> { return obj as any; }
 
 export const taggedObject = <T extends Record<string, object>, K extends string>(obj: T, key: K): TaggedObject<T, K> => {
     const keys = objectKeys(obj);
