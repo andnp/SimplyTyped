@@ -44,7 +44,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[Nullable](#nullable) - [NotNullable](#notnullable) - [NoInfer](#noinfer) - [Unknown](#unknown) - [Nominal](#nominal)
+[Nullable](#nullable) - [NoInfer](#noinfer) - [Unknown](#unknown) - [Nominal](#nominal)
 
 ## Conditionals
 
@@ -301,13 +301,6 @@ A few utility functions that generically work in any context, with any type.
 Makes a type nullable (null | undefined).
 ```ts
 type x = Nullable<string>; // => string | null | undefined
-```
-
-### NotNullable
-Takes a nullable type and removes the option for null | undefined;
-```ts
-type x = NotNullable<string | undefined>; // => string
-type y = NotNullable<Nullable<string>>; // => string
 ```
 
 ### NoInfer

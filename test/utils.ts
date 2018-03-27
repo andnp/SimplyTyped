@@ -1,5 +1,5 @@
 import test from 'ava';
-import { NoInfer, Nullable, NotNullable, Nominal } from '../src/index';
+import { NoInfer, Nullable, Nominal } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -22,7 +22,7 @@ test('Will make a type nullable (null | undefined)', t => {
 });
 
 test('Will make a type not nullable', t => {
-    type got = NotNullable<Nullable<string>>;
+    type got = NonNullable<Nullable<string>>;
 
     assert<got, string>(t);
 });
