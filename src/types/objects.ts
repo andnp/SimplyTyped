@@ -66,4 +66,3 @@ export interface ConstructorFor<T extends object> {
     new (...args: any[]): T;
     prototype: T;
 }
-export type InstanceOf<T extends ConstructorFor<any>> = T['prototype'];

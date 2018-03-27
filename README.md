@@ -252,14 +252,6 @@ Builds the type of a constructor function for a particular object.
 type c = ConstructorFor<obj1> // => new (...args: any[]) => { w: string, x: string, z: number }
 ```
 
-### InstanceOf
-Reverse of [ConstructorFor](#constructorfor).
-This takes a constructor function and gives back the instance of that object.
-```ts
-type c = ConstructorFor<obj1>
-type o = InstanceOf<c> // => { w: string, x: string, z: number }
-```
-
 ### AllRequired
 Makes all fields of an object "required".
 This means not Nullable and not optional.
