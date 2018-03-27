@@ -1,7 +1,7 @@
 import { Diff, UnionContains } from './strings';
 import { IsObject } from './predicates';
 import { If } from './conditionals';
-import { NotNullable, Nullable } from './utils';
+import { Nullable } from './utils';
 
 // -------
 // Helpers
@@ -41,9 +41,11 @@ export type TaggedObject<T extends Record<string, object>, Key extends string> =
 export type DeepPartial<T extends PlainObject> = Partial<{
     [k in Keys<T>]: T[k] extends object ? DeepPartial<T[k]> : T[k];
 }>;
-export type AllRequired<T extends object> = { [K in Keys<T>]-?: NotNullable<T[K]> };
+export type AllRequired<T extends object> = {
+    [K in Keys<T>]-?: NonNullable<T[K]>
+};
 export type Required<T extends object, K extends Keys<T>> = CombineObjects<
-    {[k in K]-?: NotNullable<T[k]> },
+    {[k in K]-?: NonNullable<T[k]> },
     Omit<T, K>
 >;
 export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
