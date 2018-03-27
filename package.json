@@ -14,7 +14,7 @@
         "test:all": "npm run test:ts2.8.1 && npm run test:tsnext",
         "tsc": "tsc",
         "prepub": "npm -s run test:all && rm -rf dist && npm -s run tsc && ts-node scripts/movePackageJson.ts",
-        "dist": "npm run -s prepub && cd dist/src && npm publish --tag beta"
+        "dist": "npm run -s prepub && cd dist/src && npm publish"
     },
     "repository": {
         "type": "git",
