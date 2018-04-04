@@ -32,14 +32,18 @@ export type Intersect<T extends object, U extends Partial<T>> = Omit<U, DiffKeys
 export type Merge<T extends object, U extends object> = CombineObjects<Omit<T, SharedKeys<T, U>>, U>;
 export type Overwrite<T extends object, U extends object> = Merge<T, Intersect<T, U>>;
 export type TaggedObject<T extends Record<string, object>, Key extends string> = {
-    [K in keyof T]: T[K] & Record<Key, K>;
+    [K in Keys<T>]: T[K] & Record<Key, K>;
 };
 
 // ---------
 // Accessors
 // ---------
 export type DeepPartial<T extends PlainObject> = Partial<{
-    [k in Keys<T>]: T[k] extends object ? DeepPartial<T[k]> : T[k];
+    [k in Keys<T>]:
+        If<IsObject<T[k]>,
+            DeepPartial<T[k]>,
+            T[k]
+        >
 }>;
 export type AllRequired<T extends object> = {
     [K in Keys<T>]-?: NonNullable<T[K]>
@@ -54,9 +58,10 @@ export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
 >;
 export type DeepReadonly<T extends PlainObject> = Readonly<{
     [k in Keys<T>]:
-        T[k] extends object ?
-            DeepReadonly<T[k]> :
+        If<IsObject<T[k]>,
+            DeepReadonly<T[k]>,
             T[k]
+        >
 }>;
 
 // -------
