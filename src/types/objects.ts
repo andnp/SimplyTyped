@@ -11,7 +11,7 @@ export type ObjectType<T> = {
     [k in Keys<T>]: T[k];
 };
 export type CombineObjects<T extends object, U extends object> = ObjectType<T & U>;
-export type GetKey<T, K extends string> = (Record<string, never> & T)[K];
+export type GetKey<T, K extends string> = K extends Keys<T> ? T[K] : never;
 
 // ----
 // Keys
