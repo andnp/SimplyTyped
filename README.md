@@ -1,5 +1,7 @@
 # SimplyTyped
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/andnp/SimplyTyped.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/andnp/SimplyTyped.svg?branch=NumberPerformance)](https://travis-ci.org/andnp/SimplyTyped)
 
 Yet another typing library.
