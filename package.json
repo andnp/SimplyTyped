@@ -13,8 +13,9 @@
         "test:tsnext": "npm install --no-save typescript@next && npm test",
         "test:all": "npm run test:ts2.8.1 && npm run test:tsnext",
         "tsc": "tsc",
-        "prepub": "npm -s run test:all && rm -rf dist && npm -s run tsc && ts-node scripts/movePackageJson.ts",
-        "dist": "npm run -s prepub && cd dist/src && npm publish"
+        "prepush": "npm run -s lint && npm run -s test",
+        "prepub": "rm -rf dist && npm -s run tsc && ts-node scripts/movePackageJson.ts",
+        "release": "npm run -s prepub && cd dist/src && npx semantic-release"
     },
     "repository": {
         "type": "git",
