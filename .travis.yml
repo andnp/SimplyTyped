@@ -6,6 +6,13 @@ install:
   - npm install
 script:
   - npm run test:all
+deploy:
+  provider: script
+  skip_cleanup: true
+  script:
+    - npm run release
+  on:
+    branch: master
 notifications:
   email:
     on_success: never
