@@ -1,5 +1,5 @@
 import test from 'ava';
-import { Length, Vector, UnionizeTuple } from '../src/index';
+import { Length, Vector, UnionizeTuple, IntersectTuple } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -36,4 +36,13 @@ test('Can get the length of a tuple', t => {
 
     assert<gotX, 2>(t);
     assert<gotT, 4>(t);
+});
+
+test('Can get the intersection of tuple values', t => {
+    type t = [{a: 'hi'}, {b: 'there'}, {c: 'friend'}];
+
+    type got = IntersectTuple<t>;
+    type expected = {a: 'hi'} & {b: 'there'} & {c: 'friend'};
+
+    assert<got, expected>(t);
 });

@@ -28,7 +28,7 @@ npm install --save-dev simplytyped
 
 **[Tuples](#tuples)**
 
-[Tuple](#tuple) - [UnionizeTuple](#unionizetuple) - [Length](#length)
+[Tuple](#tuple) - [UnionizeTuple](#unionizetuple) - [IntersectTuple](#intersecttuple) - [Length](#length)
 
 **[Strings](#strings)**
 
@@ -343,6 +343,13 @@ doStuff(['hi', 'there']); // => doStuff(x: ['hi', 'there']): void
 Returns elements within a tuple as a union.
 ```ts
 type x = UnionizeTuple<[number, string]> // => number | string
+```
+
+### IntersectTuple
+Returns elements of a tuple intersected with each other.
+**Note: only works for tuples up to length 10**
+```ts
+type x = IntersectTuple<[{a: 'hi'}, {b: 'there'}]>; // => {a: 'hi'} & {b: 'there'}
 ```
 
 ### Length
