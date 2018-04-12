@@ -12,7 +12,7 @@
         "test:tsnext": "npm install --no-save typescript@next && npm test",
         "test:all": "npm run test:ts2.8.1 && npm run test:tsnext",
         "tsc": "tsc",
-        "prepub": "rm -rf dist && npm -s run tsc && ts-node scripts/movePackageJson.ts",
+        "prepub": "rm -rf dist && npm -s run tsc && ts-node scripts/preparePublish.ts",
         "release": "npm run -s prepub && cd dist/src && npx semantic-release"
     },
     "repository": {
