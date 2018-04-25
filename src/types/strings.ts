@@ -1,7 +1,9 @@
 import { True, False, And } from './conditionals';
 import { IsNever } from './predicates';
 
-export type Diff<T extends string, U extends string> = Exclude<T, U>;
+// TODO: this is here only for backwards compatibility
+export type Diff<T, U> = Exclude<T, U>;
+
 export type DropString<T extends string, U extends T> = Diff<T, U>;
 
 export type StringEqual<T extends string, U extends string> =
@@ -10,4 +12,4 @@ export type StringEqual<T extends string, U extends string> =
         IsNever<Diff<U, T>>
     >;
 
-export type UnionContains<T extends string, U extends string> = (Record<T, True> & Record<string, False>)[U];
+export type UnionContains<T, U> = U extends T ? True : False;

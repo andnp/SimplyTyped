@@ -16,6 +16,7 @@ export type GetKey<T, K extends string> = K extends Keys<T> ? T[K] : never;
 // ----
 // Keys
 // ----
+export type StringKeys<T> = Exclude<Keys<T>, number | symbol>;
 export type Keys<T> = keyof T;
 export type PureKeys<T> = Record<Keys<T>, Keys<T>>[Keys<T>];
 export type SharedKeys<T, U> = Keys<T> & Keys<U>;
