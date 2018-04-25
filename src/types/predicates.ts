@@ -1,6 +1,5 @@
-import { False, True, ReallyTrue, And, Or, Not } from './conditionals';
-import { Diff, UnionContains } from './strings';
-import { Keys, HasKey } from './objects';
+import { False, True, And, Or, Not } from './conditionals';
+import { Keys } from './objects';
 import { AnyFunc } from './functions';
 
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
@@ -11,7 +10,7 @@ export type StringPrototypeKeys = Keys<string>;
 export type ObjectPrototypeKeys = Keys<Object>; // tslint:disable-line
 export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
 
-export type IsNever<S extends string> = UnionContains<UnionContains<S, S>, False>;
+export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;
 export type IsType<T, X> = X extends T ? True : False;
 export type IsArray<T> = T extends any[] ? True : False;
 export type IsNumber<T> = T extends number ? True : False;

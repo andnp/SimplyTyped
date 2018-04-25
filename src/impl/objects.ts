@@ -1,6 +1,6 @@
-import { DeepReadonly, Keys, TaggedObject } from '../types/objects';
+import { DeepReadonly, Keys, TaggedObject, StringKeys } from '../types/objects';
 
-export function isKeyOf<T extends object>(obj: T, k: string): k is keyof T {
+export function isKeyOf<T extends object>(obj: T, k: string): k is StringKeys<T> {
     return Object.keys(obj).includes(k);
 }
 
