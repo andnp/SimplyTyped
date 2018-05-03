@@ -1,6 +1,6 @@
-import { Diff, UnionContains } from './strings';
+import { Diff } from './strings';
 import { IsObject } from './predicates';
-import { If } from './conditionals';
+import { If, False, True } from './conditionals';
 import { Nullable } from './utils';
 
 // -------
@@ -22,7 +22,7 @@ export type PureKeys<T> = Record<Keys<T>, Keys<T>>[Keys<T>];
 export type SharedKeys<T, U> = Keys<T> & Keys<U>;
 export type AllKeys<T, U> = Keys<T> | Keys<U>;
 export type DiffKeys<T, U> = Diff<Keys<T>, Keys<U>>;
-export type HasKey<T, U extends string> = UnionContains<Keys<T>, U>;
+export type HasKey<T, U extends string | number | symbol> = U extends Keys<T> ? True : False;
 
 // -------------
 // Manipulations
