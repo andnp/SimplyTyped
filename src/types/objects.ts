@@ -66,6 +66,10 @@ export type DeepReadonly<T extends PlainObject> = Readonly<{
             T[k]
         >
 }>;
+export type KeysByType<O extends object, T> = {
+    [k in keyof O]: O[k] extends T ? k : never;
+}[keyof O];
+
 
 // -------
 // Classes
