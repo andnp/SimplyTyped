@@ -24,7 +24,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey) - [AllRequired](#allrequired) - [Required](#required) - [TaggedObject](#taggedobject)
+[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [KeysByType](#keysbytype) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey) - [AllRequired](#allrequired) - [Required](#required) - [TaggedObject](#taggedobject)
 
 **[Tuples](#tuples)**
 
@@ -197,6 +197,12 @@ type y = DiffKeys<obj2, obj1> // => 'z'
 Gets all keys between two objects.
 ```ts
 type x = AllKeys<obj1, obj2> // => 'w' | 'x' | 'y' | 'z'
+```
+
+### KeysByType
+Gets all keys that point to a given type.
+```ts
+type x = KeysByType<obj1, string> // => 'w' | 'x'
 ```
 
 ### Omit
