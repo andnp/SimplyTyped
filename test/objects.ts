@@ -1,5 +1,5 @@
 import test from 'ava';
-import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, Required, AllRequired, taggedObject } from '../src/index';
+import { AllKeys, CombineObjects, DeepPartial, DeepReadonly, DiffKeys, Intersect, Keys, Merge, ObjectType, Omit, Optional, Overwrite, SharedKeys, UnionizeProperties, ConstructorFor, Required, AllRequired, taggedObject, KeysByType } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -201,4 +201,17 @@ test('Can generate a tagged object', t => {
 
     t.deepEqual(got, expected);
     assert<typeof got, typeof expected>(t);
+});
+
+test('Can filter object keys by right side type', t => {
+    type obj = {
+        a: 1,
+        b: 2,
+        c: 3,
+    };
+
+    type expected = 'a' | 'b';
+    type got = KeysByType<obj, 1 | 2>;
+
+    assert<got, expected>(t);
 });
