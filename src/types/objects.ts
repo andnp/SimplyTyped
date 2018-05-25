@@ -30,8 +30,10 @@ export type HasKey<T, U extends string | number | symbol> = U extends Keys<T> ? 
 export type UnionizeProperties<T extends object> = T[Keys<T>];
 export type Omit<T extends object, K extends Keys<T>> = Pick<T, Diff<Keys<T>, K>>;
 export type Intersect<T extends object, U extends Partial<T>> = Omit<U, DiffKeys<U, T>>;
-export type Merge<T extends object, U extends object> = CombineObjects<Omit<T, SharedKeys<T, U>>, U>;
-export type Overwrite<T extends object, U extends object> = Merge<T, Intersect<T, U>>;
+export type Overwrite<T extends object, U extends object> = {
+    [k in keyof T]: k extends keyof U ? U[k] : T[k];
+};
+export type Merge<T extends object, U extends object> = CombineObjects<Overwrite<T, U>, U>;
 export type TaggedObject<T extends Record<string, object>, Key extends string> = {
     [K in Keys<T>]: T[K] & Record<Key, K>;
 };
