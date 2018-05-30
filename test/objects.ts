@@ -94,6 +94,20 @@ test('Can merge two objects, resolving matching keys by rightmost object', t => 
     assert<got, expected>(t);
 });
 
+test('Can merge an object containing all strings as keys', t => {
+    type a = {
+        y: string;
+        [s: string]: string;
+    };
+    type b = { x: number, y: number };
+
+    type got = Merge<a, b>;
+    type expected = { x: number, y: number } & Record<string, string>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 test('Can get a deep partial object', t => {
     type a = {
         b: {
