@@ -127,6 +127,23 @@ test('Can get a deep partial object', t => {
     assert<got, expected>(t);
 });
 
+test('Can get a deep partial object with arrays', t => {
+    type a = {
+        b: [{
+            c: number,
+        }],
+    };
+
+    type got = DeepPartial<a>;
+    type expected = {
+        b?: [{
+            c?: number,
+        }],
+    };
+
+    assert<got, expected>(t);
+});
+
 test('Can get an object with only shared properties', t => {
     type a = { x: number, y: string };
     type b = { y: string, z: string };
@@ -157,6 +174,15 @@ test('Can make nested object readonly', t => {
     type x = { x: { a: 1, b: 'hi' }, y: 'hey' };
 
     type expected = { readonly x: Readonly<{ a: 1, b: 'hi' }>, readonly y: 'hey' };
+    type got = DeepReadonly<x>;
+
+    assert<got, expected>(t);
+});
+
+test('Can make nested object with arrays readonly', t => {
+    type x = { x: [{ a: 1, b: 'hi' }], y: 'hey' };
+
+    type expected = { readonly x: Array<Readonly<{ a: 1, b: 'hi' }>>, readonly y: 'hey' };
     type got = DeepReadonly<x>;
 
     assert<got, expected>(t);

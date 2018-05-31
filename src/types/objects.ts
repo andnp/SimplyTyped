@@ -1,5 +1,5 @@
 import { Diff } from './strings';
-import { IsObject } from './predicates';
+import { IsObject, IsArray } from './predicates';
 import { If, False, True } from './conditionals';
 import { Nullable } from './utils';
 
@@ -41,12 +41,11 @@ export type TaggedObject<T extends Record<string, object>, Key extends string> =
 // ---------
 // Accessors
 // ---------
-export type DeepPartial<T extends PlainObject> = Partial<{
+export type DeepPartial<T> = Partial<{
     [k in Keys<T>]:
-        If<IsObject<T[k]>,
-            DeepPartial<T[k]>,
-            T[k]
-        >
+        T[k] extends any[] ? Array<DeepPartial<T[k][number]>> :
+        T[k] extends object ? DeepPartial<T[k]> :
+            T[k];
 }>;
 export type AllRequired<T extends object> = {
     [K in Keys<T>]-?: NonNullable<T[K]>
@@ -59,12 +58,11 @@ export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
     {[k in K]?: Nullable<T[k]> },
     Omit<T, K>
 >;
-export type DeepReadonly<T extends PlainObject> = Readonly<{
+export type DeepReadonly<T> = Readonly<{
     [k in Keys<T>]:
-        If<IsObject<T[k]>,
-            DeepReadonly<T[k]>,
-            T[k]
-        >
+        T[k] extends any[] ? Array<DeepReadonly<T[k][number]>> :
+        T[k] extends object ? DeepReadonly<T[k]> :
+            T[k];
 }>;
 export type KeysByType<O extends object, T> = {
     [k in keyof O]: O[k] extends T ? k : never;
