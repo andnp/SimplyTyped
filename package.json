@@ -41,7 +41,7 @@
         "@commitlint/config-conventional": "^6.1.3",
         "@types/node": "~10.1.0",
         "ava": "~0.25.0",
-        "commitlint": "^6.1.3",
+        "commitlint": "^7.0.0",
         "husky": "^0.14.3",
         "ts-node": "^6.0.0",
         "tslint": "^5.8.0"
