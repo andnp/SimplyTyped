@@ -35,7 +35,7 @@
     ],
     "homepage": "https://github.com/andnp/SimplyTyped#readme",
     "peerDependencies": {
-        "typescript": "^2.8.1"
+        "typescript": ">2.8.1"
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^6.1.3",
