@@ -55,7 +55,7 @@ export type Required<T extends object, K extends Keys<T>> = CombineObjects<
     Omit<T, K>
 >;
 export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
-    {[k in K]?: Nullable<T[k]> },
+    {[k in K]?: T[k] | undefined },
     Omit<T, K>
 >;
 export type DeepReadonly<T> = Readonly<{
