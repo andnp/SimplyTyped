@@ -40,7 +40,7 @@ npm install --save-dev simplytyped
 
 **[Functions](#functions)**
 
-[Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [AnyFunc](#anyfunc) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
+[Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [AnyFunc](#anyfunc) - [OverwriteReturn](#overwritereturn) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
 
 **[Utils](#utils)**
 
@@ -468,6 +468,13 @@ Useful when designing many api's that don't care what function they take in, the
 ```ts
 type got = AnyFunc; // => (...args: any[]) => any;
 type got2 = AnyFunc<number>; // => (...args: any[]) => number;
+```
+
+### OverwriteReturn
+Can change the return type of any function while maintaining the function arguments. (up to 7 arguments)
+```ts
+type F = (x: 'hi', y: 'there') => number;
+type got = OverwriteReturn<F, string>; // => (x: 'hi', y: 'there') => string;
 ```
 
 ### Readonly
