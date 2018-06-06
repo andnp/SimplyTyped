@@ -1,5 +1,5 @@
 import test from 'ava';
-import { ConstructorFunction, Predicate, objectKeys, isKeyOf, AnyFunc } from '../src/index';
+import { ConstructorFunction, Predicate, objectKeys, isKeyOf, AnyFunc, OverwriteReturn } from '../src/index';
 
 function assert<T, U extends T>(t: { pass: any }) { t.pass(); }
 
@@ -59,4 +59,14 @@ test('Can define the type of a function that takes any arguments', t => {
 
     assert<got, expected>(t);
     assert<got2, expected2>(t);
+});
+
+test('Can change return type of a function', t => {
+    type f = (x: 'hi', y: 'there', z: 22) => number;
+
+    type got = OverwriteReturn<f, string>;
+    type expected = (x: 'hi', y: 'there', z: 22) => string;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
 });
