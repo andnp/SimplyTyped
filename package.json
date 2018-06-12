@@ -48,8 +48,11 @@
     },
     "ava": {
         "files": [
-            "dist/test/**/*.js"
-        ]
+            "dist/test/**/*.test.js"
+        ],
+        "concurrency": 32,
+        "babel": {},
+        "compileEnhancements": false
     },
     "commitlint": {
         "extends": [
