@@ -14,8 +14,7 @@ const tsConfig = {
     baseUrl: "src/",
 };
 
-// const files = [ 'objects', 'utils', 'functions', 'strings', 'tuples', 'numbers', 'conditionals', 'predicates' ];
-
+// order dictates the order these appear in the generated markdown
 const files = [
     { file: 'objects', test: 'test/objects', header: 'Objects' },
     { file: 'utils', test: 'test/utils', header: 'Utils' },
@@ -33,19 +32,21 @@ const generateMarkdown = (fileName: string, testPath: string) => {
     const checker = program.getTypeChecker();
 
     for (const sourceFile of program.getSourceFiles()) {
-        if (sourceFile.fileName !== fileName) continue; // we don't care about imported source files
+        if (sourceFile.fileName !== fileName) continue; // we don't care about imported source files, only the single file we are inspecting
 
         const sourceDocs = [] as TypeInfo[];
 
         tsc.forEachChild(sourceFile, (node) => {
             if (!isNodeExported(node)) return; // we only need to document exported types
-            if (!(tsc.isTypeAliasDeclaration(node) || tsc.isFunctionDeclaration(node))) return; // we only need to document types
+            if (!(tsc.isTypeAliasDeclaration(node) || tsc.isFunctionDeclaration(node))) return; // we only need to document types and functions
 
             const symbol = checker.getSymbolAtLocation(node.name!);
-            if (!symbol) return;
+            if (!symbol) return; // we should never get into this state because we aren't dealing with .d.ts files
 
+            // Get the JSDoc description
             const description = tsc.displayPartsToString(symbol.getDocumentationComment(checker));
 
+            // Don't document things with `no-doc` at start of description
             if (description.trim().startsWith('no-doc')) return;
 
             const typeName = symbol.name;
