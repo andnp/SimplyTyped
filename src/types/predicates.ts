@@ -2,12 +2,19 @@ import { False, True, And, Or, Not } from './conditionals';
 import { Keys } from './objects';
 import { AnyFunc } from './functions';
 
+/** no-doc */
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
+/** no-doc */
 export type ArrayPrototypeKeys = Keys<any[]>;
+/** no-doc */
 export type NumberPrototypeKeys = Keys<number>;
+/** no-doc */
 export type BooleanPrototypeKeys = Keys<false>;
+/** no-doc */
 export type StringPrototypeKeys = Keys<string>;
+/** no-doc */
 export type ObjectPrototypeKeys = Keys<Object>; // tslint:disable-line
+/** no-doc */
 export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
 
 export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;

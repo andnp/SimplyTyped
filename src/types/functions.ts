@@ -1,10 +1,26 @@
 import { If } from './conditionals';
 import { IsAny } from './predicates';
 
+/**
+ * This represents the constructor for a particular object.
+ */
 export type ConstructorFunction<T extends object> = new (...args: any[]) => T;
+/**
+ * This is a function that takes some args and returns a boolean
+ */
 export type Predicate<A = any> = If<IsAny<A>, (...args: any[]) => boolean, (arg: A) => boolean>;
+/**
+ * Concisely and cleanly define an arbitrary function.
+ * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
+ */
 export type AnyFunc<R = any> = (...args: any[]) => R;
 
+/**
+ * Modifies the return value of a function of up to 7 parameters.
+ * @param F a function with up to 7 parameters
+ * @param R the new return value of the function
+ * @returns the function `F` with new return value `R`
+ */
 export type OverwriteReturn<F extends AnyFunc, R> =
     F extends () => any ? () => R :
     F extends (x1: infer X1) => any ? (x1: X1) => R :
