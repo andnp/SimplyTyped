@@ -1,7 +1,6 @@
 # SimplyTyped
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/andnp/SimplyTyped.svg)](https://greenkeeper.io/)
-
 [![Build Status](https://travis-ci.org/andnp/SimplyTyped.svg?branch=NumberPerformance)](https://travis-ci.org/andnp/SimplyTyped)
 
 Yet another typing library.
@@ -14,496 +13,942 @@ The goal is to provide all of the building blocks necessary to make concise, yet
 npm install --save-dev simplytyped
 ```
 
-**[Conditionals](#conditionals)**
-
-[If](#if) - [And](#and) - [Or](#or) - [Not](#not) - [Xor](#xor) - [Nand](#nand)
-
-**[Predicates](#predicates)**
-
-[IsAny](#isany) - [IsArray](#isarray) - [IsBoolean](#isboolean) - [IsFunction](#isfunction) - [IsNever](#isnever) - [IsNumber](#isnumber) - [IsObject](#isobject) - [IsType](#istype)
+## Table of Contents
 
 **[Objects](#objects)**
 
-[Keys](#keys) - [ObjectType](#objecttype) - [CombineObjects](#combineobjects) - [Intersect](#intersect) - [SharedKeys](#sharedkeys) - [DiffKeys](#diffkeys) - [AllKeys](#allkeys) - [KeysByType](#keysbytype) - [Omit](#omit) - [Merge](#merge) - [Overwrite](#overwrite) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [Optional](#optional) - [GetKey](#getkey) - [AllRequired](#allrequired) - [Required](#required) - [TaggedObject](#taggedobject)
-
-**[Tuples](#tuples)**
-
-[Tuple](#tuple) - [UnionizeTuple](#unionizetuple) - [IntersectTuple](#intersecttuple) - [Length](#length)
-
-**[Strings](#strings)**
-
-[Diff](#diff) - [StringEqual](#stringequal) - [DropString](#dropstring)
-
-**[Numbers](#numbers)**
-
-[IsZero](#iszero) - [IsOne](#isone) - [NumberToString](#numbertostring) - [Next](#next) - [Prev](#prev) - [Add](#add) - [Sub](#sub) - [NumberEqual](#numberequal)
-
-**[Functions](#functions)**
-
-[Predicate](#predicate) - [ConstructorFunction](#constructorfunction) - [AnyFunc](#anyfunc) - [OverwriteReturn](#overwritereturn) - [Readonly](#readonly) - [isKeyOf](#isKeyOf) - [objectKeys](#objectkeys)
+[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties)
 
 **[Utils](#utils)**
 
-[Nullable](#nullable) - [NoInfer](#noinfer) - [Unknown](#unknown) - [Nominal](#nominal)
+[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [Unknown](#unknown)
 
-## Conditionals
+**[Functions](#functions)**
 
-Some (somewhat common) implementations of conditional type logic
+[AnyFunc](#anyfunc) - [ConstructorFunction](#constructorfunction) - [OverwriteReturn](#overwritereturn) - [Predicate](#predicate)
 
-### If
-```ts
-type x = If<True, string, number> // => string
-type y = If<False, string, number> // => number
-```
+**[Strings](#strings)**
 
-### And
-```ts
-type x = If<And<True, True>, string, number> // => string
-type y = If<And<True, False>, string, number> // => number
-...
-```
+[Diff](#diff) - [DropString](#dropstring) - [StringEqual](#stringequal) - [UnionContains](#unioncontains)
 
-### Or
-```ts
-type x = If<Or<True, False>, string, number> // => string
-type y = If<Or<False, False>, string, number> // => number
-...
-```
+**[Tuples](#tuples)**
 
-### Not
-```ts
-type x = Not<True> // => False
-type y = Not<False> // => True
-```
+[IntersectTuple](#intersecttuple) - [Length](#length) - [UnionizeTuple](#unionizetuple)
 
-### Xor
-```ts
-type x = Xor<True, False> // => True
-type y = Xor<True, True> // => False
-...
-```
+**[Numbers](#numbers)**
 
-### Nand
-```ts
-type x = Nand<True, True> // => False
-type y = Nand<False, True> // => True
-```
+[Add](#add) - [IsOne](#isone) - [IsZero](#iszero) - [Next](#next) - [NumberEqual](#numberequal) - [Numbers](#numbers) - [NumberToString](#numbertostring) - [Prev](#prev) - [Sub](#sub)
 
-## Predicates
+**[Conditionals](#conditionals)**
 
-### IsAny
-```ts
-type x = IsAny<any> // => True
-type y = IsAny<'hey'> // => False
-```
+[And](#and) - [If](#if) - [Nand](#nand) - [Not](#not) - [Or](#or) - [Xor](#xor)
 
-### IsArray
-```ts
-type x = IsArray<any[]> // => True
-type y = IsArray<number> // => False
-```
+**[Predicates](#predicates)**
 
-### IsBoolean
-```ts
-type x = IsBoolean<false> // => True
-type y = IsBoolean<3> // => False
-```
+[IsAny](#isany) - [IsArray](#isarray) - [IsBoolean](#isboolean) - [IsFunction](#isfunction) - [IsNever](#isnever) - [IsNil](#isnil) - [IsNull](#isnull) - [IsNumber](#isnumber) - [IsObject](#isobject) - [IsString](#isstring) - [IsStringFunction](#isstringfunction) - [IsType](#istype) - [IsUndefined](#isundefined)
 
-### IsFunction
-```ts
-type x = IsFunction<(() => string)> // => True
-type y = IsFunction<'not a function'> // => False
-```
+**[Runtime](#runtime)**
 
-### IsNever
-Returns true if type is `never`, otherwise returns false.
-```ts
-type x = IsNever<'hi'> // => False
-type y = IsNever<never> // => True
-```
-
-### IsNumber
-```ts
-type x = IsNumber<3> // => True
-type y = IsNumber<false> // => False
-```
-
-### IsObject
-```ts
-type x = IsObject<{a: number, b: string}> // => True
-type y = IsObject<string> // => False
-```
-
-### IsType
-Given a base type and a value, check to see if value matches the base type.
-Useful for checking if something is an instance of a class.
-```ts
-class Thing { x: string };
-type x = IsType<Thing, { x: string }> // => True
-type y = IsType<Thing, { y: number }> // => False
-```
+[isKeyOf](#iskeyof) - [objectKeys](#objectkeys) - [Readonly](#readonly) - [taggedObject](#taggedobject)
 
 ## Objects
 
+### AllKeys
+Gets all keys between two objects.
 ```ts
-type obj1 = { w: string, x: string, y: number }
-type obj2 = { y: string, z: number }
+test('Can get all keys between objects', t => {
+    type a = { w: number, x: string };
+    type b = { x: number, z: boolean };
+
+    type got = AllKeys<a, b>;
+    type expected = 'w' | 'x' | 'z';
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
 
-### Keys
-No different than `keyof`, but can look a bit nicer when nesting many types deep
+### AllRequired
+Marks all keys as required.
 ```ts
-type x = keyof obj1 // => 'w' | 'x' | 'y'
-type y = Keys<obj1> // => 'w' | 'x' | 'y'
-```
+test('Can make all fields of options object required (not optional and not nullable)', t => {
+    type x = { a?: string, b: number | undefined };
+    type got = AllRequired<x>;
+    type expected = { a: string, b: number };
 
-### ObjectType
-On its own, not that interesting.
-Takes an object and makes it an object type.
-Is useful when combined with `&` intersection types (as seen next).
-```ts
-type x = ObjectType<obj1> // => { w: string, x: string, y: number }
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
 
 ### CombineObjects
-Takes the intersection between two objects, and flattens them.
-This can make extremely complex types look much nicer.
+Takes two objects and returns their intersection.
+This combines all keys and uses `ObjectType` to "clean up" the resultant object.
+Useful for making extremely complex types look nice in VSCode.
 ```ts
-type x = obj1 & obj2 // => { w: string, x: string, y: number } & { y: string, z: number }
-type y = CombineObjects<obj1, obj2> // => { w: string, x: string, y: string & number, z: number }
+test('Can combine two objects (without pesky & in vscode)', t => {
+    type a = { x: number, y: 'hi' };
+    type b = { z: number, y: 'there' };
+
+    type got = CombineObjects<a, b>;
+    type expected = {
+        x: number,
+        y: 'hi' & 'there',
+        z: number
+    };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
+
+### DeepPartial
+Uses `Partial` to make every parameter of an object optional (`| undefined`).
+Iterates through arrays of objects and nested objects.
+```ts
+test('Can get a deep partial object', t => {
+    type a = {
+        b: {
+            c: number
+        },
+        d: string
+    };
+
+    type got = DeepPartial<a>;
+    type expected = {
+        b?: {
+            c?: number
+        },
+        d?: string
+    };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+test('Can get a deep partial object with arrays', t => {
+    type a = {
+        b: Array<{
+            c: number,
+        }>,
+    };
+
+    type got = DeepPartial<a>;
+    type expected = {
+        b?: Array<{
+            c?: number,
+        }>,
+    };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### DeepReadonly
+Uses `Readonly` to make every parameter of an object - and its sub-objects recursively - readonly.
+```ts
+test('Can make nested object readonly', t => {
+    type x = { x: { a: 1, b: 'hi' }, y: 'hey' };
+
+    type expected = { readonly x: Readonly<{ a: 1, b: 'hi' }>, readonly y: 'hey' };
+    type got = DeepReadonly<x>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+test('Can make nested object with arrays readonly', t => {
+    type x = { x: [{ a: 1, b: 'hi' }], y: 'hey' };
+
+    type expected = { readonly x: Array<Readonly<{ a: 1, b: 'hi' }>>, readonly y: 'hey' };
+    type got = DeepReadonly<x>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### DiffKeys
+Gets all of the keys that are different between two objects.
+This is a set difference between `Keys<T>` and `Keys<U>`.
+Note that calling this with arguments reversed will have different results.
+```ts
+test('Can get all keys that are different between objects', t => {
+    type a = { x: number, y: string };
+    type b = { y: string, z: number };
+
+    type gotA = DiffKeys<a, b>;
+    type gotB = DiffKeys<b, a>;
+
+    assert<gotA, 'x'>(t);
+    assert<gotB, 'z'>(t);
+});
+
+```
+
+### GetKey
+Gets the value of specified property on any object without compile time error (`Property 'b' does not exist on type '{ a: string; }'.`) and the like.
+Returns `never` if the key is not on the object.
+It helps to use `If<HasKey...` to handle validity of the object first.
+```ts
+test('Can safely get the value at a certain key if it exists', t => {
+    type obj = { x: number, y: string };
+    type expected = number;
+    type got = GetKey<obj, 'x'>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+test('Will get `never` if key does not exist', t => {
+    type obj = { x: number, y: string };
+    type expected = never;
+    type got = GetKey<obj, 'z'>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### HasKey
+Returns `True` if a key, `K`, is present in a type, `T`, else `False`.
+
 
 ### Intersect
 Returns only the shared properties between two objects.
 All shared properties must be the same type.
 ```ts
-type x = Intersect<obj1, { x: string }> // => { x: string }
+test('Can get an object with only shared properties', t => {
+    type a = { x: number, y: string };
+    type b = { y: string, z: string };
+
+    type expected = { y: string };
+    type got = Intersect<a, b>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
 
-### SharedKeys
-Gets all of the keys that are shared between two objects (as in keys in common).
+### Keys
+No different than `keyof`, but can look a bit nicer when nesting many types deep.
 ```ts
-type x = SharedKeys<obj1, obj2> // => 'y'
-```
+test('Can get keys from object', t => {
+    type obj = { x: number, y: string, z: boolean };
+    type expected = 'x' | 'y' | 'z';
+    type got = Keys<obj>;
 
-### DiffKeys
-Gets all of the keys that are different from obj1 to obj2.
-```ts
-type x = DiffKeys<obj1, obj2> // => 'w' | 'x'
-type y = DiffKeys<obj2, obj1> // => 'z'
-```
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
 
-### AllKeys
-Gets all keys between two objects.
-```ts
-type x = AllKeys<obj1, obj2> // => 'w' | 'x' | 'y' | 'z'
 ```
 
 ### KeysByType
 Gets all keys that point to a given type.
 ```ts
-type x = KeysByType<obj1, string> // => 'w' | 'x'
-```
+test('Can filter object keys by right side type', t => {
+    type obj = {
+        a: 1,
+        b: 2,
+        c: 3,
+    };
 
-### Omit
-Gives back an object with listed keys removed.
-```ts
-type x = Omit<obj1, 'w' | 'x'> // => { y: number }
+    type expected = 'a' | 'b';
+    type got = KeysByType<obj, 1 | 2>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
 
 ### Merge
 Much like `_.merge` in javascript, this returns an object with all keys present between both objects, but conflicts resolved by rightmost object.
 ```ts
-type x = Merge<obj1, obj2> // => { w: string, x: string, y: string, z: number }
+test('Can merge two objects, resolving matching keys by rightmost object', t => {
+    type a = { x: number, y: string };
+    type b = { y: number, z: string };
+
+    type got = Merge<a, b>;
+    type expected = { x: number, y: number, z: string };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+test('Can merge an object containing all strings as keys', t => {
+    type a = {
+        y: string;
+        [s: string]: string;
+    };
+    type b = { x: number, y: number };
+
+    type got = Merge<a, b>;
+    type expected = { x: number, y: number } & Record<string, string>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### ObjectType
+Takes any type and makes it an object type.
+Useful when combined with `&` intersection types.
+```ts
+test('Can turn an object into another object', t => {
+    type obj = { x: number, y: string };
+    type expected = obj;
+    type got = ObjectType<obj>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### Omit
+Gives back an object with listed keys removed.
+This is the opposite of `Pick`.
+```ts
+test('Can omit keys from an object', t => {
+    type a = { x: number, y: string, z: boolean };
+
+    type got = Omit<a, 'x' | 'y'>;
+    type expected = { z: boolean };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### Optional
+Mark specific keys, `K`, of `T` as optional (think `Partial`).
+```ts
+test('Can make properties optional', t => {
+    type x = { x: number, y: string, z: 'hello there' };
+
+    type expected = { x?: number, y?: string, z: 'hello there' };
+    type got = Optional<x, 'x' | 'y'>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
 
 ### Overwrite
 Can change the types of properties on an object.
 This is similar to `Merge`, except that it will not add previously non-existent properties to the object.
 ```ts
-type a = Overwrite<obj1, obj2> // => { w: string, x: string, y: string }
-type b = Overwrite<obj2, obj1> // => { y: number, z: number }
+test('Can overwrite properties on an object', t => {
+    type a = { x: number, y: string, z: 'hello there' };
+
+    type expected = { x: number, y: string, z: 'hello' | 'there' };
+    type got1 = Overwrite<a, { z: 'hello' | 'there' }>;
+    type got2 = Overwrite<a, { z: 'hello' | 'there', w: number }>;
+
+    assert<got1, expected>(t);
+    assert<expected, got1>(t);
+    assert<got2, expected>(t);
+    assert<expected, got2>(t);
+});
+
 ```
 
-### DeepPartial
-Uses `Partial` to make every parameter of an object optional (`| undefined`).
-```ts
-type x = DeepPartial<obj1> // => { w?: string, x?: string, y?: number }
-```
+### PlainObject
+An object with string keys and values of type `any`.
 
-### DeepReadonly
-Uses `Readonly` to make every parameter of an object readonly
-```ts
-type x = DeepReadonly<obj1> // => { w: readonly string, x: readonly string, y: readonly number }
-```
 
-### Optional
-Makes certain properties on an object optional.
-```ts
-type x = Optional<obj1, 'w' | 'x'> // => { w?: string, x?: string, y: number }
-```
+### PureKeys
+When an object has optional or readonly keys, that information is contained within the key.
+When using optional/readonly keys in another object, they will retain optional/readonly status.
+`PureKeys` will remove the optional/readonly status modifiers from keys.
 
-### GetKey
-Gets the value of specified property on any object without compile time error (`Property 'b' does not exist on type '{ a: string; }'.`) and the like.
-Returns `never` if the key is not on the object.
-I suggest using `If<HasKey...` first to handle validity of the object first.
-```ts
-type x = GetKey<{ a: string }, 'a'> // => string
-type y = GetKey<{ a: string }, 'b'> // => never
-```
-
-### ConstructorFor
-Builds the type of a constructor function for a particular object.
-```ts
-type c = ConstructorFor<obj1> // => new (...args: any[]) => { w: string, x: string, z: number }
-```
-
-### AllRequired
-Makes all fields of an object "required".
-This means not Nullable and not optional.
-```ts
-type x = { a?: string, b: number | undefined };
-type o = AllRequired<x>; // => { a: string, b: number }
-```
 
 ### Required
-Makes certain fields of an object "required"
+Mark specific keys, `K`, of `T` as required.
 ```ts
-type x = { a?: string, b: number | undefined };
-type o = Required<x, 'a'>; // => { a: string, b: number | undefined }
+test('Can make certain fields of options object required', t => {
+    type x = { a?: string, b: number | undefined };
+    type got1 = Required<x, 'a'>;
+    type got2 = Required<x, 'b'>;
+    type got3 = Required<x, 'a' | 'b'>;
+
+    type expected1 = { a: string, b: number | undefined };
+    type expected2 = { a?: string, b: number };
+    type expected3 = { a: string, b: number };
+
+    assert<got1, expected1>(t);
+    assert<got2, expected2>(t);
+    assert<got3, expected3>(t);
+});
+
 ```
 
-### TaggedObject
-Creates an object with each entry being tagged by the key defining that entry.
+### SharedKeys
+Gets all of the keys that are shared between two objects.
 ```ts
-const obj = {
-    a: { merp: 'hi' },
-    b: { merp: 'there' },
-    c: { merp: 'friend' },
-};
+test('Can get keys that are same between objects', t => {
+    type a = { x: number, y: string };
+    type b = { x: string, y: string, z: boolean };
 
-const got = taggedObject(obj, 'name');
-/*
-got = {
-    a: { name: 'a', merp: 'hi' },
-    b: { name: 'b', merp: 'there' },
-    c: { name: 'c', merp: 'friend' },
-};
-*/
+    type got = SharedKeys<a, b>;
+    type expected = 'x' | 'y';
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### StringKeys
+Typescript 2.9 introduced `number | symbol` as possible results from `keyof any`.
+For backwards compatibility with objects containing only `string` keys, this will
+exclude any `number | symbol` keys from `keyof`.
+
+
+### TaggedObject
+For discriminated unions of objects, it is important to have a single "tag" property.
+Creates an object with each entry being tagged by the key defining that entry.
+
+
+### UnionizeProperties
+Get a union of the properties of an object.
+```ts
+test('Can get a union of all values in an object', t => {
+    type a = { x: 'hi', y: 'there', z: 'friend' };
+
+    type got = UnionizeProperties<a>;
+    type expected = 'hi' | 'there' | 'friend';
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
 ```
 
 ## Utils
-A few utility functions that generically work in any context, with any type.
-
-### Nullable
-Makes a type nullable (null | undefined).
-```ts
-type x = Nullable<string>; // => string | null | undefined
-```
 
 ### NoInfer
-Prevents typescript from being able to infer a generic type.
-Useful when trying to get a function to infer based on one argument of a function, but not another.
+Prevent `T` from being inferred in generic function
 ```ts
-function doStuff<T>(x: T, y: NoInfer<T>): T { return x; }
-function inferAll<T>(x: T, y: T): T { return x; }
-doStuff('hi', 'there') // => compile error
-inferAll('hi', 'there') // => typeof T === 'string'
-```
+test('Will not infer based on second argument', t => {
+    function doStuff<T>(x: T, y: NoInfer<T | 'there'>): T { return x; }
 
-### Unknown
-A type that has no properties and cannot be passed into functions.
-This is particularly useful on the boundaries of an app where you may not know the type of a variable.
-For instance `JSON.parse` could return an `Unknown` and would require validation and / or a type assertion to make it a useful type.
-```ts
-declare let x: Unknown;
-x = 'hi'; // valid operation
-function doStuff(a: number) {}
-doStuff(x); // invalid operation
-x.thing // invalid operation
-x() // invalid operation
+    const hi = 'hi' as 'hi' | number;
+    const there = 'there';
+    const x = doStuff(hi, there);
+
+    assert<typeof x, 'hi'>(t);
+    assert<typeof x, number>(t);
+});
+
 ```
 
 ### Nominal
-This creates a type that, while it shares all of the properties with its parent type, cannot be set to another type without containing the same tag.
-This is useful in the case where you have a string that is an id, but you don't want to be able to set just any string to this id; only a string tagged as being an id.
+Constructs a nominal type of type `T`.
+Useful to prevent any value of type `T` from being used or modified in places it shouldn't (think `id`s).
 ```ts
-type Id = Nominal<string, 'id'>; // => string
-declare let x: Id;
-x = 'hi'; // invalid operation;
-x = 'hi' as Nominal<string, 'id'>; // valid operation
-x = 'hi' as Id; // valid operation
+test('Can make a new nominal type', t => {
+    type Id = Nominal<string, 'id'>;
+
+    // TODO: improve once negative testing is in place
+    assert<Id, Nominal<string, 'id'>>(t);
+});
+
 ```
 
-## Tuples
-A tuple can be defined in two ways: `[number, string]` which as of Typescript 2.7 has an enforced length type parameter: `[number, string]['length'] === 2` or using this library's `Tuple<any>` which can be extended with any length of tuple: `function doStuff<T extends Tuple<any>>(x: T) {}`.
-
-### Tuple
+### Nullable
+Mark a type as nullable (`null | undefined`).
 ```ts
-function doStuff<T extends Tuple<any>>(x: T) {}
+test('Will make a type nullable (null | undefined)', t => {
+    type got = Nullable<string>;
+    type expected = string | null | undefined;
 
-doStuff(['hi', 'there']); // => doStuff(x: ['hi', 'there']): void
+    assert<got, expected>(t);
+});
+
+test('Will make a type not nullable', t => {
+    type got = NonNullable<Nullable<string>>;
+
+    assert<got, string>(t);
+});
+
 ```
 
-### UnionizeTuple
-Returns elements within a tuple as a union.
-```ts
-type x = UnionizeTuple<[number, string]> // => number | string
-```
+### Unknown
+A constant type that mimics an unknowable type.
 
-### IntersectTuple
-Returns elements of a tuple intersected with each other.
-**Note: only works for tuples up to length 10**
-```ts
-type x = IntersectTuple<[{a: 'hi'}, {b: 'there'}]>; // => {a: 'hi'} & {b: 'there'}
-```
-
-### Length
-Gets the length of either a built-in tuple, or a Vector.
-This will only work after Typescript 2.7 is released.
-```ts
-type x = Length<['hey', 'there']> // => 2
-```
-
-## Strings
-
-### Diff
-Get the differences between two unions of strings.
-```ts
-type x = Diff<'hi' | 'there', 'hi' | 'friend'> // => 'there'
-```
-
-### StringEqual
-Returns true if all elements in two unions of strings are equal.
-```ts
-type x = StringEqual<'hi' | 'there', 'hi'> // => False
-type y = StringEqual<'hi' | 'there', 'there' | 'hi'> // => True
-```
-
-### DropString
-Can remove a string from a union of strings
-```ts
-type x = DropString<'hi' | 'there', 'hi'> // => 'there'
-```
-
-## Numbers
-
-Supports numbers from [0, 63]. More slows down the compiler to a crawl right now.
-
-### IsZero
-Returns true if the number is equal to zero.
-```ts
-type x = IsZero<1> // => False
-type y = IsZero<0> // => True
-```
-
-### IsOne
-Returns true if the number is equal to one.
-```ts
-type x = IsOne<0> // => False
-type y = IsOne<1> // => True
-```
-
-### NumberToString
-Returns the string type for a given number
-```ts
-type x = NumberToString<0> // => '0'
-type y = NumberToString<1> // => '1'
-```
-
-### Next
-Returns the number + 1.
-```ts
-type x = Next<0> // => 1
-type y = Next<22> // => 23
-```
-
-### Prev
-Returns the number - 1.
-```ts
-type x = Prev<0> // => -1
-type y = Prev<23> // => 22
-```
-
-### Add
-Adds two numbers together.
-```ts
-type x = Add<22, 8> // => 30
-```
-
-### Sub
-Subtracts the second from the first.
-```ts
-type x = Sub<22, 8> // => 14
-```
-
-### NumberEqual
-Returns `True` if the numbers are equivalent
-```ts
-type x = NumberEqual<0, 0> // => True
-type y = NumberEqual<22, 21> // => False
-```
 
 ## Functions
-
-### Predicate
-This is a function that takes some args and returns a boolean
-```ts
-type x = Predicate // => (...args: any[]) => boolean
-const isThing: Predicate = (x: Thing) => x instanceof Thing;
-```
-
-### ConstructorFunction
-This represents the constructor for a particular object.
-```ts
-class Thing { constructor(public x: string) {}}
-type x = ConstructorFunction<Thing>
-declare const construct: x;
-const y = new construct(); // => y instanceof Thing
-```
 
 ### AnyFunc
 Concisely and cleanly define an arbitrary function.
 Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
 ```ts
-type got = AnyFunc; // => (...args: any[]) => any;
-type got2 = AnyFunc<number>; // => (...args: any[]) => number;
+test('Can define the type of a function that takes any arguments', t => {
+    type got = AnyFunc;
+    type got2 = AnyFunc<number>; // takes anything, returns a number
+
+    type expected = (...args: any[]) => any;
+    type expected2 = (...args: any[]) => number;
+
+    assert<got, expected>(t);
+    assert<got2, expected2>(t);
+});
+
+```
+
+### ConstructorFunction
+This represents the constructor for a particular object.
+```ts
+test('Can build a constructor type for a type', t => {
+    type Constructor = ConstructorFunction<{ x: string, y: number }>;
+    class Thing { x: string = ''; y: number = 22; }
+
+    assert<Constructor, typeof Thing>(t);
+});
+
 ```
 
 ### OverwriteReturn
-Can change the return type of any function while maintaining the function arguments. (up to 7 arguments)
+Modifies the return value of a function of up to 7 parameters.
 ```ts
-type F = (x: 'hi', y: 'there') => number;
-type got = OverwriteReturn<F, string>; // => (x: 'hi', y: 'there') => string;
+test('Can change return type of a function', t => {
+    type f = (x: 'hi', y: 'there', z: 22) => number;
+
+    type got = OverwriteReturn<f, string>;
+    type expected = (x: 'hi', y: 'there', z: 22) => string;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+
 ```
 
-### Readonly
-This takes a runtime object and makes its properties readonly.
-Useful for declare object literals, but using inferred types.
+### Predicate
+This is a function that takes some args and returns a boolean
 ```ts
-const config = Readonly({
-    url: 'https://example.com',
-    password: 'immasecurepassword',
-}); // => { url: readonly string, password: readonly string }
+test('Can build a predicate function with single known argument type', t => {
+    type PredFunc = Predicate<string>;
+    type expected = (arg: string) => boolean;
+
+    assert<PredFunc, expected>(t);
+});
+
+test('Can build a predicate function with unknown argument types', t => {
+    type PredFunc = Predicate;
+    type works = (arg1: string, arg2: number) => boolean;
+    type expected = (...args: any[]) => boolean;
+
+    assert<PredFunc, works>(t);
+    assert<PredFunc, expected>(t);
+});
+
 ```
+
+## Strings
+
+### Diff
+
+```ts
+test('Can get difference between unions of strings', t => {
+    type a = 'hi' | 'there';
+    type b = 'hi' | 'my' | 'friend';
+
+    type gotA = Diff<a, b>;
+    type gotB = Diff<b, a>;
+
+    assert<gotA, 'there'>(t);
+    assert<gotB, 'my' | 'friend'>(t);
+});
+
+```
+
+### DropString
+
+```ts
+test('Can remove a string from a union of strings', t => {
+    type a = 'hi' | 'there';
+    type b = 'hey' | 'there' | never;
+
+    assert<DropString<a, 'hi'>, 'there'>(t);
+    assert<DropString<b, 'hey' | 'there'>, never>(t);
+    assert<DropString<a, 'hi' | 'there'>, never>(t);
+});
+
+```
+
+### StringEqual
+
+```ts
+test('Can check that two unions of strings are equal', t => {
+    type a = 'hi' | 'there';
+    type b = 'there' | 'hi';
+    type c = 'hi' | 'there' | 'friend';
+
+    assert<StringEqual<a, b>, True>(t);
+    assert<StringEqual<b, a>, True>(t);
+    assert<StringEqual<b, c>, False>(t);
+});
+
+```
+
+### UnionContains
+
+
+
+## Tuples
+
+### IntersectTuple
+Gives an intersection of all values contained in a tuple.
+```ts
+test('Can get the intersection of tuple values', t => {
+    type t = [{a: 'hi'}, {b: 'there'}, {c: 'friend'}];
+
+    type got = IntersectTuple<t>;
+    type expected = {a: 'hi'} & {b: 'there'} & {c: 'friend'};
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### Length
+
+```ts
+test('Can get the length of a tuple', t => {
+    type t = [1, 2, 3, 4];
+    type x = ['hello', 'world'];
+
+    type gotT = Length<t>;
+    type gotX = Length<x>;
+
+    assert<gotX, 2>(t);
+    assert<gotT, 4>(t);
+});
+
+```
+
+### UnionizeTuple
+Gives a union of all values contained in a tuple.
+```ts
+test('Can get a union of all values in tuple', t => {
+    type t = ['hi', 'there', 'friend'];
+
+    type got = UnionizeTuple<t>;
+    type expected = 'hi' | 'there' | 'friend';
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+## Numbers
+
+### Add
+Adds two numbers together.
+```ts
+test('Can add two numbers', t => {
+    type fifty = Add<12, 38>;
+    assert<fifty, 50>(t);
+});
+
+```
+
+### IsOne
+Returns true if the number is equal to one.
+```ts
+test('Can check if a number is one', t => {
+    type notOne = IsOne<0>;
+    type one = IsOne<1>;
+    assert<notOne, False>(t);
+    assert<one, True>(t);
+});
+
+```
+
+### IsZero
+Returns true if the number is equal to zero.
+```ts
+test('Can check if a number is zero', t => {
+    type notZero = IsZero<1>;
+    type zero = IsZero<0>;
+    assert<notZero, False>(t);
+    assert<zero, True>(t);
+});
+
+```
+
+### Next
+Returns the number + 1.
+
+
+### NumberEqual
+Returns `True` if the numbers are equivalent
+```ts
+test('Can check if two numbers are equal', t => {
+    type notEqual = NumberEqual<22, 23>;
+    type equal = NumberEqual<12, 12>;
+    assert<notEqual, False>(t);
+    assert<equal, True>(t);
+});
+
+```
+
+### Numbers
+
+
+
+### NumberToString
+Returns the string type for a given number
+```ts
+test('Can get a number as a string', t => {
+    type str = NumberToString<22>;
+    assert<str, '22'>(t);
+});
+
+```
+
+### Prev
+Returns the number - 1.
+
+
+### Sub
+Subtracts the second from the first.
+```ts
+test('Can subtract two numbers', t => {
+    type ten = Sub<22, 12>;
+    assert<ten, 10>(t);
+});
+
+```
+
+## Conditionals
+
+### And
+
+```ts
+test('Conditions can be based on AND', t => {
+    type conditional<C extends Bool, D extends Bool> = If<And<C, D>, number, string>;
+    type gotFF = conditional<False, False>;
+    type gotFT = conditional<False, True>;
+    type gotTF = conditional<True, False>;
+    type gotTT = conditional<True, True>;
+
+    assert<gotFF, string>(t);
+    assert<gotFT, string>(t);
+    assert<gotTF, string>(t);
+    assert<gotTT, number>(t);
+});
+
+```
+
+### If
+
+```ts
+test('Can assign type conditionally', t => {
+    type conditional<C extends Bool> = If<C, number, string>;
+    type gotF = conditional<False>;
+    type gotT = conditional<True>;
+
+    assert<gotF, string>(t);
+    assert<gotT, number>(t);
+});
+
+```
+
+### Nand
+
+```ts
+test('Conditions can be based on NAND', t => {
+    assert<Nand<True, True>,   False>(t);
+    assert<Nand<False, True>,  True>(t);
+    assert<Nand<True, False>,  True>(t);
+    assert<Nand<False, False>, True>(t);
+});
+
+```
+
+### Not
+
+```ts
+test('Conditional logic can be inversed with NOT', t => {
+    type conditional<C extends Bool> = If<Not<C>, number, string>;
+    type gotF = conditional<False>;
+    type gotT = conditional<True>;
+
+    assert<gotF, number>(t);
+    assert<gotT, string>(t);
+});
+
+```
+
+### Or
+
+```ts
+test('Conditions can be based on OR', t => {
+    type conditional<C extends Bool, D extends Bool> = If<Or<C, D>, number, string>;
+    type gotFF = conditional<False, False>;
+    type gotFT = conditional<False, True>;
+    type gotTF = conditional<True, False>;
+    type gotTT = conditional<True, True>;
+
+    assert<gotFF, string>(t);
+    assert<gotFT, number>(t);
+    assert<gotTF, number>(t);
+    assert<gotTT, number>(t);
+});
+
+```
+
+### Xor
+
+```ts
+test('Conditions can be based on XOR', t => {
+    assert<Xor<True, True>,   False>(t);
+    assert<Xor<False, True>,  True>(t);
+    assert<Xor<True, False>,  True>(t);
+    assert<Xor<False, False>, False>(t);
+});
+
+```
+
+## Predicates
+
+### IsAny
+
+
+
+### IsArray
+
+
+
+### IsBoolean
+
+
+
+### IsFunction
+
+
+
+### IsNever
+
+
+
+### IsNil
+
+
+
+### IsNull
+
+
+
+### IsNumber
+
+
+
+### IsObject
+
+
+
+### IsString
+
+
+
+### IsStringFunction
+
+
+
+### IsType
+
+
+
+### IsUndefined
+
+
+
+## Runtime
 
 ### isKeyOf
-Type guard returning true if `k` is a key in `obj`.
+Type guard for any key, `k`.
+Marks `k` as a key of `T` if `k` is in `obj`.
 ```ts
-const obj = { a: '' };
-const k = 'a';
-if (isKeyOf(obj, k)) {
-    obj[k] = 'hi'; // typeof k === 'a'
-} else {
-    throw new Error('oops'); // typeof k === string
-}
+test('Can check if an object contains a key', t => {
+    const o = { a: 'hi', b: 22 };
+    const key1: string = 'a';
+
+    if (isKeyOf(o, key1)) {
+        assert<typeof key1, 'a' | 'b'>(t);
+        t.pass();
+    } else {
+        assert<typeof key1, string>(t);
+        t.fail();
+    }
+});
+
 ```
 
 ### objectKeys
 Same as `Object.keys` except that the returned type is an array of keys of the object.
 Note that for the same reason that `Object.keys` does not do this natively, this method _is not safe_ for objects on the perimeter of your code (user input, read in files, network requests etc.).
 ```ts
-const obj = { a: '', b: 22 };
-const keys = objectKeys(obj); // Array<'a' | 'b'>
+test('Can get keys of an object', t => {
+    const o = { a: 'hi', b: 22 };
+    const keys = objectKeys(o);
+
+    type K = typeof keys;
+    type expected = Array<'a' | 'b'>;
+    assert<K, expected>(t);
+    assert<expected, K>(t);
+
+    t.deepEqual(keys, ['a', 'b']);
+});
+
+```
+
+### Readonly
+Useful for marking object literals as readonly while still keeping type inference:
+`const obj = Readonly({ a: 22, b: 'yellow' });`
+
+
+### taggedObject
+Useful for tagged unions of objects (imagine redux reducers) this tags every sub-object with the key pointing to that sub-object.
+```ts
+test('Can generate a tagged object', t => {
+    const obj = {
+        a: { merp: 'hi' },
+        b: { merp: 'there' },
+        c: { merp: 'friend' },
+    };
+
+    const expected = {
+        a: { name: 'a' as 'a', merp: 'hi' },
+        b: { name: 'b' as 'b', merp: 'there' },
+        c: { name: 'c' as 'c', merp: 'friend' },
+    };
+
+    const got = taggedObject(obj, 'name');
+
+    t.deepEqual(got, expected);
+    assert<typeof got, typeof expected>(t);
+    assert<typeof expected, typeof got>(t);
+
+});
+
 ```
 
