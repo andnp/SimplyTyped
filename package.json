@@ -7,7 +7,7 @@
     "private": true,
     "scripts": {
         "doc": "ts-node scripts/generateDocumentation.ts > README.md",
-        "commitDocs": "npm run -s doc && git add README.md && git commit -m 'docs: generate documentation'",
+        "commitDocs": "sh scripts/commitDocsIfChanged.sh",
         "lint": "tslint --config tslint.json --project . --format stylish",
         "test": "npm run -s tsc && NODE_PATH=src/ ava",
         "test:ts2.8.3": "npm install --no-save typescript@2.8.3 && npm test",
