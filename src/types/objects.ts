@@ -195,7 +195,7 @@ export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
  */
 export type DeepReadonly<T> = Readonly<{
     [k in Keys<T>]:
-        T[k] extends any[] ? Array<DeepReadonly<T[k][number]>> :
+        T[k] extends any[] ? ReadonlyArray<DeepReadonly<T[k][number]>> :
         T[k] extends object ? DeepReadonly<T[k]> :
             T[k];
 }>;
