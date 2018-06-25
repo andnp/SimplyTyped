@@ -25,7 +25,7 @@ npm install --save-dev simplytyped
 
 **[Functions](#functions)**
 
-[AnyFunc](#anyfunc) - [ConstructorFunction](#constructorfunction) - [OverwriteReturn](#overwritereturn) - [Predicate](#predicate)
+[AnyFunc](#anyfunc) - [ArgsAsTuple](#argsastuple) - [ConstructorFunction](#constructorfunction) - [OverwriteReturn](#overwritereturn) - [Predicate](#predicate)
 
 **[Strings](#strings)**
 
@@ -506,6 +506,28 @@ test('Can define the type of a function that takes any arguments', t => {
 
     assert<got, expected>(t);
     assert<got2, expected2>(t);
+});
+
+```
+
+### ArgsAsTuple
+Returns a tuple type of a functions arguments up to 7.
+```ts
+test("Can get a tuple of function's argument types", t => {
+    type F0 = () => any;
+    type F1 = (x: number) => any;
+    type F2 = (x: number, y: string) => any;
+    type F3 = (x: number, y: string, z: boolean) => any;
+
+    type E0 = void[];
+    type E1 = [number];
+    type E2 = [number, string];
+    type E3 = [number, string, boolean];
+
+    assert<ArgsAsTuple<F0>, E0>(t);
+    assert<ArgsAsTuple<F1>, E1>(t);
+    assert<ArgsAsTuple<F2>, E2>(t);
+    assert<ArgsAsTuple<F3>, E3>(t);
 });
 
 ```
