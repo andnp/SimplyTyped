@@ -22,3 +22,25 @@ test('Can make nested object with arrays readonly', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
+
+test('Can make an object with functions readonly', t => {
+    type x = {
+        a: () => 22,
+        b: string,
+        c: {
+            d: boolean,
+        },
+    };
+
+    type expected = {
+        readonly a: () => 22,
+        readonly b: string,
+        readonly c: {
+            readonly d: boolean,
+        },
+    };
+    type got = DeepReadonly<x>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});

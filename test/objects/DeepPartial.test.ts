@@ -40,3 +40,26 @@ test('Can get a deep partial object with arrays', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
+
+test('Can get a deep partial object with functions', t => {
+    type x = {
+        a: () => 22,
+        b: string,
+        c: {
+            d: number,
+        },
+    };
+
+    type expected = {
+        a?: () => 22,
+        b?: string,
+        c?: {
+            d?: number,
+        },
+    };
+
+    type got = DeepPartial<x>;
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
