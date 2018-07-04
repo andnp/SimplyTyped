@@ -1,6 +1,6 @@
 import { Diff } from './strings';
 import { False, True } from './conditionals';
-import { AnyFunc } from 'types/functions';
+import { AnyFunc } from './functions';
 
 // -------
 // Helpers
