@@ -42,7 +42,7 @@
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^7.0.0",
-        "@types/node": "~10.5.0",
+        "@types/node": "~10.7.0",
         "ava": "~0.25.0",
         "commitlint": "^7.0.0",
         "husky": "^0.14.3",
