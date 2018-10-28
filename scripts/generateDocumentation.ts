@@ -149,8 +149,12 @@ console.log(markdown);
 
 
 /** True if this is visible outside this file, false otherwise */
-function isNodeExported(node: tsc.Node): boolean {
-    return (tsc.getCombinedModifierFlags(node) & tsc.ModifierFlags.Export) !== 0 || (!!node.parent && node.parent.kind === tsc.SyntaxKind.SourceFile); // tslint:disable-line no-bitwise
+function isNodeExported(node: tsc.Node | tsc.Declaration): boolean {
+    const declaration: tsc.Declaration = {
+        _declarationBrand: 'branded',
+        ...node,
+    };
+    return (tsc.getCombinedModifierFlags(declaration) & tsc.ModifierFlags.Export) !== 0 || (!!declaration.parent && declaration.parent.kind === tsc.SyntaxKind.SourceFile); // tslint:disable-line no-bitwise
 }
 
 // TODO: make this less atrocious

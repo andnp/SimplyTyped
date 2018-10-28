@@ -41,6 +41,15 @@ export type GetKey<T, K extends keyof any> = K extends Keys<T> ? T[K] : never;
 // Keys
 // ----
 /**
+ * Objects can be indexed by multiple types: `string`, `number`, `symbol`.
+ * For safe compatibility with typescript version, this type will always
+ * have the correct set of object key types for the current version of TS.
+ *
+ * This is useful for functions that must take a key, instead of `K extends string`,
+ * use `K extends ObjectKeys`.
+ */
+export type ObjectKeys = keyof any;
+/**
  * Typescript 2.9 introduced `number | symbol` as possible results from `keyof any`.
  * For backwards compatibility with objects containing only `string` keys, this will
  * exclude any `number | symbol` keys from `keyof`.

@@ -17,7 +17,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties)
+[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties)
 
 **[Utils](#utils)**
 
@@ -345,6 +345,15 @@ test('Can merge an object containing all strings as keys', t => {
 });
 
 ```
+
+### ObjectKeys
+Objects can be indexed by multiple types: `string`, `number`, `symbol`.
+For safe compatibility with typescript version, this type will always
+have the correct set of object key types for the current version of TS.
+
+This is useful for functions that must take a key, instead of `K extends string`,
+use `K extends ObjectKeys`.
+
 
 ### ObjectType
 Takes any type and makes it an object type.
