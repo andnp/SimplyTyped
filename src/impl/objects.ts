@@ -1,4 +1,4 @@
-import { DeepReadonly, Keys, TaggedObject } from '../types/objects';
+import { DeepReadonly, Keys, TaggedObject, ObjectKeys } from '../types/objects';
 
 /**
  * Type guard for any key, `k`.
@@ -34,7 +34,7 @@ export function Readonly<T extends object>(obj: T): DeepReadonly<T> { return obj
  * @param key the name of the "tag" parameter
  * @returns `obj` with the inner objects tagged with parameter `key` and the key pointing to that inner object
  */
-export function taggedObject<T extends Record<string, object>, K extends string>(obj: T, key: K): TaggedObject<T, K> {
+export function taggedObject<T extends Record<ObjectKeys, object>, K extends string>(obj: T, key: K): TaggedObject<T, K> {
     const keys = objectKeys(obj);
     return keys.reduce((collection: any, k) => {
         const inner: any = obj[k];
