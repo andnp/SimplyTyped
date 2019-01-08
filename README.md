@@ -17,7 +17,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties)
+[_StrictUnionHelper](#_strictunionhelper) - [AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
 
 **[Utils](#utils)**
 
@@ -52,6 +52,10 @@ npm install --save-dev simplytyped
 [isKeyOf](#iskeyof) - [objectKeys](#objectkeys) - [Readonly](#readonly) - [taggedObject](#taggedobject)
 
 ## Objects
+
+### _StrictUnionHelper
+
+
 
 ### AllKeys
 Gets all keys between two objects.
@@ -466,6 +470,31 @@ test('Can get keys that are same between objects', t => {
 
 ```
 
+### StrictUnion
+Makes a union 'strict', such that members are disallowed from including the keys of other members
+For example, `{x: 1, y: 1}` is a valid member of `{x: number} | {y: number}`,
+     but it's not a valid member of StrictUnion<{x: number} | {y: number}>.
+```ts
+test('disallow union members with mixed properties', t => {
+    type a = { a: number };
+    type b = { b: string };
+
+    type good1 = {a: 1};
+    type good2 = {b: "b"};
+    type bad = {a: 1, b: "foo"};
+
+    type isStrict<T> = T extends Array<StrictUnion<a | b>> ? 'Yes' : 'No';
+
+    type strictUnion = [good1, good2];
+    type nonStrictUnion = [good1, good2, bad];
+
+    assert<isStrict<strictUnion>, 'Yes'>(t);
+    assert<isStrict<nonStrictUnion>, 'No'>(t);
+
+});
+
+```
+
 ### StringKeys
 Typescript 2.9 introduced `number | symbol` as possible results from `keyof any`.
 For backwards compatibility with objects containing only `string` keys, this will
@@ -485,6 +514,23 @@ test('Can get a union of all values in an object', t => {
 
     type got = UnionizeProperties<a>;
     type expected = 'hi' | 'there' | 'friend';
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+```
+
+### UnionKeys
+
+```ts
+test('Can get all keys between objects in a union', t => {
+    type a = { w: number, x: string };
+    type b = { x: number, z: boolean };
+    type c = { y: boolean, z: string };
+
+    type got = UnionKeys<a | b | c>;
+    type expected = 'w' | 'x' | 'y' | 'z';
 
     assert<got, expected>(t);
     assert<expected, got>(t);
