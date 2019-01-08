@@ -102,6 +102,15 @@ export type DiffKeys<T, U> = Diff<Keys<T>, Keys<U>>;
  */
 export type HasKey<T, K extends keyof any> = K extends Keys<T> ? True : False;
 
+/**
+ * @param T the union to get the keys of
+ * @returns a union containing all the keys of members of `T`
+ */
+export type UnionKeys<T>
+    // Using a conditional here, so that it distributes over members of the union
+    // See https://www.typescriptlang.org/docs/handbook/advanced-types.html#distributive-conditional-types
+    = T extends any ? keyof T : never;
+
 // -------------
 // Manipulations
 // -------------
