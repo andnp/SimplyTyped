@@ -243,3 +243,23 @@ export interface ConstructorFor<T extends object> {
     new (...args: any[]): T;
     prototype: T;
 }
+
+// ------
+// Unions
+// ------
+
+/**
+ * Makes a union 'strict', such that members are disallowed from including the keys of other members
+ * For example, `{x: 1, y: 1}` is a valid member of `{x: number} | {y: number}`,
+ *     but it's not a valid member of StrictUnion<{x: number} | {y: number}>.
+ * @param T a union type
+ * @returns a the strict version of `T`
+ */
+export type StrictUnion<T> = _StrictUnionHelper<T, T>;
+
+// UnionMember is actually passed as the whole union, but it's used in a distributive conditional
+//   to refer to each individual member of the union
+export type _StrictUnionHelper<UnionMember, Union> =
+    UnionMember extends any ?
+        UnionMember & Partial<Record<Exclude<UnionKeys<Union>, keyof UnionMember>, never>>
+    : never;
