@@ -259,6 +259,7 @@ export type StrictUnion<T> = _StrictUnionHelper<T, T>;
 
 // UnionMember is actually passed as the whole union, but it's used in a distributive conditional
 //   to refer to each individual member of the union
+/** no-doc */
 export type _StrictUnionHelper<UnionMember, Union> =
     UnionMember extends any ?
         UnionMember & Partial<Record<Exclude<UnionKeys<Union>, keyof UnionMember>, never>>

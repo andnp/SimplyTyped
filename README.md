@@ -17,7 +17,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[_StrictUnionHelper](#_strictunionhelper) - [AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
+[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
 
 **[Utils](#utils)**
 
@@ -52,10 +52,6 @@ npm install --save-dev simplytyped
 [isKeyOf](#iskeyof) - [objectKeys](#objectkeys) - [Readonly](#readonly) - [taggedObject](#taggedobject)
 
 ## Objects
-
-### _StrictUnionHelper
-
-
 
 ### AllKeys
 Gets all keys between two objects.
