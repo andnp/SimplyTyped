@@ -13,9 +13,7 @@
         "test:all": "sh scripts/testTsVersions.sh",
         "tsc": "tsc",
         "prepub": "rm -rf dist && npm -s run tsc && ts-node scripts/preparePublish.ts",
-        "release": "npm run -s prepub && cd dist/src && npx semantic-release",
-        "commitmsg": "commitlint -e $GIT_PARAMS",
-        "prepush": "npm run -s lint && npm run -s test && npm run -s commitDocs"
+        "release": "npm run -s prepub && cd dist/src && npx semantic-release"
     },
     "repository": {
         "type": "git",
@@ -58,5 +56,11 @@
         "extends": [
             "@commitlint/config-conventional"
         ]
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -e $GIT_PARAMS",
+            "pre-push": "npm run -s lint && npm run -s test && npm run -s commitDocs"
+        }
     }
 }
