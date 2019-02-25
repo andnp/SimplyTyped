@@ -21,7 +21,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [Unknown](#unknown)
+[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor) - [Unknown](#unknown)
 
 **[Functions](#functions)**
 
@@ -579,6 +579,18 @@ test('Will make a type not nullable', t => {
     type got = NonNullable<Nullable<string>>;
 
     assert<got, string>(t);
+});
+
+```
+
+### PromiseOr
+Returns the given type or a Promise containing that type.
+```ts
+test('Will give back a promise containing given type union the type itself', t => {
+    type got = PromiseOr<string>;
+    type expected = Promise<string> | string;
+
+    assert<got, expected>(t);
 });
 
 ```
