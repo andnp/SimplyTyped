@@ -32,3 +32,10 @@ export declare class Tagged<N extends string> { private _nominal_: N; }
  * @returns a type that is equal only to itself, but can be used like its contained type `T`
  */
 export type Nominal<T, N extends string> = T & Tagged<N>;
+
+/**
+ * Returns the given type or a Promise containing that type.
+ * @param T the inner type for the promise
+ * @returns a the type union with a promise containing the given type
+ */
+export type PromiseOr<T> = Promise<T> | T;
