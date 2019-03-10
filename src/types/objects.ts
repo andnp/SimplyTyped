@@ -109,7 +109,7 @@ export type HasKey<T, K extends keyof any> = K extends Keys<T> ? True : False;
 export type UnionKeys<T>
     // Using a conditional here, so that it distributes over members of the union
     // See https://www.typescriptlang.org/docs/handbook/advanced-types.html#distributive-conditional-types
-    = T extends any ? keyof T : never;
+    = T extends unknown ? keyof T : never;
 
 // -------------
 // Manipulations
@@ -261,6 +261,6 @@ export type StrictUnion<T> = _StrictUnionHelper<T, T>;
 //   to refer to each individual member of the union
 /** no-doc */
 export type _StrictUnionHelper<UnionMember, Union> =
-    UnionMember extends any ?
+    UnionMember extends unknown ?
         UnionMember & Partial<Record<Exclude<UnionKeys<Union>, keyof UnionMember>, never>>
     : never;
