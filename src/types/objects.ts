@@ -35,7 +35,7 @@ export type CombineObjects<T extends object, U extends object> = ObjectType<T & 
  * @param K Key to query object for value
  * @returns `T[K]` if the key exists, `never` otherwise
  */
-export type GetKey<T, K extends keyof any> = K extends Keys<T> ? T[K] : never;
+export type GetKey<T, K extends ObjectKeys> = K extends Keys<T> ? T[K] : never;
 
 // ----
 // Keys
@@ -93,14 +93,14 @@ export type AllKeys<T, U> = Keys<T> | Keys<U>;
  * @param U second type from which keys will be pulled
  * @returns keys of `T` minus the keys of `U`
  */
-export type DiffKeys<T, U> = Diff<Keys<T>, Keys<U>>;
+export type DiffKeys<T, U> = Exclude<Keys<T>, Keys<U>>;
 /**
  * Returns `True` if a key, `K`, is present in a type, `T`, else `False`.
  * @param T type to check for existence of key `K`.
  * @param K key to query `T` for
  * @returns `True` if `K` is a key of `T`. Else `False`.
  */
-export type HasKey<T, K extends keyof any> = K extends Keys<T> ? True : False;
+export type HasKey<T, K extends ObjectKeys> = K extends Keys<T> ? True : False;
 
 /**
  * @param T the union to get the keys of
@@ -160,7 +160,7 @@ export type Merge<T extends object, U extends object> = Overwrite<T, U> & U;
  * @param Key the key to add to each inner object as the tag property
  * @returns a record where each key of the record is now the `Key` property of the inner object
  */
-export type TaggedObject<T extends Record<keyof any, object>, Key extends keyof any> = {
+export type TaggedObject<T extends Record<ObjectKeys, object>, Key extends ObjectKeys> = {
     [K in Keys<T>]: T[K] & Record<Key, K>;
 };
 

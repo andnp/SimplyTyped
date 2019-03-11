@@ -6,7 +6,7 @@ import { DeepReadonly, Keys, TaggedObject, ObjectKeys } from '../types/objects';
  * @param obj object to query for key `k`
  * @param k key to check existence in `obj`
  */
-export function isKeyOf<T extends object>(obj: T, k: keyof any): k is keyof T {
+export function isKeyOf<T extends object>(obj: T, k: ObjectKeys): k is keyof T {
     return k in obj;
 }
 
