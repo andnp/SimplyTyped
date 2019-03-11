@@ -1,5 +1,4 @@
 import { False, True, And, Or, Not } from './conditionals';
-import { Keys } from './objects';
 import { AnyFunc } from './functions';
 
 /** no-doc */
@@ -7,15 +6,15 @@ export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnP
 /** no-doc */
 export type ArrayPrototypeKeys = keyof unknown[];
 /** no-doc */
-export type NumberPrototypeKeys = Keys<number>;
+export type NumberPrototypeKeys = keyof number;
 /** no-doc */
-export type BooleanPrototypeKeys = Keys<false>;
+export type BooleanPrototypeKeys = keyof false;
 /** no-doc */
-export type StringPrototypeKeys = Keys<string>;
+export type StringPrototypeKeys = keyof string;
 /** no-doc */
-export type ObjectPrototypeKeys = Keys<Object>; // tslint:disable-line
+export type ObjectPrototypeKeys = keyof Object; // tslint:disable-line
 /** no-doc */
-export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
+export type FunctionPrototypeKeys = keyof Function; // tslint:disable-line
 
 export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;
 export type IsType<T, X> = X extends T ? True : False;

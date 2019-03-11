@@ -1,4 +1,4 @@
-import { DeepReadonly, Keys, TaggedObject, ObjectKeys } from '../types/objects';
+import { DeepReadonly, TaggedObject } from '../types/objects';
 
 /**
  * Type guard for any key, `k`.
@@ -17,7 +17,7 @@ export function isKeyOf<T extends object>(obj: T, k: ObjectKeys): k is keyof T {
  * @returns an array of keys from `obj`
  */
 export function objectKeys<T extends object>(obj: T) {
-    return Object.keys(obj) as Array<Keys<T>>;
+    return Object.keys(obj) as Array<keyof T>;
 }
 
 /**
