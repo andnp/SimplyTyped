@@ -174,7 +174,7 @@ export type TaggedObject<T extends Record<ObjectKeys, object>, Key extends Objec
  */
 export type DeepPartial<T> = Partial<{
     [k in Keys<T>]:
-        T[k] extends any[] ? Array<DeepPartial<T[k][number]>> :
+        T[k] extends Array<unknown> ? Array<DeepPartial<T[k][number]>> :
         T[k] extends AnyFunc ? T[k] :
         T[k] extends object ? DeepPartial<T[k]> :
             T[k];
@@ -214,7 +214,7 @@ export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
  */
 export type DeepReadonly<T> = Readonly<{
     [k in Keys<T>]:
-        T[k] extends any[] ? ReadonlyArray<DeepReadonly<T[k][number]>> :
+        T[k] extends Array<unknown> ? ReadonlyArray<DeepReadonly<T[k][number]>> :
         T[k] extends AnyFunc ? T[k] :
         T[k] extends object ? DeepReadonly<T[k]> :
             T[k];
