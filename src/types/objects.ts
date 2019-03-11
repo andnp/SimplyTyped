@@ -1,4 +1,3 @@
-import { Diff } from './strings';
 import { False, True } from './conditionals';
 import { AnyFunc } from './functions';
 
@@ -127,7 +126,7 @@ export type UnionizeProperties<T extends object> = T[Keys<T>];
  * @param K the union of keys to remove from `T`
  * @returns `T` with the keys `K` removed
  */
-export type Omit<T extends object, K extends Keys<T>> = Pick<T, Diff<Keys<T>, K>>;
+export type Omit<T extends object, K extends Keys<T>> = Pick<T, Exclude<Keys<T>, K>>;
 /**
  * Returns only the shared properties between two objects.
  * All shared properties must be the same type.
