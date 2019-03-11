@@ -22,7 +22,7 @@ export type AnyFunc<R = any> = (...args: any[]) => R;
  * @returns the function `F` with new return value `R`
  */
 export type OverwriteReturn<F extends AnyFunc, R> =
-    F extends ((...x: infer T) => unknown) ? ((...x: T) => R) : AnyFunc<R>;
+    F extends ((...x: infer T) => unknown) ? ((...x: T) => R) : never;
 
 /**
  * Returns a tuple type of a functions arguments up to 7.
@@ -30,4 +30,4 @@ export type OverwriteReturn<F extends AnyFunc, R> =
  * @returns a tuple containing `F`'s argument types
  */
 export type ArgsAsTuple<F extends AnyFunc> =
-    F extends ((...x: infer T) => unknown) ? T : any[];
+    F extends ((...x: infer T) => unknown) ? T : never;
