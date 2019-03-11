@@ -17,7 +17,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
+[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
 
 **[Utils](#utils)**
 
@@ -221,7 +221,7 @@ test('Can make an object with functions readonly', t => {
 
 ### DiffKeys
 Gets all of the keys that are different between two objects.
-This is a set difference between `Keys<T>` and `Keys<U>`.
+This is a set difference between `keyof T` and `keyof U`.
 Note that calling this with arguments reversed will have different results.
 ```ts
 test('Can get all keys that are different between objects', t => {
@@ -276,20 +276,6 @@ test('Can get an object with only shared properties', t => {
 
     type expected = { y: string };
     type got = Intersect<a, b>;
-
-    assert<got, expected>(t);
-    assert<expected, got>(t);
-});
-
-```
-
-### Keys
-No different than `keyof`, but can look a bit nicer when nesting many types deep.
-```ts
-test('Can get keys from object', t => {
-    type obj = { x: number, y: string, z: boolean };
-    type expected = 'x' | 'y' | 'z';
-    type got = Keys<obj>;
 
     assert<got, expected>(t);
     assert<expected, got>(t);
