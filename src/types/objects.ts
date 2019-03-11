@@ -173,8 +173,8 @@ export type TaggedObject<T extends Record<ObjectKeys, object>, Key extends Objec
  * @returns `Partial<T>` recursively through all properties of `T`
  */
 export type DeepPartial<T> = Partial<{
-    [k in Keys<T>]:
-        T[k] extends Array<unknown> ? Array<DeepPartial<T[k][number]>> :
+    [k in keyof T]:
+        T[k] extends unknown[] ? Array<DeepPartial<T[k][number]>> :
         T[k] extends AnyFunc ? T[k] :
         T[k] extends object ? DeepPartial<T[k]> :
             T[k];
@@ -213,8 +213,8 @@ export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
  * @returns `T` with all keys recursively marked as readonly
  */
 export type DeepReadonly<T> = Readonly<{
-    [k in Keys<T>]:
-        T[k] extends Array<unknown> ? ReadonlyArray<DeepReadonly<T[k][number]>> :
+    [k in keyof T]:
+        T[k] extends unknown[] ? ReadonlyArray<DeepReadonly<T[k][number]>> :
         T[k] extends AnyFunc ? T[k] :
         T[k] extends object ? DeepReadonly<T[k]> :
             T[k];

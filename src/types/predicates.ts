@@ -5,7 +5,7 @@ import { AnyFunc } from './functions';
 /** no-doc */
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
 /** no-doc */
-export type ArrayPrototypeKeys = Keys<Array<unknown>>;
+export type ArrayPrototypeKeys = keyof unknown[];
 /** no-doc */
 export type NumberPrototypeKeys = Keys<number>;
 /** no-doc */
@@ -19,7 +19,7 @@ export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
 
 export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;
 export type IsType<T, X> = X extends T ? True : False;
-export type IsArray<T> = T extends Array<unknown> ? True : False;
+export type IsArray<T> = T extends unknown[] ? True : False;
 export type IsNumber<T> = T extends number ? True : False;
 export type IsString<T> = T extends string ? True : False;
 export type IsFunction<T> =
