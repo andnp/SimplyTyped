@@ -9,7 +9,7 @@ test("Can get a tuple of function's argument types", t => {
     type F2 = (x: number, y: string) => any;
     type F3 = (x: number, y: string, z: boolean) => any;
 
-    type E0 = void[];
+    type E0 = [];
     type E1 = [number];
     type E2 = [number, string];
     type E3 = [number, string, boolean];
