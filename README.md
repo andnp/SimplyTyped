@@ -21,7 +21,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor) - [Unknown](#unknown)
+[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor)
 
 **[Functions](#functions)**
 
@@ -29,7 +29,7 @@ npm install --save-dev simplytyped
 
 **[Strings](#strings)**
 
-[Diff](#diff) - [DropString](#dropstring) - [StringEqual](#stringequal) - [UnionContains](#unioncontains)
+[DropString](#dropstring) - [StringEqual](#stringequal) - [UnionContains](#unioncontains)
 
 **[Tuples](#tuples)**
 
@@ -595,10 +595,6 @@ test('Will give back a promise containing given type union the type itself', t =
 
 ```
 
-### Unknown
-A constant type that mimics an unknowable type.
-
-
 ## Functions
 
 ### AnyFunc
@@ -627,7 +623,7 @@ test("Can get a tuple of function's argument types", t => {
     type F2 = (x: number, y: string) => any;
     type F3 = (x: number, y: string, z: boolean) => any;
 
-    type E0 = void[];
+    type E0 = [];
     type E1 = [number];
     type E2 = [number, string];
     type E3 = [number, string, boolean];
@@ -690,22 +686,6 @@ test('Can build a predicate function with unknown argument types', t => {
 ```
 
 ## Strings
-
-### Diff
-
-```ts
-test('Can get difference between unions of strings', t => {
-    type a = 'hi' | 'there';
-    type b = 'hi' | 'my' | 'friend';
-
-    type gotA = Diff<a, b>;
-    type gotB = Diff<b, a>;
-
-    assert<gotA, 'there'>(t);
-    assert<gotB, 'my' | 'friend'>(t);
-});
-
-```
 
 ### DropString
 
