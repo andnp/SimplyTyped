@@ -11,9 +11,9 @@ export type BooleanPrototypeKeys = keyof false;
 /** no-doc */
 export type StringPrototypeKeys = keyof string;
 /** no-doc */
-export type ObjectPrototypeKeys = keyof Object; // tslint:disable-line
+export type ObjectPrototypeKeys = keyof Object;
 /** no-doc */
-export type FunctionPrototypeKeys = keyof Function; // tslint:disable-line
+export type FunctionPrototypeKeys = keyof Function;
 
 export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;
 export type IsType<T, X> = X extends T ? True : False;
@@ -23,7 +23,7 @@ export type IsString<T> = T extends string ? True : False;
 export type IsFunction<T> =
     Or<
         T extends Function ? True : False,
-        T extends Function ? True : False>; // tslint:disable-line
+        T extends Function ? True : False>;
 
 export type IsStringFunction<T extends string> = And<IsString<T>, IsNever<T>>;
 export type IsBoolean<T> = T extends boolean ? True : False;

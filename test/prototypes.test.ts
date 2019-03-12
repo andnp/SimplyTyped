@@ -68,7 +68,7 @@ test('Can check if a type is a string', t => {
 
 test('Can check if a type is a function', t => {
     assert<IsFunction<func>, True>(t);
-    assert<IsFunction<Function>, True>(t); // tslint:disable-line
+    assert<IsFunction<Function>, True>(t);
 
     assert<IsFunction<obj>, False>(t);
     assert<IsFunction<str>, False>(t);
