@@ -1,5 +1,4 @@
 import { False, True } from './conditionals';
-import { AnyFunc } from './functions';
 
 // -------
 // Helpers
@@ -169,7 +168,7 @@ export type TaggedObject<T extends Record<keyof any, object>, Key extends keyof 
 export type DeepPartial<T> = Partial<{
     [k in keyof T]:
         T[k] extends unknown[] ? Array<DeepPartial<T[k][number]>> :
-        T[k] extends AnyFunc ? T[k] :
+        T[k] extends Function ? T[k] :
         T[k] extends object ? DeepPartial<T[k]> :
             T[k];
 }>;
@@ -209,7 +208,7 @@ export type Optional<T extends object, K extends keyof T> = CombineObjects<
 export type DeepReadonly<T> = Readonly<{
     [k in keyof T]:
         T[k] extends unknown[] ? ReadonlyArray<DeepReadonly<T[k][number]>> :
-        T[k] extends AnyFunc ? T[k] :
+        T[k] extends Function ? T[k] :
         T[k] extends object ? DeepReadonly<T[k]> :
             T[k];
 }>;

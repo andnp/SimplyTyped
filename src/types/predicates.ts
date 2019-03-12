@@ -1,5 +1,4 @@
 import { False, True, And, Or, Not } from './conditionals';
-import { AnyFunc } from './functions';
 
 /** no-doc */
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
@@ -23,7 +22,7 @@ export type IsNumber<T> = T extends number ? True : False;
 export type IsString<T> = T extends string ? True : False;
 export type IsFunction<T> =
     Or<
-        T extends AnyFunc ? True : False,
+        T extends Function ? True : False,
         T extends Function ? True : False>; // tslint:disable-line
 
 export type IsStringFunction<T extends string> = And<IsString<T>, IsNever<T>>;
