@@ -8,7 +8,7 @@ export type ConstructorFunction<T extends object> = new (...args: any[]) => T;
 /**
  * This is a function that takes some args and returns a boolean
  */
-export type Predicate<A = any> = If<IsAny<A>, (...args: any[]) => boolean, (arg: A) => boolean>;
+export type Predicate<A = any> = (arg: A) => boolean;
 /**
  * Concisely and cleanly define an arbitrary function.
  * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
