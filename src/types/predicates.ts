@@ -1,21 +1,19 @@
 import { False, True, And, Or, Not } from './conditionals';
-import { Keys } from './objects';
-import { AnyFunc } from './functions';
 
 /** no-doc */
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
 /** no-doc */
 export type ArrayPrototypeKeys = keyof unknown[];
 /** no-doc */
-export type NumberPrototypeKeys = Keys<number>;
+export type NumberPrototypeKeys = keyof number;
 /** no-doc */
-export type BooleanPrototypeKeys = Keys<false>;
+export type BooleanPrototypeKeys = keyof false;
 /** no-doc */
-export type StringPrototypeKeys = Keys<string>;
+export type StringPrototypeKeys = keyof string;
 /** no-doc */
-export type ObjectPrototypeKeys = Keys<Object>; // tslint:disable-line
+export type ObjectPrototypeKeys = keyof Object;
 /** no-doc */
-export type FunctionPrototypeKeys = Keys<Function>; // tslint:disable-line
+export type FunctionPrototypeKeys = keyof Function;
 
 export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;
 export type IsType<T, X> = X extends T ? True : False;
@@ -24,8 +22,8 @@ export type IsNumber<T> = T extends number ? True : False;
 export type IsString<T> = T extends string ? True : False;
 export type IsFunction<T> =
     Or<
-        T extends AnyFunc ? True : False,
-        T extends Function ? True : False>; // tslint:disable-line
+        T extends Function ? True : False,
+        T extends Function ? True : False>;
 
 export type IsStringFunction<T extends string> = And<IsString<T>, IsNever<T>>;
 export type IsBoolean<T> = T extends boolean ? True : False;

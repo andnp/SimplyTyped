@@ -1,5 +1,4 @@
 import { False, True } from './conditionals';
-import { AnyFunc } from './functions';
 
 // -------
 // Helpers
@@ -15,7 +14,7 @@ export type PlainObject = Record<string, any>;
  * @returns An object formed by the key, value pairs of T
  */
 export type ObjectType<T> = {
-    [k in Keys<T>]: T[k];
+    [k in keyof T]: T[k];
 };
 /**
  * Takes two objects and returns their intersection.
@@ -34,7 +33,7 @@ export type CombineObjects<T extends object, U extends object> = ObjectType<T & 
  * @param K Key to query object for value
  * @returns `T[K]` if the key exists, `never` otherwise
  */
-export type GetKey<T, K extends ObjectKeys> = K extends Keys<T> ? T[K] : never;
+export type GetKey<T, K extends keyof any> = K extends keyof T ? T[K] : never;
 
 // ----
 // Keys
@@ -55,13 +54,7 @@ export type ObjectKeys = keyof any;
  * @param T type from which to get keys
  * @returns keys of `T` that extend `string`
  */
-export type StringKeys<T> = Exclude<Keys<T>, number | symbol>;
-/**
- * No different than `keyof`, but can look a bit nicer when nesting many types deep.
- * @param T type from which to get keys
- * @returns keys of `T` that extend `string | number | symbol`
- */
-export type Keys<T> = keyof T;
+export type StringKeys<T> = Exclude<keyof T, number | symbol>;
 /**
  * When an object has optional or readonly keys, that information is contained within the key.
  * When using optional/readonly keys in another object, they will retain optional/readonly status.
@@ -69,37 +62,37 @@ export type Keys<T> = keyof T;
  * @param T type from which to get keys
  * @returns keys of `T` without status modifiers (readonly/optional)
  */
-export type PureKeys<T> = Record<Keys<T>, Keys<T>>[Keys<T>];
+export type PureKeys<T> = Record<keyof T, keyof T>[keyof T];
 /**
  * Gets all of the keys that are shared between two objects.
  * @param T first type from which keys will be pulled
  * @param U second type from which keys will be pulled
  * @returns the keys that both `T` and `U` have in common.
  */
-export type SharedKeys<T, U> = Keys<T> & Keys<U>;
+export type SharedKeys<T, U> = keyof T & keyof U;
 /**
  * Gets all keys between two objects.
  * @param T first type from which keys will be pulled
  * @param U second type from which keys will be pulled
  * @returns the keys of `T` in addition to the keys of `U`
  */
-export type AllKeys<T, U> = Keys<T> | Keys<U>;
+export type AllKeys<T, U> = keyof T | keyof U;
 /**
  * Gets all of the keys that are different between two objects.
- * This is a set difference between `Keys<T>` and `Keys<U>`.
+ * This is a set difference between `keyof T` and `keyof U`.
  * Note that calling this with arguments reversed will have different results.
  * @param T first type from which keys will be pulled
  * @param U second type from which keys will be pulled
  * @returns keys of `T` minus the keys of `U`
  */
-export type DiffKeys<T, U> = Exclude<Keys<T>, Keys<U>>;
+export type DiffKeys<T, U> = Exclude<keyof T, keyof U>;
 /**
  * Returns `True` if a key, `K`, is present in a type, `T`, else `False`.
  * @param T type to check for existence of key `K`.
  * @param K key to query `T` for
  * @returns `True` if `K` is a key of `T`. Else `False`.
  */
-export type HasKey<T, K extends ObjectKeys> = K extends Keys<T> ? True : False;
+export type HasKey<T, K extends keyof any> = K extends keyof T ? True : False;
 
 /**
  * @param T the union to get the keys of
@@ -118,7 +111,7 @@ export type UnionKeys<T>
  * @param T the object whose property values will be unionized
  * @returns a union of the right-side values of `T`
  */
-export type UnionizeProperties<T extends object> = T[Keys<T>];
+export type UnionizeProperties<T extends object> = T[keyof T];
 /**
  * Gives back an object with listed keys removed.
  * This is the opposite of `Pick`.
@@ -126,7 +119,7 @@ export type UnionizeProperties<T extends object> = T[Keys<T>];
  * @param K the union of keys to remove from `T`
  * @returns `T` with the keys `K` removed
  */
-export type Omit<T extends object, K extends Keys<T>> = Pick<T, Exclude<Keys<T>, K>>;
+export type Omit<T extends object, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /**
  * Returns only the shared properties between two objects.
  * All shared properties must be the same type.
@@ -159,8 +152,8 @@ export type Merge<T extends object, U extends object> = Overwrite<T, U> & U;
  * @param Key the key to add to each inner object as the tag property
  * @returns a record where each key of the record is now the `Key` property of the inner object
  */
-export type TaggedObject<T extends Record<ObjectKeys, object>, Key extends ObjectKeys> = {
-    [K in Keys<T>]: T[K] & Record<Key, K>;
+export type TaggedObject<T extends Record<keyof any, object>, Key extends keyof any> = {
+    [K in keyof T]: T[K] & Record<Key, K>;
 };
 
 // ---------
@@ -175,7 +168,7 @@ export type TaggedObject<T extends Record<ObjectKeys, object>, Key extends Objec
 export type DeepPartial<T> = Partial<{
     [k in keyof T]:
         T[k] extends unknown[] ? Array<DeepPartial<T[k][number]>> :
-        T[k] extends AnyFunc ? T[k] :
+        T[k] extends Function ? T[k] :
         T[k] extends object ? DeepPartial<T[k]> :
             T[k];
 }>;
@@ -185,7 +178,7 @@ export type DeepPartial<T> = Partial<{
  * @returns `T` with all fields marked required
  */
 export type AllRequired<T extends object> = {
-    [K in Keys<T>]-?: NonNullable<T[K]>
+    [K in keyof T]-?: NonNullable<T[K]>
 };
 /**
  * Mark specific keys, `K`, of `T` as required.
@@ -193,7 +186,7 @@ export type AllRequired<T extends object> = {
  * @param K keys of `T` that will be marked required
  * @returns `T` with keys, `K`, marked as required
  */
-export type Required<T extends object, K extends Keys<T>> = CombineObjects<
+export type Required<T extends object, K extends keyof T> = CombineObjects<
     {[k in K]-?: NonNullable<T[k]> },
     Omit<T, K>
 >;
@@ -203,7 +196,7 @@ export type Required<T extends object, K extends Keys<T>> = CombineObjects<
  * @param K keys of `T` that will be marked optional
  * @returns `T` with keys, `K`, marked as optional
  */
-export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
+export type Optional<T extends object, K extends keyof T> = CombineObjects<
     {[k in K]?: T[k] | undefined },
     Omit<T, K>
 >;
@@ -215,7 +208,7 @@ export type Optional<T extends object, K extends Keys<T>> = CombineObjects<
 export type DeepReadonly<T> = Readonly<{
     [k in keyof T]:
         T[k] extends unknown[] ? ReadonlyArray<DeepReadonly<T[k][number]>> :
-        T[k] extends AnyFunc ? T[k] :
+        T[k] extends Function ? T[k] :
         T[k] extends object ? DeepReadonly<T[k]> :
             T[k];
 }>;
