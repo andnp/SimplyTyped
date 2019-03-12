@@ -14,11 +14,6 @@ export type NoInfer<T> = T & ObjectType<T>;
  * @returns `T | null | undefined`
  */
 export type Nullable<T> = T | null | undefined;
-/**
- * A constant type that mimics an unknowable type.
- * @returns `{} | null | undefined`
- */
-export type Unknown = {} | null | undefined;
 
 /**
  * no-doc - This is a helper for `Nominal` and is not useful on its own

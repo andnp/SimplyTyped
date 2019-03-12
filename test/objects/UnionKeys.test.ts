@@ -1,7 +1,7 @@
 import test from 'ava';
 import { assert } from '../helpers/assert';
 
-import { AllKeys, UnionKeys } from '../../src';
+import { UnionKeys } from '../../src';
 
 test('Can get all keys between objects in a union', t => {
     type a = { w: number, x: string };

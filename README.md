@@ -17,11 +17,11 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [Keys](#keys) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
+[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
 
 **[Utils](#utils)**
 
-[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor) - [Unknown](#unknown)
+[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor)
 
 **[Functions](#functions)**
 
@@ -29,7 +29,7 @@ npm install --save-dev simplytyped
 
 **[Strings](#strings)**
 
-[Diff](#diff) - [DropString](#dropstring) - [StringEqual](#stringequal) - [UnionContains](#unioncontains)
+[DropString](#dropstring) - [StringEqual](#stringequal) - [UnionContains](#unioncontains)
 
 **[Tuples](#tuples)**
 
@@ -221,7 +221,7 @@ test('Can make an object with functions readonly', t => {
 
 ### DiffKeys
 Gets all of the keys that are different between two objects.
-This is a set difference between `Keys<T>` and `Keys<U>`.
+This is a set difference between `keyof T` and `keyof U`.
 Note that calling this with arguments reversed will have different results.
 ```ts
 test('Can get all keys that are different between objects', t => {
@@ -276,20 +276,6 @@ test('Can get an object with only shared properties', t => {
 
     type expected = { y: string };
     type got = Intersect<a, b>;
-
-    assert<got, expected>(t);
-    assert<expected, got>(t);
-});
-
-```
-
-### Keys
-No different than `keyof`, but can look a bit nicer when nesting many types deep.
-```ts
-test('Can get keys from object', t => {
-    type obj = { x: number, y: string, z: boolean };
-    type expected = 'x' | 'y' | 'z';
-    type got = Keys<obj>;
 
     assert<got, expected>(t);
     assert<expected, got>(t);
@@ -595,10 +581,6 @@ test('Will give back a promise containing given type union the type itself', t =
 
 ```
 
-### Unknown
-A constant type that mimics an unknowable type.
-
-
 ## Functions
 
 ### AnyFunc
@@ -627,7 +609,7 @@ test("Can get a tuple of function's argument types", t => {
     type F2 = (x: number, y: string) => any;
     type F3 = (x: number, y: string, z: boolean) => any;
 
-    type E0 = void[];
+    type E0 = [];
     type E1 = [number];
     type E2 = [number, string];
     type E3 = [number, string, boolean];
@@ -690,22 +672,6 @@ test('Can build a predicate function with unknown argument types', t => {
 ```
 
 ## Strings
-
-### Diff
-
-```ts
-test('Can get difference between unions of strings', t => {
-    type a = 'hi' | 'there';
-    type b = 'hi' | 'my' | 'friend';
-
-    type gotA = Diff<a, b>;
-    type gotB = Diff<b, a>;
-
-    assert<gotA, 'there'>(t);
-    assert<gotB, 'my' | 'friend'>(t);
-});
-
-```
 
 ### DropString
 

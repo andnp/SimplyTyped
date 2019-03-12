@@ -5,6 +5,7 @@
     ],
     "rules": {
         "arrow-parens": false,
+        "ban-types": false,
         "curly": false,
         "indent": [
             true,
