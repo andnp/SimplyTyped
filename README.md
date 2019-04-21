@@ -21,7 +21,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor)
+[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor) - [UnionToIntersection](#uniontointersection)
 
 **[Functions](#functions)**
 
@@ -575,6 +575,32 @@ Returns the given type or a Promise containing that type.
 test('Will give back a promise containing given type union the type itself', t => {
     type got = PromiseOr<string>;
     type expected = Promise<string> | string;
+
+    assert<got, expected>(t);
+});
+
+```
+
+### UnionToIntersection
+Defines an intersection type of all union items.
+```ts
+test('Union of Strings', t => {
+    type got = UnionToIntersection<'hi' | 'there'>;
+    type expected = 'hi' & 'there';
+
+    assert<got, expected>(t);
+});
+
+test('Union of Objects', t => {
+    type got = UnionToIntersection<   { a: 0 } |
+    { b: 1 } |
+    { c: 2 }>;
+
+    type expected =   {
+        a: 0
+        b: 1
+        c: 2
+      };
 
     assert<got, expected>(t);
 });
