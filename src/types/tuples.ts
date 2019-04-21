@@ -11,7 +11,7 @@ export type Length<T extends Vector<any>> = T['length'];
 export type UnionizeTuple<T extends Vector<any>> = T[number];
 /**
  * Gives an intersection of all values contained in a tuple.
- * @param T a tuple of items up to 10
+ * @param T a tuple of items
  * @returns an intersection of all items in the tuple
  */
 export type IntersectTuple<T extends Vector<any>>= UnionToIntersection<T[number]>;
