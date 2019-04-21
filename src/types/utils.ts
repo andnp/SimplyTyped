@@ -34,3 +34,13 @@ export type Nominal<T, N extends string> = T & Tagged<N>;
  * @returns a the type union with a promise containing the given type
  */
 export type PromiseOr<T> = Promise<T> | T;
+
+
+/**
+ * Defines an intersection type of all union items.
+ * @param U Union of any types that will be intersected.
+ * @returns U items intersected
+ * @see https://stackoverflow.com/a/50375286/9259330
+ */
+export type UnionToIntersection<U> =
+    (U extends unknown ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
