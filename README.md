@@ -21,7 +21,7 @@ npm install --save-dev simplytyped
 
 **[Utils](#utils)**
 
-[NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor) - [UnionToIntersection](#uniontointersection)
+[NoDistribute](#nodistribute) - [NoInfer](#noinfer) - [Nominal](#nominal) - [Nullable](#nullable) - [PromiseOr](#promiseor) - [UnionToIntersection](#uniontointersection)
 
 **[Functions](#functions)**
 
@@ -521,6 +521,44 @@ test('Can get all keys between objects in a union', t => {
 ```
 
 ## Utils
+
+### NoDistribute
+Prevent `T` from being distributed in a conditional type.
+A conditional is only distributed when the checked type is naked type param and T & {} is not a
+naked type param, but has the same contract as T.
+```ts
+test("can create a conditional type that won't distribute over unions", t => {
+    type IsString<T> = T extends string ? "Yes" : "No";
+    type IsStringNoDistribute<T> = NoDistribute<T> extends string ? "Yes" : "No";
+
+    /**
+     * Evaluates as:
+     * ("foo" extends string ? "Yes" : "No")
+     *  | (42 extends string ? "Yes" : "No")
+     */
+    type T1 = IsString<"foo" | 42>;
+    assert<T1, "Yes" | "No">(t);
+    assert<"Yes" | "No", T1>(t);
+
+    /**
+     * Evaluates as:
+     * ("foo" | 42) extends string ? "Yes" : "No"
+     */
+    type T2 = IsStringNoDistribute<"foo" | 5>;
+    assert<T2, "No">(t);
+    assert<"No", T2>(t);
+});
+
+test("cannot be used to prevent a distributive conditional from distributing", t => {
+    type IsString<T> = T extends string ? "Yes" : "No";
+    // It's the defintion of the conditional type that matters,
+    //  not the type that's passed in, so this still distributes
+    type Test = IsString<NoDistribute<"foo" | 42>>;
+    assert<Test, "Yes" | "No">(t);
+    assert<"Yes" | "No", Test>(t);
+});
+
+```
 
 ### NoInfer
 Prevent `T` from being inferred in generic function
