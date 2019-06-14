@@ -9,6 +9,18 @@ import { ObjectType } from "./objects";
 export type NoInfer<T> = T & ObjectType<T>;
 
 /**
+ * Prevent `T` from being distributed in a conditional type.
+ * A conditional is only distributed when the checked type is naked type param and T & {} is not a
+ * naked type param, but has the same contract as T.
+ *
+ * @note This must be used directly the condition itself: `NoDistribute<T> extends U`,
+ * it won't work wrapping a type argument passed to a conditional type.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#distributive-conditional-types
+ */
+export type NoDistribute<T> = T & {};
+
+/**
  * Mark a type as nullable (`null | undefined`).
  * @param T type that will become nullable
  * @returns `T | null | undefined`
