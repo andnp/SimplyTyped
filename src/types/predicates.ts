@@ -37,13 +37,4 @@ export type IsObject<T> = And<
     Not<IsArray<T>>>
 >;
 
-// hmm...
-export type IsAny<T> =
-    And<Not<IsArray<T>>,
-    And<Not<IsBoolean<T>>,
-    And<Not<IsNumber<T>>,
-    And<Not<IsString<T>>,
-    And<Not<IsFunction<T>>,
-    And<Not<IsNil<T>>,
-    Not<IsObject<T>>>>>>>
->;
+export type IsAny<T> = 0 extends (1 & T) ? True : False;
