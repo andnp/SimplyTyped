@@ -66,7 +66,6 @@ test('Can get all keys between objects', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### AllRequired
@@ -80,7 +79,6 @@ test('Can make all fields of options object required (not optional and not nulla
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### CombineObjects
@@ -102,7 +100,6 @@ test('Can combine two objects (without pesky & in vscode)', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### DeepPartial
@@ -169,7 +166,6 @@ test('Can get a deep partial object with functions', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### DeepReadonly
@@ -216,7 +212,6 @@ test('Can make an object with functions readonly', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### DiffKeys
@@ -234,7 +229,6 @@ test('Can get all keys that are different between objects', t => {
     assert<gotA, 'x'>(t);
     assert<gotB, 'z'>(t);
 });
-
 ```
 
 ### GetKey
@@ -259,7 +253,6 @@ test('Will get `never` if key does not exist', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### HasKey
@@ -280,7 +273,6 @@ test('Can get an object with only shared properties', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### KeysByType
@@ -299,7 +291,6 @@ test('Can filter object keys by right side type', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### Merge
@@ -329,7 +320,6 @@ test('Can merge an object containing all strings as keys', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### ObjectKeys
@@ -353,7 +343,6 @@ test('Can turn an object into another object', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### Omit
@@ -369,7 +358,6 @@ test('Can omit keys from an object', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### Optional
@@ -384,7 +372,6 @@ test('Can make properties optional', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### Overwrite
@@ -403,7 +390,6 @@ test('Can overwrite properties on an object', t => {
     assert<got2, expected>(t);
     assert<expected, got2>(t);
 });
-
 ```
 
 ### PlainObject
@@ -433,7 +419,6 @@ test('Can make certain fields of options object required', t => {
     assert<got2, expected2>(t);
     assert<got3, expected3>(t);
 });
-
 ```
 
 ### SharedKeys
@@ -449,7 +434,6 @@ test('Can get keys that are same between objects', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### StrictUnion
@@ -474,7 +458,6 @@ test('disallow union members with mixed properties', t => {
     assert<isStrict<nonStrictUnion>, 'No'>(t);
 
 });
-
 ```
 
 ### StringKeys
@@ -500,7 +483,6 @@ test('Can get a union of all values in an object', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### UnionKeys
@@ -517,7 +499,6 @@ test('Can get all keys between objects in a union', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ## Utils
@@ -557,7 +538,6 @@ test("cannot be used to prevent a distributive conditional from distributing", t
     assert<Test, "Yes" | "No">(t);
     assert<"Yes" | "No", Test>(t);
 });
-
 ```
 
 ### NoInfer
@@ -573,7 +553,6 @@ test('Will not infer based on second argument', t => {
     assert<typeof x, 'hi'>(t);
     assert<typeof x, number>(t);
 });
-
 ```
 
 ### Nominal
@@ -586,7 +565,6 @@ test('Can make a new nominal type', t => {
     // TODO: improve once negative testing is in place
     assert<Id, Nominal<string, 'id'>>(t);
 });
-
 ```
 
 ### Nullable
@@ -604,7 +582,6 @@ test('Will make a type not nullable', t => {
 
     assert<got, string>(t);
 });
-
 ```
 
 ### PromiseOr
@@ -616,7 +593,6 @@ test('Will give back a promise containing given type union the type itself', t =
 
     assert<got, expected>(t);
 });
-
 ```
 
 ### UnionToIntersection
@@ -640,7 +616,6 @@ test('Union of Objects', t => {
 
     assert<got, expected>(t);
 });
-
 ```
 
 ## Functions
@@ -659,7 +634,6 @@ test('Can define the type of a function that takes any arguments', t => {
     assert<got, expected>(t);
     assert<got2, expected2>(t);
 });
-
 ```
 
 ### ArgsAsTuple
@@ -681,7 +655,6 @@ test("Can get a tuple of function's argument types", t => {
     assert<ArgsAsTuple<F2>, E2>(t);
     assert<ArgsAsTuple<F3>, E3>(t);
 });
-
 ```
 
 ### ConstructorFunction
@@ -693,7 +666,6 @@ test('Can build a constructor type for a type', t => {
 
     assert<Constructor, typeof Thing>(t);
 });
-
 ```
 
 ### OverwriteReturn
@@ -708,8 +680,6 @@ test('Can change return type of a function', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
-
 ```
 
 ### Predicate
@@ -721,7 +691,6 @@ test('Can build a predicate function with single known argument type', t => {
 
     assert<PredFunc, expected>(t);
 });
-
 ```
 
 ## Strings
@@ -737,7 +706,6 @@ test('Can remove a string from a union of strings', t => {
     assert<DropString<b, 'hey' | 'there'>, never>(t);
     assert<DropString<a, 'hi' | 'there'>, never>(t);
 });
-
 ```
 
 ### StringEqual
@@ -752,7 +720,6 @@ test('Can check that two unions of strings are equal', t => {
     assert<StringEqual<b, a>, True>(t);
     assert<StringEqual<b, c>, False>(t);
 });
-
 ```
 
 ### UnionContains
@@ -773,7 +740,6 @@ test('Can get the intersection of tuple values', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ### Length
@@ -789,7 +755,6 @@ test('Can get the length of a tuple', t => {
     assert<gotX, 2>(t);
     assert<gotT, 4>(t);
 });
-
 ```
 
 ### UnionizeTuple
@@ -804,7 +769,6 @@ test('Can get a union of all values in tuple', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
-
 ```
 
 ## Numbers
@@ -816,7 +780,6 @@ test('Can add two numbers', t => {
     type fifty = Add<12, 38>;
     assert<fifty, 50>(t);
 });
-
 ```
 
 ### IsOne
@@ -828,7 +791,6 @@ test('Can check if a number is one', t => {
     assert<notOne, False>(t);
     assert<one, True>(t);
 });
-
 ```
 
 ### IsZero
@@ -840,7 +802,6 @@ test('Can check if a number is zero', t => {
     assert<notZero, False>(t);
     assert<zero, True>(t);
 });
-
 ```
 
 ### Next
@@ -856,7 +817,6 @@ test('Can check if two numbers are equal', t => {
     assert<notEqual, False>(t);
     assert<equal, True>(t);
 });
-
 ```
 
 ### Numbers
@@ -870,7 +830,6 @@ test('Can get a number as a string', t => {
     type str = NumberToString<22>;
     assert<str, '22'>(t);
 });
-
 ```
 
 ### Prev
@@ -884,7 +843,6 @@ test('Can subtract two numbers', t => {
     type ten = Sub<22, 12>;
     assert<ten, 10>(t);
 });
-
 ```
 
 ## Conditionals
@@ -904,7 +862,6 @@ test('Conditions can be based on AND', t => {
     assert<gotTF, string>(t);
     assert<gotTT, number>(t);
 });
-
 ```
 
 ### If
@@ -918,7 +875,6 @@ test('Can assign type conditionally', t => {
     assert<gotF, string>(t);
     assert<gotT, number>(t);
 });
-
 ```
 
 ### Nand
@@ -930,7 +886,6 @@ test('Conditions can be based on NAND', t => {
     assert<Nand<True, False>,  True>(t);
     assert<Nand<False, False>, True>(t);
 });
-
 ```
 
 ### Not
@@ -944,7 +899,6 @@ test('Conditional logic can be inversed with NOT', t => {
     assert<gotF, number>(t);
     assert<gotT, string>(t);
 });
-
 ```
 
 ### Or
@@ -962,7 +916,6 @@ test('Conditions can be based on OR', t => {
     assert<gotTF, number>(t);
     assert<gotTT, number>(t);
 });
-
 ```
 
 ### Xor
@@ -974,7 +927,6 @@ test('Conditions can be based on XOR', t => {
     assert<Xor<True, False>,  True>(t);
     assert<Xor<False, False>, False>(t);
 });
-
 ```
 
 ## Predicates
@@ -1049,7 +1001,6 @@ test('Can check if an object contains a key', t => {
         t.fail();
     }
 });
-
 ```
 
 ### objectKeys
@@ -1067,7 +1018,6 @@ test('Can get keys of an object', t => {
 
     t.deepEqual(keys, ['a', 'b']);
 });
-
 ```
 
 ### Readonly
@@ -1098,6 +1048,5 @@ test('Can generate a tagged object', t => {
     assert<typeof expected, typeof got>(t);
 
 });
-
 ```
 

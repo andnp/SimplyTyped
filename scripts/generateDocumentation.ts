@@ -14,17 +14,20 @@ const tsConfig = {
     baseUrl: "src/",
 };
 
+const TEST_BASE = 'test';
+const REGRESSION_SEPARATOR = '/* Regression Tests */';
+
 // order dictates the order these appear in the generated markdown
 const files = [
-    { file: 'objects', test: 'test/objects', header: 'Objects' },
-    { file: 'utils', test: 'test/utils', header: 'Utils' },
-    { file: 'functions', test: 'test/functions', header: 'Functions' },
-    { file: 'strings', test: 'test/strings', header: 'Strings' },
-    { file: 'tuples', test: 'test/tuples', header: 'Tuples' },
-    { file: 'numbers', test: 'test/numbers', header: 'Numbers' },
-    { file: 'conditionals', test: 'test/conditionals', header: 'Conditionals' },
-    { file: 'predicates', test: 'test/predicates', header: 'Predicates' },
-    { file: path.join('src', 'impl', 'objects'), test: 'test/impl/objects', header: 'Runtime' },
+    { file: 'objects', test: `${TEST_BASE}/objects`, header: 'Objects' },
+    { file: 'utils', test: `${TEST_BASE}/utils`, header: 'Utils' },
+    { file: 'functions', test: `${TEST_BASE}/functions`, header: 'Functions' },
+    { file: 'strings', test: `${TEST_BASE}/strings`, header: 'Strings' },
+    { file: 'tuples', test: `${TEST_BASE}/tuples`, header: 'Tuples' },
+    { file: 'numbers', test: `${TEST_BASE}/numbers`, header: 'Numbers' },
+    { file: 'conditionals', test: `${TEST_BASE}/conditionals`, header: 'Conditionals' },
+    { file: 'predicates', test: `${TEST_BASE}/predicates`, header: 'Predicates' },
+    { file: 'src/impl/objects', test: `${TEST_BASE}/impl/objects`, header: 'Runtime' },
 ];
 
 const generateMarkdown = (fileName: string, testPath: string) => {
@@ -90,8 +93,9 @@ const generateMarkdown = (fileName: string, testPath: string) => {
                 const codeExamplePath = path.join(testPath, `${typeInfo.typeName}.test.ts`);
 
                 const testFile = fs.existsSync(codeExamplePath) && fs.readFileSync(codeExamplePath).toString();
+                const testCases = testFile && removeImports(removeRegressionTests(testFile)).trim();
 
-                const codeExample = testFile ? `\`\`\`ts\n${removeImports(testFile)}\n\`\`\`` : '';
+                const codeExample = testFile ? `\`\`\`ts\n${testCases}\n\`\`\`` : '';
 
                 return header + '\n' + description + '\n' + codeExample;
             });
@@ -155,6 +159,17 @@ function isNodeExported(node: tsc.Node | tsc.Declaration): boolean {
         ...node,
     };
     return (tsc.getCombinedModifierFlags(declaration) & tsc.ModifierFlags.Export) !== 0 || (!!declaration.parent && declaration.parent.kind === tsc.SyntaxKind.SourceFile); // tslint:disable-line no-bitwise
+}
+
+/**
+ * Takes a unit (regression) test file and removes the regression tests.
+ * This way we don't clutter up the documentation with regression test cases.
+ */
+function removeRegressionTests(testCode: string): string {
+    if (!testCode.includes(REGRESSION_SEPARATOR)) return testCode;
+
+    const [ before, ] = testCode.split(REGRESSION_SEPARATOR);
+    return before;
 }
 
 // TODO: make this less atrocious

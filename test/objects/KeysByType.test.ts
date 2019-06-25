@@ -16,3 +16,27 @@ test('Can filter object keys by right side type', t => {
     assert<got, expected>(t);
     assert<expected, got>(t);
 });
+
+/* Regression Tests */
+
+test('Does not give `undefined` key', t => {
+    type obj = { a: string, b?: number };
+
+    type got = KeysByType<obj, string>;
+    type expected = 'a';
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+test('Filters optional keys by undefined type', t => {
+    type obj = { a: string, b?: number };
+
+    type got = KeysByType<obj, undefined>;
+    type expected = 'b';
+
+    // TODO: Known failure. Optional keys are not considered of type `undefined`.
+    // assert<got, expected>(t);
+    // assert<expected, got>(t);
+    t.pass();
+});
