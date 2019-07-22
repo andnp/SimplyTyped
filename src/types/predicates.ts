@@ -1,4 +1,4 @@
-import { False, True, And, Or, Not } from './conditionals';
+import { False, True, And, Or, Not, If } from './conditionals';
 
 /** no-doc */
 export type KnownProblemPrototypeKeys = 'toString' | 'toLocaleString' | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'constructor' | 'valueOf';
@@ -15,7 +15,7 @@ export type ObjectPrototypeKeys = keyof Object;
 /** no-doc */
 export type FunctionPrototypeKeys = keyof Function;
 
-export type IsNever<S extends string> = Not<(Record<S, True> & Record<string, False>)[S]>;
+export type IsNever<T> = keyof any extends keyof T ? If<IsAny<T>, False, True> : False;
 export type IsType<T, X> = X extends T ? True : False;
 export type IsArray<T> = T extends unknown[] ? True : False;
 export type IsNumber<T> = T extends number ? True : False;
