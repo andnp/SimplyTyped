@@ -30,7 +30,7 @@ export type Nullable<T> = T | null | undefined;
 /**
  * no-doc - This is a helper for `Nominal` and is not useful on its own
  */
-export declare class Tagged<N extends string> { private _nominal_: N; }
+export declare class Tagged<N extends string> { protected _nominal_: N; }
 /**
  * Constructs a nominal type of type `T`.
  * Useful to prevent any value of type `T` from being used or modified in places it shouldn't (think `id`s).
