@@ -31,6 +31,8 @@ export type Nullable<T> = T | null | undefined;
  * no-doc - This is a helper for `Nominal` and is not useful on its own
  */
 export declare class Tagged<N extends string> { protected _nominal_: N; }
+
+declare const nominalBrand: unique symbol;
 /**
  * Constructs a nominal type of type `T`.
  * Useful to prevent any value of type `T` from being used or modified in places it shouldn't (think `id`s).
@@ -38,7 +40,7 @@ export declare class Tagged<N extends string> { protected _nominal_: N; }
  * @param N the name of the `Nominal` type (id, username, etc.)
  * @returns a type that is equal only to itself, but can be used like its contained type `T`
  */
-export type Nominal<T, N extends string> = T & Tagged<N>;
+export type Nominal<T, N extends string> = T & { [nominalBrand]: N };
 
 /**
  * Returns the given type or a Promise containing that type.
