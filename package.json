@@ -37,7 +37,7 @@
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^8.0.0",
-        "@types/node": "~13.7.0",
+        "@types/node": "~13.9.0",
         "@ava/babel": "^1.0.1",
         "ava": "~3.7.1",
         "commitlint": "^8.0.0",
