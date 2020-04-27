@@ -949,7 +949,23 @@ test('Conditions can be based on XOR', t => {
 
 ### IsNever
 
+```ts
+test('Can ask if T is of type "never"', t => {
+    assert<IsNever<'hi'>, False>(t);
+    assert<IsNever<any>, False>(t);
+    assert<IsNever<object>, False>(t);
+    assert<IsNever<Function>, False>(t);
+    assert<IsNever<() => string>, False>(t);
+    assert<IsNever<number>, False>(t);
+    assert<IsNever<boolean>, False>(t);
+    assert<IsNever<string | number>, False>(t);
+    assert<IsNever<unknown>, False>(t);
+    assert<IsNever<null>, False>(t);
+    assert<IsNever<undefined>, False>(t);
 
+    assert<IsNever<never>, True>(t);
+});
+```
 
 ### IsNil
 
