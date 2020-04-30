@@ -17,7 +17,7 @@ npm install --save-dev simplytyped
 
 **[Objects](#objects)**
 
-[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
+[AllKeys](#allkeys) - [AllRequired](#allrequired) - [CombineObjects](#combineobjects) - [DeepPartial](#deeppartial) - [DeepReadonly](#deepreadonly) - [DiffKeys](#diffkeys) - [ElementwiseIntersect](#elementwiseintersect) - [GetKey](#getkey) - [HasKey](#haskey) - [Intersect](#intersect) - [KeysByType](#keysbytype) - [Merge](#merge) - [ObjectKeys](#objectkeys) - [ObjectType](#objecttype) - [Omit](#omit) - [Optional](#optional) - [Overwrite](#overwrite) - [PlainObject](#plainobject) - [PureKeys](#purekeys) - [Required](#required) - [SharedKeys](#sharedkeys) - [StrictUnion](#strictunion) - [StringKeys](#stringkeys) - [TaggedObject](#taggedobject) - [TryKey](#trykey) - [UnionizeProperties](#unionizeproperties) - [UnionKeys](#unionkeys)
 
 **[Utils](#utils)**
 
@@ -88,12 +88,12 @@ Useful for making extremely complex types look nice in VSCode.
 ```ts
 test('Can combine two objects (without pesky & in vscode)', t => {
     type a = { x: number, y: 'hi' };
-    type b = { z: number, y: 'there' };
+    type b = { z: number };
 
     type got = CombineObjects<a, b>;
     type expected = {
         x: number,
-        y: 'hi' & 'there',
+        y: 'hi',
         z: number
     };
 
@@ -228,6 +228,51 @@ test('Can get all keys that are different between objects', t => {
 
     assert<gotA, 'x'>(t);
     assert<gotB, 'z'>(t);
+});
+```
+
+### ElementwiseIntersect
+Takes two objects and returns their element-wise intersection.
+*Note*: this removes any key-level information, such as optional or readonly keys.
+```ts
+test('Can combine two objects elementwise', t => {
+    type a = { x: number, y: 'hi' };
+    type b = { z: number, y: 'there' };
+
+    type got = ElementwiseIntersect<a, b>;
+    type expected = {
+        x: number,
+        y: 'hi' & 'there',
+        z: number,
+    };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
+});
+
+test('Can combine two objects with private members elementwise', t => {
+    class A {
+        a: number = 1;
+        private x: number = 2;
+        y: 'hi' = 'hi';
+        private z: 'hey' = 'hey';
+    }
+
+    class B {
+        a: 22 = 22;
+        private x: number = 2;
+        y: 'there' = 'there';
+        private z: 'friend' = 'friend';
+    }
+
+    type got = ElementwiseIntersect<A, B>;
+    type expected = {
+        a: 22,
+        y: 'hi' & 'there',
+    };
+
+    assert<got, expected>(t);
+    assert<expected, got>(t);
 });
 ```
 
@@ -469,6 +514,10 @@ exclude any `number | symbol` keys from `keyof`.
 ### TaggedObject
 For discriminated unions of objects, it is important to have a single "tag" property.
 Creates an object with each entry being tagged by the key defining that entry.
+
+
+### TryKey
+Like `GetKey`, but returns `unknown` if the key is not present on the object.
 
 
 ### UnionizeProperties

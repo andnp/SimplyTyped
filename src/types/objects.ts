@@ -34,6 +34,23 @@ export type CombineObjects<T extends object, U extends object> = ObjectType<T & 
  * @returns `T[K]` if the key exists, `never` otherwise
  */
 export type GetKey<T, K extends keyof any> = K extends keyof T ? T[K] : never;
+/**
+ * Like `GetKey`, but returns `unknown` if the key is not present on the object.
+ * @param T Object to get values from
+ * @param K Key to query object for value
+ * @returns `T[K]` if the key exists, `unknown` otherwise
+ */
+export type TryKey<T, K extends keyof any> = K extends keyof T ? T[K]: unknown;
+/**
+ * Takes two objects and returns their element-wise intersection.
+ * *Note*: this removes any key-level information, such as optional or readonly keys.
+ * @param T First object to be intersected
+ * @param U Second object to be intersected
+ * @returns element-wise `T` & `U` cleaned up to look like flat object to VSCode
+ */
+export type ElementwiseIntersect<T extends object, U extends object> = {
+    [k in (keyof T | keyof U)]: TryKey<T, k> & TryKey<U, k>;
+};
 
 // ----
 // Keys
