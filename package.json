@@ -1,10 +1,38 @@
 {
     "name": "simplytyped",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "description": "yet another Typescript type library for advanced types",
     "main": "dist/src/index",
     "types": "dist/src/index.d.ts",
+    "deno": "edition-deno/index.ts",
+    "browser": "edition-deno/index.ts",
     "private": true,
+    "editions": [
+        {
+            "description": "TypeScript source code with Import for modules",
+            "directory": "src",
+            "entry": "index.ts",
+            "tags": [
+                "typescript",
+                "import"
+            ],
+            "engines": false
+        },
+        {
+            "description": "TypeScript source code made to be compatible with Deno",
+            "directory": "edition-deno",
+            "entry": "index.ts",
+            "tags": [
+                "typescript",
+                "import",
+                "deno"
+            ],
+            "engines": {
+                "deno": true,
+                "browsers": true
+            }
+        }
+    ],
     "scripts": {
         "doc": "ts-node scripts/generateDocumentation.ts > README.md",
         "commitDocs": "sh scripts/commitDocsIfChanged.sh",
@@ -12,7 +40,7 @@
         "test": "npm run -s tsc && NODE_PATH=src/ ava",
         "test:all": "sh scripts/testTsVersions.sh",
         "tsc": "tsc",
-        "prepub": "rm -rf dist && npm -s run tsc && ts-node scripts/preparePublish.ts",
+        "prepub": "rm -rf dist && npm -s run tsc && ts-node scripts/preparePublish.ts && make-deno-edition",
         "release": "npm run -s prepub && cd dist/src && npx semantic-release"
     },
     "repository": {
@@ -29,7 +57,8 @@
         "url": "https://github.com/andnp/SimplyTyped/issues"
     },
     "files": [
-        "dist/src"
+        "dist/src",
+        "edition-deno"
     ],
     "homepage": "https://github.com/andnp/SimplyTyped#readme",
     "peerDependencies": {
@@ -42,6 +71,7 @@
         "ava": "~3.7.1",
         "commitlint": "^8.0.0",
         "husky": "^4.0.2",
+        "make-deno-edition": "^0.2.1",
         "ts-node": "^8.0.3",
         "tslint": "^5.13.0"
     },
