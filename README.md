@@ -13,7 +13,7 @@ The goal is to provide all of the building blocks necessary to make concise, yet
 npm install --save-dev simplytyped
 ```
 
-To use with [Deno](https://deno.land), import `https://unpkg.com/simplytyped@^1.1.0/edition-deno/index.ts`
+To use with [Deno](https://deno.land), import `https://unpkg.com/simplytyped/edition-deno/index.ts`
 
 ## Table of Contents
 
